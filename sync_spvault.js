@@ -51,7 +51,8 @@ log('Parsing dei dati del vault...');
 
 function cleanObsidianProse(text) {
   if (!text) return '';
-  let t = text.replace(/######\s*(?:Post|Video|Immagini|Immagine|Tags|Tag|Fonti|Dettagli)[\s\S]*$/gi, '');
+  // Cut any trailing sections (Post, Video, Immagini, Tags, Fonti, Dettagli, Data di creazione)
+  let t = text.replace(/(?:^|\n)(?:#{1,6}\s*)?(?:Post|Video|Immagin[ie].*|Media.*|Font[ie].*|Tag[s]?.*|Link[s]?.*|\*?Data di creazione:?.*)[\s\S]*$/gi, '');
   t = t.replace(/!\[.*?\]\(.*?\)/g, '');
   t = t.replace(/!\[\[.*?\]\]/g, '');
   t = t.replace(/\[\[(?:[^|\]]*\|)?([^\]]+)\]\]/g, '$1');
@@ -63,11 +64,65 @@ function cleanObsidianProse(text) {
   return t;
 }
 
+function parseBilingualMarkdown(raw) {
+  if (!raw) return { en: '', it: '' };
+
+  const splitRegex = /(?:^|\n)(?:#{1,6}\s*)?Traduzion[ie](?:\s+Italian[ae])?\s*(?:\n|$)/i;
+  const match = raw.match(splitRegex);
+
+  let en = '';
+  let it = '';
+
+  if (match) {
+    en = raw.slice(0, match.index).trim();
+    const after = raw.slice(match.index + match[0].length);
+    const cutRegex = /(?:^|\n)(?:#{1,6}\s*)?(?:Post|Video|Immagin[ie].*|Media.*|Font[ie].*|Tag[s]?.*|Link[s]?.*|\*?Data di creazione:?.*)\s*(?:\n|$)/i;
+    const cutMatch = after.match(cutRegex);
+    if (cutMatch) {
+      it = after.slice(0, cutMatch.index).trim();
+    } else {
+      it = after.trim();
+    }
+  } else {
+    const cutRegex = /(?:^|\n)(?:#{1,6}\s*)?(?:Post|Video|Immagin[ie].*|Media.*|Font[ie].*|Tag[s]?.*|Link[s]?.*|\*?Data di creazione:?.*)\s*(?:\n|$)/i;
+    const cutMatch = raw.match(cutRegex);
+    if (cutMatch) {
+      en = raw.slice(0, cutMatch.index).trim();
+    } else {
+      en = raw.trim();
+    }
+    it = '';
+  }
+
+  return {
+    en: cleanObsidianProse(en),
+    it: cleanObsidianProse(it)
+  };
+}
+
 function extractQuote(text) {
   if (!text) return '';
   const m = text.match(/--\s*["«]([\s\S]*?)["»]\s*--/) || text.match(/["«]([\s\S]*?)["»]/);
   return m ? cleanObsidianProse(m[1].replace(/\n/g, ' ')) : '';
 }
+
+const ROLE_MAP = {
+  'maid': 'Cameriera',
+  'bartender': 'Barista',
+  'secretary': 'Segretaria',
+  'technician': 'Tecnico',
+  'host': 'Host / Albergatrice',
+  'doctor': 'Medico',
+  'knight': 'Cavaliere',
+  'journalist': 'Giornalista',
+  'apprentice': 'Apprendista',
+  'chief inspector': 'Ispettore Capo',
+  'dancer': 'Ballerina',
+  'superintendent': 'Sovrintendente',
+  'messenger': 'Messaggera',
+  'star student': 'Studentessa modello',
+  'studentessa modello': 'Studentessa modello'
+};
 
 const repoContent = path.join(VAULT_REPO, 'content');
 
@@ -86,21 +141,14 @@ charFolders.forEach(name => {
   const dripRaw = dripFile ? fs.readFileSync(path.join(cDir, dripFile), 'utf8') : '';
   const hiddenRaw = hiddenFile ? fs.readFileSync(path.join(cDir, hiddenFile), 'utf8') : '';
 
-  let dripEn = '';
-  let dripIt = '';
-  if (dripRaw.includes('###### Traduzione') || dripRaw.includes('###### Traduzioni')) {
-    const parts = dripRaw.split(/###### Traduzion[ie]/i);
-    dripEn = parts[0].trim();
-    const after = parts[1] || '';
-    dripIt = after.split(/###### (?:Immagini|Immagine|Tags|Tag|Fonti)/i)[0].trim();
-  } else {
-    dripEn = dripRaw.trim();
-  }
+  const pDrip = parseBilingualMarkdown(dripRaw);
+  const dripEn = pDrip.en;
+  const dripIt = pDrip.it;
 
   const enLines = dripEn.split('\n').map(l => l.trim()).filter(Boolean);
   const itLines = dripIt.split('\n').map(l => l.trim()).filter(Boolean);
-  let titleEn = enLines[0] || name;
-  let titleIt = itLines[0] || name;
+  let rawTitleEn = enLines[0] || name;
+  let rawTitleIt = itLines[0] || name;
 
   let quoteEn = extractQuote(dripEn);
   let quoteIt = extractQuote(dripIt);
@@ -111,22 +159,14 @@ charFolders.forEach(name => {
   let hiddenBodyIt = '';
 
   if (hiddenRaw) {
-    let hEn = '';
-    let hIt = '';
-    if (hiddenRaw.includes('###### Traduzione') || hiddenRaw.includes('###### Traduzioni')) {
-      const hParts = hiddenRaw.split(/###### Traduzion[ie]/i);
-      hEn = hParts[0].trim();
-      const hAfter = hParts[1] || '';
-      hIt = hAfter.split(/###### (?:Immagini|Immagine|Tags|Tag|Fonti)/i)[0].trim();
-    } else {
-      hEn = hiddenRaw.trim();
-    }
-    const hEnLines = hEn.split('\n').map(l => l.trim()).filter(Boolean);
-    const hItLines = hIt.split('\n').map(l => l.trim()).filter(Boolean);
-    hiddenTitleEn = cleanObsidianProse(hEnLines[0] || 'The Mystery');
-    hiddenTitleIt = cleanObsidianProse(hItLines[0] || 'Il Mistero');
-    hiddenBodyEn = cleanObsidianProse(hEn);
-    hiddenBodyIt = cleanObsidianProse(hIt);
+    const pHidden = parseBilingualMarkdown(hiddenRaw);
+    hiddenBodyEn = pHidden.en;
+    hiddenBodyIt = pHidden.it;
+
+    const hEnLines = hiddenBodyEn.split('\n').map(l => l.trim()).filter(Boolean);
+    const hItLines = hiddenBodyIt.split('\n').map(l => l.trim()).filter(Boolean);
+    hiddenTitleEn = cleanObsidianProse(hEnLines[0] || 'The Mystery').replace(/^#+\s*/, '');
+    hiddenTitleIt = cleanObsidianProse(hItLines[0] || 'Il Mistero').replace(/^#+\s*/, '');
   }
 
   const tags = [];
@@ -163,8 +203,37 @@ charFolders.forEach(name => {
     dripImg = profileImg;
   }
 
+  // Extract hidden and official arts from disk
+  const hiddenFilesDir = path.join(SITE_DIR, '_multimedia', 'Personaggi', 'Hidden Pages');
+  const officialFilesDir = path.join(SITE_DIR, '_multimedia', 'Personaggi', 'Official Art');
+  const cleanCharName = name.toLowerCase().replace(/[^a-z0-9]/g, '');
+  const baseCharName = cleanCharName.replace(/ii$/, '');
+
+  const hiddenImgs = [];
+  if (fs.existsSync(hiddenFilesDir)) {
+    const hFiles = fs.readdirSync(hiddenFilesDir);
+    hFiles.forEach(f => {
+      const cf = f.toLowerCase().replace(/[^a-z0-9]/g, '');
+      if (cf.includes(cleanCharName) || (baseCharName && cf.includes(baseCharName))) {
+        hiddenImgs.push(`_multimedia/Personaggi/Hidden Pages/${f}`);
+      }
+    });
+  }
+
+  let officialArt = '';
+  if (fs.existsSync(officialFilesDir)) {
+    const oFiles = fs.readdirSync(officialFilesDir);
+    const oMatch = oFiles.find(f => {
+      const cf = f.toLowerCase().replace(/[^a-z0-9]/g, '');
+      return cf.includes(cleanCharName) || (baseCharName && cf.includes(baseCharName));
+    });
+    if (oMatch) {
+      officialArt = `_multimedia/Personaggi/Official Art/${oMatch}`;
+    }
+  }
+
   const links = [];
-  const linkRegex = /https?:\/\/[^\s\)\"\'>]+/g;
+  const linkRegex = /https?:\/\/[^\s\)\">]+/g;
   let lm;
   while ((lm = linkRegex.exec(dripRaw + '\n' + hiddenRaw)) !== null) {
     if (!links.includes(lm[0])) links.push(lm[0]);
@@ -172,23 +241,40 @@ charFolders.forEach(name => {
   const ytLink = links.find(l => l.includes('youtube.com') || l.includes('youtu.be')) || '';
   const xLink = links.find(l => l.includes('x.com') || l.includes('twitter.com')) || '';
 
-  let cleanTitleIt = cleanObsidianProse(titleIt).replace(/^[—–-]+\s*/, '').replace(/\s*[—–-]+.*$/, '').trim();
-  let cleanTitleEn = cleanObsidianProse(titleEn).replace(/^[—–-]+\s*/, '').replace(/\s*[—–-]+.*$/, '').trim();
-  let roleIt = cleanTitleIt;
-  const roleMatch = cleanTitleIt.match(/\((.*?)\)/);
-  if (roleMatch) roleIt = roleMatch[1].trim();
+  // Determine role and clean titles
+  let cleanTitleIt = cleanObsidianProse(rawTitleIt).replace(/^[—–-]+\s*/, '').replace(/\s*[—–-]+.*$/, '').trim();
+  let cleanTitleEn = cleanObsidianProse(rawTitleEn).replace(/^[—–-]+\s*/, '').replace(/\s*[—–-]+.*$/, '').trim();
+
+  const roleMatchIt = cleanTitleIt.match(/\((.*?)\)/);
+  const roleMatchEn = cleanTitleEn.match(/\((.*?)\)/);
+
+  let roleIt = '';
+  if (roleMatchIt) {
+    roleIt = roleMatchIt[1].trim();
+  } else if (roleMatchEn) {
+    const rawRole = roleMatchEn[1].trim().toLowerCase();
+    roleIt = ROLE_MAP[rawRole] || roleMatchEn[1].trim();
+  } else {
+    roleIt = cleanTitleIt || name;
+  }
+
+  let title_it = cleanTitleIt;
+  let title_en = cleanTitleEn;
+  if (cleanTitleIt && !cleanTitleIt.includes(name) && !cleanTitleIt.includes(roleIt)) {
+    title_it = `${name} (${roleIt})`;
+  }
 
   cases.push({
     id: 'case_' + name.toLowerCase().replace(/[^a-z0-9]/g, '_'),
     name: name,
     faction: faction,
     role: roleIt,
-    title_it: cleanTitleIt,
-    title_en: cleanTitleEn,
+    title_it: title_it,
+    title_en: title_en,
     quote_it: quoteIt,
     quote_en: quoteEn,
-    bio_it: cleanObsidianProse(dripIt),
-    bio_en: cleanObsidianProse(dripEn),
+    bio_it: dripIt,
+    bio_en: dripEn,
     has_hidden: !!hiddenRaw,
     hidden_title_it: hiddenTitleIt,
     hidden_title_en: hiddenTitleEn,
@@ -198,6 +284,9 @@ charFolders.forEach(name => {
     hidden_story_en: hiddenBodyEn,
     drip_img: dripImg,
     profile_img: profileImg,
+    hidden_img: hiddenImgs[0] || '',
+    hidden_imgs: hiddenImgs,
+    official_art: officialArt,
     trailer_url: ytLink,
     x_url: xLink,
     x_post_url: xLink,
@@ -218,27 +307,22 @@ factionFolders.forEach(fDirName => {
   if (files.length === 0) return;
   const mainFile = files.find(f => f.startsWith('ATOTS')) || files[0];
   const raw = fs.readFileSync(path.join(fPath, mainFile), 'utf8');
-  let en = '';
-  let it = '';
-  if (raw.includes('###### Traduzione') || raw.includes('###### Traduzioni')) {
-    const parts = raw.split(/###### Traduzion[ie]/i);
-    en = parts[0].trim();
-    it = (parts[1] || '').split(/###### (?:Immagini|Tags|Fonti)/i)[0].trim();
-  } else {
-    en = raw.trim();
-    it = raw.trim();
-  }
+  
+  const pFac = parseBilingualMarkdown(raw);
+  const en = pFac.en;
+  const it = pFac.it || pFac.en;
 
   let banner = '';
-  const bannerFiles = [
-    `_multimedia/Art Per Fazioni/${fDirName} Faction Art.jpg`,
-    `_multimedia/Art Per Fazioni/${fDirName} Art.jpg`,
-    `_multimedia/Art Per Fazioni/${fDirName.charAt(0).toUpperCase() + fDirName.slice(1).toLowerCase()} Art.jpg`
-  ];
-  for (const bf of bannerFiles) {
-    if (fs.existsSync(path.join(SITE_DIR, bf))) {
-      banner = bf;
-      break;
+  const artFazioniDir = path.join(SITE_DIR, '_multimedia', 'Art Per Fazioni');
+  if (fs.existsSync(artFazioniDir)) {
+    const diskFiles = fs.readdirSync(artFazioniDir);
+    const cleanFName = fDirName.replace(/[^a-zA-Z0-9]/g, '').toLowerCase();
+    const match = diskFiles.find(file => {
+      const lower = file.toLowerCase().replace(/[^a-zA-Z0-9]/g, '');
+      return lower.includes(cleanFName);
+    });
+    if (match) {
+      banner = `_multimedia/Art Per Fazioni/${match}`;
     }
   }
 
@@ -252,8 +336,8 @@ factionFolders.forEach(fDirName => {
   factions.push({
     name: displayName,
     alias: alias,
-    desc_it: cleanObsidianProse(it),
-    desc_en: cleanObsidianProse(en),
+    desc_it: it,
+    desc_en: en,
     banner: banner,
     tags: [tag]
   });
@@ -284,8 +368,8 @@ const virtualFactions = [
       const metPath = path.join(repoContent, 'Dizionario/Metallurgy.md');
       if (fs.existsSync(metPath)) {
         const raw = fs.readFileSync(metPath, 'utf8');
-        const parts = raw.split(/###### Traduzion[ie]/i);
-        if (parts[1]) return cleanObsidianProse(parts[1]);
+        const pMet = parseBilingualMarkdown(raw);
+        if (pMet.it) return pMet.it;
       }
       return 'Accademia di Metallurgia citata negli atti di Tinsley e Cordelia.';
     })(),
@@ -307,20 +391,12 @@ const dizFiles = fs.readdirSync(path.join(repoContent, 'Dizionario'));
 dizFiles.forEach(f => {
   const termName = f.replace('.md', '');
   const raw = fs.readFileSync(path.join(repoContent, 'Dizionario', f), 'utf8');
-  let en = '';
-  let it = '';
-  if (raw.includes('###### Traduzione') || raw.includes('###### Traduzioni')) {
-    const parts = raw.split(/###### Traduzion[ie]/i);
-    en = parts[0].trim();
-    it = parts[1].split(/######|\*Data/i)[0].trim();
-  } else {
-    en = raw.trim();
-  }
+  const pDiz = parseBilingualMarkdown(raw);
   lexicon.push({
     term: termName,
     category: 'Terminologia & Concetti',
-    def_it: cleanObsidianProse(it),
-    def_en: cleanObsidianProse(en),
+    def_it: pDiz.it || pDiz.en,
+    def_en: pDiz.en,
     source_file: 'Dizionario/' + f
   });
 });
@@ -329,23 +405,15 @@ const mapsFootnotes = path.join(repoContent, 'Mappe/Footnotes');
 fs.readdirSync(mapsFootnotes).forEach(f => {
   const termName = f.replace('.md', '');
   const raw = fs.readFileSync(path.join(mapsFootnotes, f), 'utf8');
-  let en = '';
-  let it = '';
   let img = '';
   const imgMatch = raw.match(/!\[\[(.*?)\]\]/);
   if (imgMatch) img = '_multimedia/Art Per Mappe/' + imgMatch[1];
-  if (raw.includes('###### Traduzione') || raw.includes('###### Traduzioni')) {
-    const parts = raw.split(/###### Traduzion[ie]/i);
-    en = parts[0].trim();
-    it = parts[1].split(/###### (?:Immagini|Tags)/i)[0].trim();
-  } else {
-    en = raw.trim();
-  }
+  const pMap = parseBilingualMarkdown(raw);
   lexicon.push({
     term: termName,
     category: 'Mappe & Ambientazione',
-    def_it: cleanObsidianProse(it),
-    def_en: cleanObsidianProse(en),
+    def_it: pMap.it || pMap.en,
+    def_en: pMap.en,
     image: img,
     source_file: 'Mappe/Footnotes/' + f
   });
@@ -355,11 +423,12 @@ const distrettiDir = path.join(repoContent, 'Mappe/Distretti ed Aree Menzionate'
 fs.readdirSync(distrettiDir).forEach(f => {
   const termName = f.replace('.md', '');
   const raw = fs.readFileSync(path.join(distrettiDir, f), 'utf8');
+  const clean = cleanObsidianProse(raw);
   lexicon.push({
     term: termName,
     category: 'Distretti & Aree Notabili',
-    def_it: cleanObsidianProse(raw) || 'Distretto censito negli atti ufficiali del database.',
-    def_en: cleanObsidianProse(raw) || 'District registered in official database records.',
+    def_it: clean || 'Distretto censito negli atti ufficiali del database.',
+    def_en: clean || 'District registered in official database records.',
     source_file: 'Mappe/Distretti ed Aree Menzionate/' + f
   });
 });
@@ -370,15 +439,8 @@ let dispId = 1;
 function parsePost(fullPath, relCategory) {
   const fileName = path.basename(fullPath, '.md');
   const raw = fs.readFileSync(fullPath, 'utf8');
-  let en = '';
-  let it = '';
-  if (raw.includes('###### Traduzione') || raw.includes('###### Traduzioni')) {
-    const parts = raw.split(/###### Traduzion[ie]/i);
-    en = parts[0].trim();
-    it = (parts[1] || '').split(/###### (?:Immagini|Immagine|Tags|Tag|Fonti)/i)[0].trim();
-  } else {
-    en = raw.trim();
-  }
+  const pPost = parseBilingualMarkdown(raw);
+
   let img = '';
   const imgMatch = raw.match(/!\[\[(.*?)\]\]/);
   if (imgMatch) {
@@ -391,7 +453,7 @@ function parsePost(fullPath, relCategory) {
       img = '_multimedia/Personaggi/Official Art/' + imgName;
     }
   }
-  const linkMatches = raw.match(/https?:\/\/[^\s\)\"\'>]+/g) || [];
+  const linkMatches = raw.match(/https?:\/\/[^\s\)\">]+/g) || [];
   const yt = linkMatches.find(l => l.includes('youtube.com') || l.includes('youtu.be')) || '';
   const tags = [];
   const tagRegex = /#[a-zA-Z0-9_\-]+/g;
@@ -405,8 +467,8 @@ function parsePost(fullPath, relCategory) {
     title: fileName,
     type: relCategory,
     date: '2026',
-    desc_en: cleanObsidianProse(en),
-    desc_it: cleanObsidianProse(it),
+    desc_en: pPost.en,
+    desc_it: pPost.it || pPost.en,
     cover_img: img,
     link: yt || (linkMatches[0] || ''),
     tags: tags
@@ -446,7 +508,7 @@ charFolders.forEach(cName => {
   });
 });
 
-// 3.5. Rilevamento contenuti non mappati (Alerts automatici per Catalyst)
+// 4. Mappatura file o sezioni non ancora mappate (Alerts)
 log('Rilevamento file e sezioni non ancora mappate nel Vault...');
 const alerts = [];
 
@@ -456,34 +518,34 @@ charFolders.forEach(name => {
   const extraFiles = files.filter(f => {
     if (!f.endsWith('.md')) return false;
     const lower = f.toLowerCase();
-    return !lower.includes('drip') && !lower.includes('hidden') && !lower.includes('trailer');
+    return !lower.includes('drip') && !lower.includes('hidden');
   });
+
   extraFiles.forEach(ef => {
     const rawContent = fs.readFileSync(path.join(cDir, ef), 'utf8');
     alerts.push({
-      type: 'CHAR_EXTRA_DOC',
-      title: `${name}: Nuovo file "${ef}"`,
-      location: `Personaggi/${name}/${ef}`,
+      type: 'Nuovo File Non Mappato',
       character: name,
       file: ef,
-      preview: cleanObsidianProse(rawContent).slice(0, 180) + '...'
+      title: `File non standard per ${name}: ${ef}`,
+      desc: `Trovato file aggiuntivo '${ef}' nella cartella di ${name}. Verificare se integrarlo nel database.`,
+      preview: rawContent.slice(0, 150).replace(/\n/g, ' ')
     });
   });
 
   const dripFile = files.find(f => f.toLowerCase().includes('drip') && f.endsWith('.md'));
   const hiddenFile = files.find(f => f.toLowerCase().includes('hidden') && f.endsWith('.md'));
-  [dripFile, hiddenFile].forEach(f => {
-    if (!f) return;
+  [dripFile, hiddenFile].filter(Boolean).forEach(f => {
     const raw = fs.readFileSync(path.join(cDir, f), 'utf8');
     const skillMatch = raw.match(/######\s*(?:Skill|Abilità|Kit|Combat|Arma|Armi|Talenti|Passive)[^\n]*/i);
     if (skillMatch) {
       alerts.push({
-        type: 'CHAR_NEW_SECTION',
-        title: `${name}: Nuova sezione "${skillMatch[0].replace('######', '').trim()}" in ${f}`,
-        location: `Personaggi/${name}/${f}`,
+        type: 'Nuova Sezione Non Mappata',
         character: name,
         file: f,
-        preview: `Rilevata intestazione "${skillMatch[0].trim()}" nel fascicolo del personaggio.`
+        title: `Nuova sezione '${skillMatch[0].replace('######', '').trim()}' in ${f}`,
+        desc: `Rilevata sezione di gioco/gameplay '${skillMatch[0]}' per ${name}. Richiede rework del template scheda.`,
+        preview: skillMatch[0]
       });
     }
   });
@@ -491,31 +553,26 @@ charFolders.forEach(name => {
 
 const knownRoots = ['Personaggi', 'Fazioni', 'Dizionario', 'Mappe', 'Post Ufficiali', '_Multimedia', '_multimedia', '!Indici', 'Template'];
 const actualRoots = fs.readdirSync(repoContent).filter(f => fs.statSync(path.join(repoContent, f)).isDirectory());
-actualRoots.forEach(rf => {
-  if (!knownRoots.includes(rf)) {
+actualRoots.forEach(r => {
+  if (!knownRoots.includes(r)) {
     alerts.push({
-      type: 'NEW_VAULT_SECTION',
-      title: `Nuova cartella nel Vault: "${rf}"`,
-      location: rf,
-      preview: `La cartella "${rf}" è stata aggiunta alla radice di content/ nel Vault ma non ha ancora un layout dedicato sul sito.`
+      type: 'Nuova Cartella Vault',
+      character: 'Globale',
+      file: r,
+      title: `Nuova cartella principale nel Vault: ${r}`,
+      desc: `La cartella '${r}' non fa parte delle cartelle canoniche censite. Richiede mappatura in sync_spvault.js.`,
+      preview: `Cartella: content/${r}`
     });
   }
 });
 
 if (alerts.length > 0) {
-  log(`[ATTENZIONE] Rilevati ${alerts.length} nuovi elementi non ancora mappati nel Vault:`);
-  alerts.forEach(a => log(` - ${a.title} (${a.location})`));
-  try {
-    const notifyMsg = `Trovati ${alerts.length} nuovi file o sezioni non mappate (es: ${alerts[0].title}). Apri il sito per i dettagli!`;
-    execSync(`powershell -ExecutionPolicy Bypass -File "${path.join(SITE_DIR, 'notify.ps1')}" -Title "Silverium DB - Nuovo Contenuto Vault" -Message "${notifyMsg}"`);
-  } catch (err) {
-    log(`Errore notifica Windows: ${err.message}`);
-  }
+  log(`RILEVATI ${alerts.length} ELEMENTI NON MAPPATI! Registrazione negli avvisi del sito...`);
 } else {
   log('Nessun file o sezione non mappata. Struttura 100% allineata.');
 }
 
-// 4. Update index.html
+// 5. Update index.html
 log('Aggiornamento index.html...');
 let html = fs.readFileSync(INDEX_HTML, 'utf8');
 
@@ -541,17 +598,22 @@ if (casesStart !== -1 && sdbVersionStart !== -1) {
   log('ERRORE: marker non trovati in index.html');
 }
 
-// 5. Push automatico su GitHub Pages (se disponibile)
+// 6. Push automatico su GitHub Pages (se disponibile)
 try {
   const remotes = execSync(`git -C "${SITE_DIR}" remote`, { encoding: 'utf8' }).trim();
   if (remotes.includes('origin')) {
     log('Controllo modifiche per GitHub Pages...');
-    execSync(`git -C "${SITE_DIR}" add index.html _multimedia`, { encoding: 'utf8' });
+    execSync(`git -C "${SITE_DIR}" add index.html _multimedia sync_spvault.js`, { encoding: 'utf8' });
     const diff = execSync(`git -C "${SITE_DIR}" status --porcelain`, { encoding: 'utf8' }).trim();
     if (diff) {
       log('Spinta aggiornamenti su GitHub Pages...');
-      execSync(`git -C "${SITE_DIR}" commit -m "Auto-sync vault update [${new Date().toISOString()}]"`, { encoding: 'utf8' });
+      execSync(`git -C "${SITE_DIR}" commit -m "Auto-sync robust vault extraction [${new Date().toISOString()}]"`, { encoding: 'utf8' });
       execSync(`git -C "${SITE_DIR}" push origin main`, { encoding: 'utf8' });
+      try {
+        execSync(`git -C "${SITE_DIR}" push origin main:gh-pages`, { encoding: 'utf8' });
+      } catch (eGh) {
+        log(`Nota push gh-pages: ${eGh.message}`);
+      }
       log('GitHub Pages aggiornato con successo!');
     } else {
       log('Nessuna modifica da caricare su GitHub (già allineato).');
