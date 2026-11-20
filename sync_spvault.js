@@ -56,6 +56,8 @@ function cleanObsidianProse(text) {
   t = t.replace(/!\[.*?\]\(.*?\)/g, '');
   t = t.replace(/!\[\[.*?\]\]/g, '');
   t = t.replace(/\[\[(?:[^|\]]*\|)?([^\]]+)\]\]/g, '$1');
+  t = t.replace(/^#{1,6}\s+/gm, '');
+  t = t.replace(/^#+\s*$/gm, '');
   t = t.replace(/==(.*?)==/g, '$1');
   t = t.replace(/\*\*(.*?)\*\*/g, '$1');
   t = t.replace(/\*(.*?)\*/g, '$1');
