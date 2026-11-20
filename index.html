@@ -1,0 +1,2479 @@
+<!DOCTYPE html>
+<html lang="it" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
+  <title>Silverium DB — Database Ufficiale Silver Palace</title>
+  <meta name="description" content="Database e archivio completo per Silver Palace curato da CatalystOnline. Personaggi, lore, video, fazioni e traduzioni in italiano.">
+  <link rel="icon" href="https://silveriumdb.cc/static/icon.png">
+
+  <!-- Typography: High-End Editorial Serif (Playfair) + Modern Precision Sans (Inter) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,600;0,700;1,600&display=swap" rel="stylesheet">
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            canvas: '#090B10',
+            surface: '#11141D',
+            'surface-raised': '#171B26',
+            'surface-hover': '#1F2433',
+            border: '#23293A',
+            'border-subtle': '#1B202D',
+            'border-active': '#45506E',
+            gold: '#D4AF37',
+            'gold-dim': 'rgba(212, 175, 55, 0.1)',
+            purple4: '#A855F7',
+            silver: '#E2E8F0',
+            muted: '#8592A6',
+          },
+          fontFamily: {
+            serif: ['"Playfair Display"', 'Georgia', 'serif'],
+            sans: ['"Inter"', 'system-ui', 'sans-serif'],
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    /* Ultra-clean scrollbar */
+    ::-webkit-scrollbar { width: 6px; height: 6px; }
+    ::-webkit-scrollbar-track { background: #090B10; }
+    ::-webkit-scrollbar-thumb { background: #23293A; border-radius: 3px; }
+    ::-webkit-scrollbar-thumb:hover { background: #45506E; }
+
+    body {
+      background-color: #090B10;
+      color: #E2E8F0;
+      font-family: 'Inter', sans-serif;
+    }
+
+    /* Refined Victorian card hover shadow */
+    .card-hover-glow:hover {
+      box-shadow: 0 8px 24px -4px rgba(212, 175, 55, 0.18);
+    }
+
+    /* Studio-grade drawer slide-over animation */
+    #character-drawer {
+      transition: opacity 300ms cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    #character-drawer-panel {
+      transition: transform 320ms cubic-bezier(0.16, 1, 0.3, 1);
+      will-change: transform;
+    }
+  </style>
+</head>
+<body class="min-h-screen flex flex-col antialiased selection:bg-gold/20 selection:text-gold">
+
+  <!-- ================= TOP NAVIGATION (CLEAN STUDIO-GRADE) ================= -->
+  <header class="border-b border-border bg-canvas/90 backdrop-blur-md sticky top-0 z-30">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between gap-4">
+      
+      <!-- Brand Logo -->
+      <a href="#home" onclick="setView('characters')" class="flex items-center gap-3 group">
+        <div class="w-9 h-9 rounded-lg bg-surface-raised border border-border flex items-center justify-center text-gold font-serif font-bold text-lg group-hover:border-gold/50 transition-colors shadow-sm">
+          S
+        </div>
+        <div>
+          <span class="font-serif font-bold text-lg tracking-tight text-white group-hover:text-gold transition-colors">Silverium DB</span>
+          <span class="text-[11px] text-muted block -mt-1 font-sans">Silver Palace Database</span>
+        </div>
+      </a>
+
+      <!-- Main Navigation -->
+      <nav class="hidden md:flex items-center gap-1 text-sm font-medium">
+        <button onclick="setView('characters')" id="nav-characters" class="px-3.5 py-1.5 rounded-md text-white bg-surface-raised border border-border transition-colors">
+          Personaggi
+        </button>
+        <button onclick="setView('timeline')" id="nav-timeline" class="px-3.5 py-1.5 rounded-md text-muted hover:text-white transition-colors">
+          Timeline & Notizie
+        </button>
+        <button onclick="setView('factions')" id="nav-factions" class="px-3.5 py-1.5 rounded-md text-muted hover:text-white transition-colors">
+          Fazioni
+        </button>
+        <button onclick="setView('lexicon')" id="nav-lexicon" class="px-3.5 py-1.5 rounded-md text-muted hover:text-white transition-colors">
+          Glossario Lore
+        </button>
+      </nav>
+
+      <!-- Right Controls: Language & Creator & Admin -->
+      <div class="flex items-center gap-3 text-xs">
+        <!-- Language Switcher -->
+        <div class="flex items-center bg-surface border border-border rounded-lg p-0.5 font-semibold">
+          <button id="lang-it" onclick="setLanguage('it')" class="px-2.5 py-1 rounded-md bg-surface-raised text-white transition-all shadow-sm">IT</button>
+          <button id="lang-en" onclick="setLanguage('en')" class="px-2.5 py-1 rounded-md text-muted hover:text-white transition-all">EN</button>
+        </div>
+
+        <!-- Creator Signature (Discreet) -->
+        <a href="https://www.youtube.com/@CatalystOnline" target="_blank" rel="noopener noreferrer" class="hidden lg:flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-border hover:border-border-active text-muted hover:text-white transition-all">
+          <span class="text-slate-400">Curato da</span>
+          <span class="font-semibold text-white">CatalystOnline</span>
+        </a>
+
+        <!-- Admin Access Button -->
+        <button onclick="openAdminGate()" class="flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-border bg-surface hover:border-gold/60 hover:text-gold text-slate-300 transition-all">
+          <svg class="w-3.5 h-3.5 text-gold" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/></svg>
+          <span class="hidden sm:inline">Admin</span>
+        </button>
+      </div>
+
+    </div>
+  </header>
+
+  <!-- ================= MAIN CONTENT ================= -->
+  <main class="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 py-6 sm:py-8">
+
+    <!-- ================= VIEW 1: CHARACTERS (PROFESSIONAL GACHA ROSTER) ================= -->
+    <section id="view-characters" class="space-y-6">
+      
+      <!-- Toolbar: Search & Clean Filter Pills -->
+      <div class="flex flex-col lg:flex-row items-stretch lg:items-center justify-between gap-4 pb-2 border-b border-border">
+        
+        <!-- Factions Filter Pills -->
+        <div id="faction-filter-pills" class="flex items-center gap-1.5 overflow-x-auto pb-1 text-xs scrollbar-none font-medium">
+          <!-- Populated dynamically via JS -->
+        </div>
+
+        <!-- Right: Search Controls -->
+        <div class="flex items-center gap-3">
+          <!-- Live Search Bar -->
+          <div class="relative w-full sm:w-72">
+            <input 
+              type="text" 
+              id="char-search" 
+              oninput="filterRoster()" 
+              placeholder="Cerca nome, fazione o titolo..." 
+              class="w-full pl-9 pr-8 py-2 bg-surface border border-border rounded-lg text-xs text-white placeholder-slate-400 focus:outline-none focus:border-gold transition-colors font-sans"
+            >
+            <svg class="w-4 h-4 text-slate-400 absolute left-2.5 top-1/2 -translate-y-1/2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+            <button id="clear-search-btn" onclick="clearSearch()" class="hidden absolute right-2.5 top-1/2 -translate-y-1/2 text-slate-400 hover:text-white" title="Cancella ricerca">
+              <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+            </button>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Character Cards Grid (Authentic Gacha Aesthetic) -->
+      <div id="roster-grid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
+        <!-- Rendered by JS -->
+      </div>
+
+    </section>
+
+    <!-- ================= VIEW 2: TIMELINE & NEWS ================= -->
+    <section id="view-timeline" class="hidden space-y-6">
+      <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 pb-4 border-b border-border">
+        <div>
+          <h2 class="font-serif text-2xl font-bold text-white">Timeline Ufficiale & Notizie</h2>
+          <p class="text-xs text-muted mt-1">Tutti gli annunci, trailer promozionali e traguardi di Silver Palace in ordine cronologico.</p>
+        </div>
+        <select id="timeline-type-filter" onchange="renderTimeline()" class="px-3 py-1.5 bg-surface border border-border rounded-lg text-xs text-white focus:outline-none focus:border-gold">
+          <option value="ALL">Tutti i Contenuti</option>
+          <option value="Trailer Ufficiale">Trailer & Video</option>
+          <option value="Drip Marketing">Drip Marketing</option>
+          <option value="Annuncio Ufficiale">Annunci & Traguardi</option>
+          <option value="Post Social / X">Post Social</option>
+        </select>
+      </div>
+
+      <div id="timeline-list" class="space-y-4 max-w-4xl">
+        <!-- Rendered by JS -->
+      </div>
+    </section>
+
+    <!-- ================= VIEW 3: FACTIONS DIRECTORY ================= -->
+    <section id="view-factions" class="hidden space-y-6">
+      <div class="flex items-center justify-between pb-4 border-b border-border">
+        <div>
+          <h2 class="font-serif text-2xl font-bold text-white">Le Fazioni di Silvernia</h2>
+          <p class="text-xs text-muted mt-1">Organizzazioni, casate nobiliari e forze dell'ordine del mondo di gioco.</p>
+        </div>
+        <button onclick="openAdminGate(); setAdminTab('faction')" class="px-3 py-1.5 rounded-lg border border-border hover:border-gold hover:text-gold text-xs transition-colors">
+          + Aggiungi Fazione
+        </button>
+      </div>
+
+      <div id="factions-grid" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <!-- Rendered by JS -->
+      </div>
+    </section>
+
+    <!-- ================= VIEW 4: LEXICON (LORE DICTIONARY) ================= -->
+    <section id="view-lexicon" class="hidden space-y-6">
+      <div class="flex items-center justify-between pb-4 border-b border-border">
+        <div>
+          <h2 class="font-serif text-2xl font-bold text-white">Glossario Lore</h2>
+          <p class="text-xs text-muted mt-1">Termini chiave, tecnologie a vapore e concetti filosofici di Silver Palace.</p>
+        </div>
+        <button onclick="openAdminGate(); setAdminTab('lexicon')" class="px-3 py-1.5 rounded-lg border border-border hover:border-gold hover:text-gold text-xs transition-colors">
+          + Aggiungi Termine
+        </button>
+      </div>
+
+      <div id="lexicon-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+        <!-- Rendered by JS -->
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ================= CHARACTER DETAIL DRAWER / OVERLAY ================= -->
+  <div id="character-drawer" class="fixed inset-0 z-50 flex justify-end bg-black/75 backdrop-blur-sm opacity-0 pointer-events-none" onclick="handleDrawerBackdropClick(event)">
+    <div id="character-drawer-panel" class="w-full max-w-3xl bg-surface border-l border-border h-full overflow-y-auto flex flex-col shadow-2xl transform translate-x-full" onclick="event.stopPropagation()">
+      
+      <!-- Drawer Top Bar -->
+      <div class="px-6 py-3.5 border-b border-border bg-canvas/90 backdrop-blur-md flex items-center justify-between sticky top-0 z-20">
+        <div class="flex items-center gap-2.5">
+          <span class="text-xs text-slate-400 font-sans">Archivio / <span id="drawer-breadcrumb-name" class="text-white font-medium">Nome</span></span>
+          <span class="text-slate-600">•</span>
+          <span id="drawer-faction-badge" class="px-2 py-0.5 rounded bg-surface border border-gold/40 text-[11px] font-semibold text-gold uppercase tracking-wide">FACTION</span>
+        </div>
+        <button onclick="closeCharacterDrawer()" class="flex items-center gap-1.5 px-2.5 py-1 rounded-md text-xs text-slate-400 hover:text-white hover:bg-surface-raised border border-border/60 transition-colors" title="Chiudi dossier">
+          <span>Chiudi</span>
+          <kbd class="px-1.5 py-0.5 rounded bg-canvas border border-border text-[10px] text-slate-400">Esc</kbd>
+        </button>
+      </div>
+
+      <!-- Drawer Hero Profile -->
+      <div class="p-6 border-b border-border bg-gradient-to-b from-surface-raised/90 via-surface to-surface flex flex-col sm:flex-row gap-6 items-start">
+        <!-- Portrait -->
+        <div class="w-36 h-52 sm:w-44 sm:h-60 rounded-xl overflow-hidden border border-border/80 flex-shrink-0 bg-canvas relative shadow-xl group cursor-pointer" onclick="openLightbox(activeChar ? activeChar.drip_img : '')">
+          <img id="drawer-portrait" src="" alt="Portrait" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+          <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 flex items-center justify-center transition-opacity text-xs text-white gap-1 font-medium">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v6m3-3H7"/></svg>
+            Ingrandisci
+          </div>
+        </div>
+
+        <!-- Identity -->
+        <div class="space-y-3 flex-1 min-w-0">
+          <div>
+            <h2 id="drawer-name" class="font-serif text-3xl sm:text-4xl font-bold text-white tracking-tight">Nome</h2>
+            <p id="drawer-title" class="font-serif italic text-gold text-lg mt-0.5">Titolo Personaggio</p>
+          </div>
+          
+          <div class="p-3.5 rounded-xl bg-canvas/80 border border-border/80 text-sm text-slate-200 italic font-serif leading-relaxed relative">
+            <span class="text-gold font-serif text-2xl absolute -top-1.5 left-2 select-none opacity-40">“</span>
+            <p id="drawer-quote" class="pl-3">«Citazione»</p>
+          </div>
+
+          <!-- Diegetic Stat Badges -->
+          <div class="flex flex-wrap gap-2 pt-1 text-xs">
+            <div class="px-3 py-1 rounded-lg bg-surface-raised border border-border flex items-center gap-1.5">
+              <span class="text-slate-400 font-medium">Ruolo / Vocazione:</span>
+              <strong id="drawer-role" class="text-gold font-semibold">Cameriera</strong>
+            </div>
+            <div class="px-3 py-1 rounded-lg bg-surface-raised border border-border flex items-center gap-1.5">
+              <span class="text-slate-400 font-medium">Fazione Vault:</span>
+              <strong id="drawer-faction" class="text-white font-semibold">MISS</strong>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tab Navigation -->
+      <div class="flex items-center border-b border-border bg-canvas px-6 text-xs font-medium">
+        <button onclick="setDrawerTab('bio')" id="d-tab-bio" class="px-4 py-3 border-b-2 border-gold text-white font-semibold transition-colors">
+          Panoramica & Lore
+        </button>
+        <button onclick="setDrawerTab('hidden')" id="d-tab-hidden" class="px-4 py-3 border-b-2 border-transparent text-muted hover:text-white transition-colors">
+          Pagine Segrete (Hidden Lore)
+        </button>
+        <button onclick="setDrawerTab('gallery')" id="d-tab-gallery" class="px-4 py-3 border-b-2 border-transparent text-muted hover:text-white transition-colors">
+          Galleria Art
+        </button>
+        <button onclick="setDrawerTab('media')" id="d-tab-media" class="px-4 py-3 border-b-2 border-transparent text-muted hover:text-white transition-colors">
+          Trailer Ufficiale
+        </button>
+        <button onclick="setDrawerTab('notes')" id="d-tab-notes" class="px-4 py-3 border-b-2 border-transparent text-gold hover:text-white transition-colors">
+          Note CatalystOnline
+        </button>
+      </div>
+
+      <!-- Tab Content Area -->
+      <div class="p-6 space-y-6 flex-1">
+        
+        <!-- TAB 1: BIO & BILINGUAL LORE -->
+        <div id="drawer-tab-content-bio" class="space-y-4">
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <!-- Italian Translation -->
+            <div class="p-5 rounded-xl bg-surface-raised border border-border/80 space-y-2.5">
+              <div class="flex items-center justify-between text-xs text-gold font-semibold border-b border-border pb-2">
+                <span>🇮🇹 Traduzione Italiana</span>
+                <span class="text-[11px] text-slate-400 font-normal">A cura di CatalystOnline</span>
+              </div>
+              <p id="drawer-bio-it" class="text-sm text-slate-200 leading-relaxed font-sans">...</p>
+            </div>
+
+            <!-- English Lore -->
+            <div class="p-5 rounded-xl bg-surface-raised border border-border/80 space-y-2.5">
+              <div class="flex items-center justify-between text-xs text-slate-300 font-semibold border-b border-border pb-2">
+                <span>🇬🇧 Testo Ufficiale Inglese</span>
+                <span class="text-[11px] text-slate-400 font-normal">Elementa Games</span>
+              </div>
+              <p id="drawer-bio-en" class="text-sm text-slate-300 leading-relaxed font-sans">...</p>
+            </div>
+          </div>
+
+          <div class="flex flex-wrap items-center gap-2 pt-2 text-xs text-slate-400">
+            <span class="font-medium">Tag Lore:</span>
+            <div id="drawer-tags" class="flex flex-wrap gap-1.5"></div>
+          </div>
+        </div>
+
+        <!-- TAB 2: HIDDEN PAGES LORE -->
+        <div id="drawer-tab-content-hidden" class="hidden space-y-4">
+          <div class="p-4 rounded-xl bg-surface-raised border border-gold/40 space-y-3">
+            <div class="flex items-center justify-between border-b border-border pb-2">
+              <span id="drawer-hidden-title" class="font-serif font-bold text-gold text-base sm:text-lg">Dossier Segreto</span>
+              <span class="px-2 py-0.5 rounded bg-canvas border border-border text-[11px] text-muted">Silver Palace Confidential</span>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <!-- IT -->
+              <div class="p-3.5 rounded-lg bg-canvas/80 border border-border space-y-1.5">
+                <span class="text-[10px] text-gold font-semibold uppercase tracking-wider">Traduzione Italiana (Catalyst)</span>
+                <p id="drawer-hidden-story-it" class="text-sm text-slate-200 leading-relaxed font-sans whitespace-pre-line"></p>
+              </div>
+              <!-- EN -->
+              <div class="p-3.5 rounded-lg bg-canvas/40 border border-border space-y-1.5">
+                <span class="text-[10px] text-muted font-semibold uppercase tracking-wider">Testo Originale Elementa (EN)</span>
+                <p id="drawer-hidden-story-en" class="text-sm text-slate-400 leading-relaxed font-sans whitespace-pre-line"></p>
+              </div>
+            </div>
+
+            <div id="drawer-hidden-extra-link" class="pt-2 text-xs flex items-center justify-between border-t border-border/60"></div>
+          </div>
+        </div>
+
+        <!-- TAB 3: GALLERY -->
+        <div id="drawer-tab-content-gallery" class="hidden space-y-4">
+          <p class="text-xs text-muted">Clicca su un'immagine per aprirla a schermo intero ad alta risoluzione.</p>
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-4" id="drawer-gallery-grid"></div>
+        </div>
+
+        <!-- TAB 3: MEDIA (SMART YOUTUBE PLAYER) -->
+        <div id="drawer-tab-content-media" class="hidden space-y-4">
+          <div class="p-4 rounded-lg bg-canvas border border-border space-y-3">
+            <div class="flex items-center justify-between text-xs pb-2 border-b border-border">
+              <span class="font-semibold text-white">Filmato Ufficiale del Personaggio</span>
+              <a id="drawer-media-external-link" href="#" target="_blank" class="text-gold hover:underline flex items-center gap-1">
+                <span>Apri su YouTube</span>
+                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
+              </a>
+            </div>
+
+            <!-- Smart Click-to-Play Video Box -->
+            <div id="drawer-video-container" class="aspect-video w-full rounded-lg overflow-hidden bg-black border border-border relative">
+              <!-- Rendered via JS -->
+            </div>
+
+            <h4 id="drawer-media-title" class="font-serif text-lg font-bold text-white pt-1">Titolo Video</h4>
+          </div>
+        </div>
+
+        <!-- TAB 4: CREATOR NOTES -->
+        <div id="drawer-tab-content-notes" class="hidden space-y-4">
+          <div class="p-5 rounded-lg border border-gold/40 bg-surface-raised space-y-3">
+            <div class="flex items-center gap-3">
+              <div class="w-9 h-9 rounded-full bg-gold/10 border border-gold/40 flex items-center justify-center font-serif font-bold text-gold">
+                C
+              </div>
+              <div>
+                <h4 class="font-serif font-bold text-white">L'Opinione di CatalystOnline</h4>
+                <p class="text-xs text-gold">Analisi, kit e speculazioni di lore</p>
+              </div>
+            </div>
+
+            <p id="drawer-creator-notes" class="text-sm text-slate-200 leading-relaxed font-sans italic border-l-2 border-gold pl-3">
+              ...
+            </p>
+
+            <div class="pt-3 border-t border-border flex items-center justify-between text-xs text-muted">
+              <span>Unisciti alla discussione:</span>
+              <a href="https://discord.gg/KAughr4AHc" target="_blank" class="text-gold hover:underline">Server Discord di Catalyst →</a>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ================= ADMIN GATE MODAL (PASSWORD: catascemo) ================= -->
+  <div id="admin-gate" class="fixed inset-0 z-50 hidden bg-black/80 backdrop-blur-md flex items-center justify-center p-4">
+    <div class="w-full max-w-sm bg-surface border border-border rounded-xl p-6 space-y-5 shadow-2xl">
+      <div class="text-center space-y-1">
+        <h3 class="font-serif text-xl font-bold text-white">Accesso Area Scrittura</h3>
+        <p class="text-xs text-muted">Gestione contenuti e database per CatalystOnline</p>
+      </div>
+
+      <form onsubmit="handleAdminLogin(event)" class="space-y-4 text-xs">
+        <div>
+          <label class="block text-slate-400 mb-1 font-medium">Password di Sicurezza:</label>
+          <input 
+            type="password" 
+            id="gate-password" 
+            placeholder="Inserisci la password..." 
+            class="w-full px-3 py-2 bg-canvas border border-border rounded-lg text-white focus:outline-none focus:border-gold transition-colors"
+          >
+          <p id="gate-error" class="hidden text-rose-400 text-[11px] mt-1.5">Password errata. Riprova.</p>
+        </div>
+
+        <div class="flex items-center gap-2 pt-1">
+          <button type="button" onclick="closeAdminGate()" class="flex-1 py-2 rounded-lg border border-border bg-surface-raised text-muted hover:text-white transition-colors">
+            Annulla
+          </button>
+          <button type="submit" class="flex-1 py-2 rounded-lg bg-gold text-canvas font-semibold hover:bg-gold/90 transition-colors">
+            Accedi
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- ================= UNLOCKED ADMIN DASHBOARD ================= -->
+  <div id="admin-dashboard" class="fixed inset-0 z-50 hidden bg-canvas overflow-y-auto flex flex-col">
+    <!-- Top Header -->
+    <div class="h-16 border-b border-border bg-surface px-6 flex items-center justify-between sticky top-0 z-20">
+      <div class="flex items-center gap-3">
+        <span class="font-serif text-lg font-bold text-white">Pannello di Gestione Contenuti</span>
+        <span class="text-xs px-2 py-0.5 rounded bg-emerald-950/60 text-emerald-400 border border-emerald-500/30 font-medium">Autenticato</span>
+      </div>
+      <div class="flex items-center gap-3 text-xs">
+        <button onclick="logoutAdmin()" class="text-rose-400 hover:underline">Esci</button>
+        <button onclick="closeAdminDashboard()" class="px-3.5 py-1.5 rounded-lg bg-gold text-canvas font-semibold hover:bg-gold/90 transition-colors">
+          Torna al Sito
+        </button>
+      </div>
+    </div>
+
+    <!-- Body -->
+    <div class="max-w-6xl w-full mx-auto p-6 space-y-6 flex-1 text-xs">
+      
+      <!-- Vault Sync Status Box (Exclusive to Admin) -->
+      <div id="admin-vault-status-box" class="p-4 rounded-xl border border-border bg-surface flex flex-col md:flex-row md:items-center justify-between gap-4">
+        <div class="flex items-start gap-3">
+          <div id="admin-vault-icon" class="w-8 h-8 rounded-lg bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 flex items-center justify-center shrink-0">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+          </div>
+          <div>
+            <div class="flex items-center gap-2">
+              <span class="font-serif font-bold text-sm text-white">Sincronizzazione Obsidian Vault</span>
+              <span id="admin-vault-badge" class="px-2 py-0.5 rounded text-[10px] font-mono bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">Allineato</span>
+            </div>
+            <p id="admin-vault-msg" class="text-slate-400 text-xs mt-0.5">Tutti i 19 personaggi, le 7 fazioni e i 21 post del repository ufficiale sono sincronizzati al 100%.</p>
+          </div>
+        </div>
+        <div id="admin-vault-actions" class="hidden shrink-0">
+          <button onclick="copyAlertPrompt()" id="admin-btn-copy-prompt" class="px-3.5 py-1.5 rounded-lg bg-gold text-canvas font-semibold hover:bg-gold/90 transition-all flex items-center gap-1.5 text-xs shadow">
+            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/></svg>
+            <span id="admin-btn-copy-text">Copia Richiesta per Antigravity</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Vault Unmapped Details (Only shown if alerts exist) -->
+      <div id="admin-vault-alerts-detail" class="hidden p-4 rounded-xl border border-amber-500/30 bg-amber-500/5 space-y-3">
+        <div class="flex items-center justify-between border-b border-amber-500/20 pb-2 text-amber-400 font-semibold text-xs">
+          <span>Dettaglio file e sezioni da mappare graficamente:</span>
+          <span class="text-[10px] text-slate-400 font-mono">Bocelli/SPVault</span>
+        </div>
+        <div id="admin-vault-alerts-list" class="space-y-2 max-h-48 overflow-y-auto pr-1 text-xs"></div>
+      </div>
+
+      <!-- Content Tabs -->
+      <div class="flex items-center gap-2 border-b border-border pb-3 font-medium">
+        <button onclick="setAdminTab('character')" id="ad-tab-char" class="px-3.5 py-2 rounded-lg bg-gold text-canvas font-semibold transition-colors">
+          + Nuovo Personaggio
+        </button>
+        <button onclick="setAdminTab('dispatch')" id="ad-tab-disp" class="px-3.5 py-2 rounded-lg border border-border bg-surface text-slate-300 hover:text-white transition-colors">
+          + Post / Video / Annuncio
+        </button>
+        <button onclick="setAdminTab('faction')" id="ad-tab-fac" class="px-3.5 py-2 rounded-lg border border-border bg-surface text-slate-300 hover:text-white transition-colors">
+          + Nuova Fazione
+        </button>
+        <button onclick="setAdminTab('lexicon')" id="ad-tab-lex" class="px-3.5 py-2 rounded-lg border border-border bg-surface text-slate-300 hover:text-white transition-colors">
+          + Termine Lore
+        </button>
+      </div>
+
+      <!-- FORM 1: PERSONAGGIO -->
+      <div id="ad-form-char" class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+        <div class="lg:col-span-7 bg-surface p-6 rounded-xl border border-border space-y-4">
+          <form oninput="updateAdminCharPreview()" onsubmit="saveCharacter(event)" class="space-y-4">
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div>
+                <label class="block text-slate-400 mb-1 font-medium">Nome Personaggio *</label>
+                <input type="text" id="fc-name" value="Lorin" required class="w-full px-3 py-2 bg-canvas border border-border rounded-lg text-white focus:outline-none focus:border-gold">
+              </div>
+              <div>
+                <label class="block text-slate-400 mb-1 font-medium">Titolo Ufficiale *</label>
+                <input type="text" id="fc-title" value="Tiratore Scelto di Silvernia" required class="w-full px-3 py-2 bg-canvas border border-border rounded-lg text-white focus:outline-none focus:border-gold">
+              </div>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+              <div>
+                <label class="block text-slate-400 mb-1 font-medium">Fazione *</label>
+                <select id="fc-faction" onchange="checkCustomFaction(this)" class="w-full px-3 py-2 bg-canvas border border-border rounded-lg text-white focus:outline-none focus:border-gold"></select>
+                <input type="text" id="fc-custom-faction" placeholder="Nome nuova fazione..." class="hidden mt-2 w-full px-3 py-1.5 bg-canvas border border-gold rounded text-white text-xs">
+              </div>
+              <div>
+                <label class="block text-slate-400 mb-1 font-medium">Rarità *</label>
+                <select id="fc-rarity" class="w-full px-3 py-2 bg-canvas border border-border rounded-lg text-white focus:outline-none focus:border-gold">
+                  <option value="5">5 Stelle (Oro)</option>
+                  <option value="4">4 Stelle (Viola)</option>
+                </select>
+              </div>
+              <div>
+                <label class="block text-slate-400 mb-1 font-medium">Elemento / Risonanza *</label>
+                <select id="fc-element" class="w-full px-3 py-2 bg-canvas border border-border rounded-lg text-white focus:outline-none focus:border-gold">
+                  <option value="Silverium">Silverium Resonance</option>
+                  <option value="Termico">Termico</option>
+                  <option value="Elettro">Elettro-Cinetico</option>
+                  <option value="Crio">Crio-Distorsione</option>
+                </select>
+              </div>
+            </div>
+
+            <div>
+              <label class="block text-slate-400 mb-1 font-medium">Citazione</label>
+              <input type="text" id="fc-quote" value="La traiettoria di un proiettile non mente mai sul bersaglio." class="w-full px-3 py-2 bg-canvas border border-border rounded-lg text-white focus:outline-none focus:border-gold">
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div>
+                <label class="block text-gold mb-1 font-medium">Traduzione Italiana (CatalystOnline) *</label>
+                <textarea id="fc-bio-it" rows="4" required class="w-full p-2.5 bg-canvas border border-border rounded-lg text-white leading-relaxed focus:outline-none focus:border-gold">Un tiratore infallibile che si muove tra i tetti di Silvernia. Nonostante la sua apparente freddezza, ha sempre coperto le spalle all'Agenzia nelle ore più buie.</textarea>
+              </div>
+              <div>
+                <label class="block text-slate-400 mb-1 font-medium">Testo Originale Inglese</label>
+                <textarea id="fc-bio-en" rows="4" class="w-full p-2.5 bg-canvas border border-border rounded-lg text-slate-300 leading-relaxed focus:outline-none focus:border-gold">A precise marksman navigating the high rooftops of Silvernia. Beneath his detached gaze lies a steadfast protector of the Detective Agency.</textarea>
+              </div>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div>
+                <label class="block text-slate-400 mb-1 font-medium">Immagine Drip Marketing (URL)</label>
+                <input type="text" id="fc-img" value="https://silveriumdb.cc/_multimedia/personaggi/drip-marketing/lorin-drip-marketing.jpg" class="w-full px-3 py-2 bg-canvas border border-border rounded-lg text-white focus:outline-none focus:border-gold">
+              </div>
+              <div>
+                <label class="block text-slate-400 mb-1 font-medium">Link Trailer YouTube</label>
+                <input type="text" id="fc-trailer" value="https://www.youtube.com/watch?v=ZcDBkBs7J6g" class="w-full px-3 py-2 bg-canvas border border-border rounded-lg text-white focus:outline-none focus:border-gold">
+              </div>
+            </div>
+
+            <div>
+              <label class="block text-gold mb-1 font-medium">Note e Consigli del Creator</label>
+              <input type="text" id="fc-notes" value="Ottimo cecchino a bersaglio singolo con meccaniche di ricarica rapida." class="w-full px-3 py-2 bg-canvas border border-border rounded-lg text-white focus:outline-none focus:border-gold">
+            </div>
+
+            <div class="pt-3 border-t border-border flex justify-end">
+              <button type="submit" class="px-5 py-2 rounded-lg bg-gold text-canvas font-semibold hover:bg-gold/90 transition-colors shadow">
+                Salva Personaggio
+              </button>
+            </div>
+          </form>
+        </div>
+
+        <!-- Preview -->
+        <div class="lg:col-span-5 space-y-3">
+          <span class="text-xs text-muted font-medium block">Anteprima Card Roster:</span>
+          <div class="w-48 bg-surface rounded-xl overflow-hidden border border-border p-2 space-y-2 shadow-lg">
+            <div class="aspect-[3/4] w-full rounded-lg overflow-hidden bg-canvas relative">
+              <img id="prev-card-img" src="https://silveriumdb.cc/_multimedia/personaggi/drip-marketing/lorin-drip-marketing.jpg" class="w-full h-full object-cover">
+            </div>
+            <div>
+              <h4 id="prev-card-name" class="font-serif font-bold text-sm text-white">Lorin</h4>
+              <p id="prev-card-title" class="text-[11px] text-muted truncate">Tiratore Scelto di Silvernia</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- FORM 2: DISPACCIO / TIMELINE -->
+      <div id="ad-form-disp" class="hidden max-w-2xl bg-surface p-6 rounded-xl border border-border space-y-4">
+        <form onsubmit="saveDispatch(event)" class="space-y-4">
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div>
+              <label class="block text-slate-400 mb-1 font-medium">Titolo Notizia / Video *</label>
+              <input type="text" id="fd-title" placeholder="Es. Trailer Speciale Gamescom 2026" required class="w-full px-3 py-2 bg-canvas border border-border rounded-lg text-white focus:outline-none focus:border-gold">
+            </div>
+            <div>
+              <label class="block text-slate-400 mb-1 font-medium">Tipologia *</label>
+              <select id="fd-type" class="w-full px-3 py-2 bg-canvas border border-border rounded-lg text-white focus:outline-none focus:border-gold">
+                <option value="Trailer Ufficiale">Trailer Ufficiale</option>
+                <option value="Drip Marketing">Drip Marketing</option>
+                <option value="Annuncio Ufficiale">Annuncio Ufficiale</option>
+                <option value="Post Social / X">Post Social / X</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div>
+              <label class="block text-slate-400 mb-1 font-medium">Data Pubblicazione *</label>
+              <input type="text" id="fd-date" value="Novembre 2026" required class="w-full px-3 py-2 bg-canvas border border-border rounded-lg text-white focus:outline-none focus:border-gold">
+            </div>
+            <div>
+              <label class="block text-slate-400 mb-1 font-medium">Link Ufficiale (YouTube / X)</label>
+              <input type="text" id="fd-link" value="https://www.youtube.com/@SilverPalace-Official" class="w-full px-3 py-2 bg-canvas border border-border rounded-lg text-white focus:outline-none focus:border-gold">
+            </div>
+          </div>
+
+          <div>
+            <label class="block text-gold mb-1 font-medium">Descrizione & Traduzione Italiana *</label>
+            <textarea id="fd-desc-it" rows="4" required class="w-full p-2.5 bg-canvas border border-border rounded-lg text-white leading-relaxed focus:outline-none focus:border-gold" placeholder="Inserisci la descrizione o la traduzione del post..."></textarea>
+          </div>
+
+          <div class="pt-3 border-t border-border flex justify-end">
+            <button type="submit" class="px-5 py-2 rounded-lg bg-gold text-canvas font-semibold hover:bg-gold/90 transition-colors shadow">
+              Pubblica Notizia
+            </button>
+          </div>
+        </form>
+      </div>
+
+      <!-- FORM 3: FAZIONE -->
+      <div id="ad-form-fac" class="hidden max-w-2xl bg-surface p-6 rounded-xl border border-border space-y-4">
+        <form onsubmit="saveFaction(event)" class="space-y-4">
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div>
+              <label class="block text-slate-400 mb-1 font-medium">Nome Fazione *</label>
+              <input type="text" id="ff-name" placeholder="Es. High Peers" required class="w-full px-3 py-2 bg-canvas border border-border rounded-lg text-white focus:outline-none focus:border-gold">
+            </div>
+            <div>
+              <label class="block text-slate-400 mb-1 font-medium">Leader / Figure Chiave</label>
+              <input type="text" id="ff-leader" placeholder="Es. Arciduca di Silvernia" class="w-full px-3 py-2 bg-canvas border border-border rounded-lg text-white focus:outline-none focus:border-gold">
+            </div>
+          </div>
+          <div>
+            <label class="block text-slate-400 mb-1 font-medium">Descrizione *</label>
+            <textarea id="ff-desc" rows="4" required class="w-full p-2.5 bg-canvas border border-border rounded-lg text-white leading-relaxed focus:outline-none focus:border-gold" placeholder="Descrivi il ruolo e la storia della fazione..."></textarea>
+          </div>
+          <div class="pt-3 border-t border-border flex justify-end">
+            <button type="submit" class="px-5 py-2 rounded-lg bg-gold text-canvas font-semibold hover:bg-gold/90 transition-colors shadow">
+              Salva Fazione
+            </button>
+          </div>
+        </form>
+      </div>
+
+      <!-- FORM 4: LEXICON -->
+      <div id="ad-form-lex" class="hidden max-w-2xl bg-surface p-6 rounded-xl border border-border space-y-4">
+        <form onsubmit="saveLexicon(event)" class="space-y-4">
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div>
+              <label class="block text-slate-400 mb-1 font-medium">Termine Lore *</label>
+              <input type="text" id="fl-term" placeholder="Es. Incinerator Abyss" required class="w-full px-3 py-2 bg-canvas border border-border rounded-lg text-white focus:outline-none focus:border-gold">
+            </div>
+            <div>
+              <label class="block text-slate-400 mb-1 font-medium">Categoria *</label>
+              <input type="text" id="fl-cat" placeholder="Es. Distretto / Tecnologia" required class="w-full px-3 py-2 bg-canvas border border-border rounded-lg text-white focus:outline-none focus:border-gold">
+            </div>
+          </div>
+          <div>
+            <label class="block text-slate-400 mb-1 font-medium">Definizione *</label>
+            <textarea id="fl-def" rows="4" required class="w-full p-2.5 bg-canvas border border-border rounded-lg text-white leading-relaxed focus:outline-none focus:border-gold" placeholder="Spiega il termine e il suo significato nel lore..."></textarea>
+          </div>
+          <div class="pt-3 border-t border-border flex justify-end">
+            <button type="submit" class="px-5 py-2 rounded-lg bg-gold text-canvas font-semibold hover:bg-gold/90 transition-colors shadow">
+              Salva Termine
+            </button>
+          </div>
+        </form>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ================= LIGHTBOX MODAL ================= -->
+  <div id="lightbox" class="fixed inset-0 z-50 hidden bg-black/95 flex items-center justify-center p-4 cursor-pointer" onclick="this.classList.add('hidden')">
+    <img id="lightbox-img" src="" class="max-w-full max-h-[90vh] object-contain rounded-lg shadow-2xl">
+  </div>
+
+  <!-- ================= APPLICATION SCRIPT ================= -->
+  <script>
+    const DEFAULT_CASES = [
+  {
+    "id": "case_alf",
+    "name": "Alf",
+    "faction": "MISS",
+    "role": "Cameriera",
+    "title_it": "Alf (Cameriera)",
+    "title_en": "Alf (Maid)",
+    "quote_it": "Avete molti pensieri per la testa, Padrone? Forse posso occuparmene io. Ci tengo davvero tanto ad aiutarvi.",
+    "quote_en": "Got a lot on your mind, Master? Perhaps I can do some of it for you. Because I really really want to help.",
+    "bio_it": "Alf (Cameriera) \n\n—— Una storia tutta vostra ——\n\n-- \"Avete molti pensieri per la testa, Padrone? Forse posso occuparmene io. Ci tengo davvero tanto ad aiutarvi.\" -- Una cameriera piuttosto goffa che segue sempre il Detective. Purtroppo, è del tutto priva di buon senso, non sa cogliere le situazioni, è negata per le faccende domestiche e ha la memoria di un pesciolino rosso. È il punto di partenza di una storia ancora tutta da svelare. \"Chi sono, in realtà?\", si chiede spesso davanti allo specchio. Eppure, il suo riflesso non le ha ancora dato una risposta.",
+    "bio_en": "Alf (Maid)\n\n—— A Story Truly Yours ——\n\n-- \"Got a lot on your mind, Master? Perhaps I can do some of it for you. Because I really really want to help.\" -- A somewhat clumsy maid who's always tagging along with the Detective. Unfortunately, she lacks any common sense, struggles to read the room, has terrible housekeeping skills, and also has the memory of a goldfish. She stands as the start to a story that's yet to unfold. \"Who am I, really?\", she often asks herself in the mirror. Yet her reflection has yet to yield her an answer. ALF",
+    "has_hidden": true,
+    "hidden_title_it": "Il mistero della curiosità",
+    "hidden_title_en": "The Curiosity Mystery",
+    "hidden_bio_it": "Il mistero della curiosità\n\nPerché dopo la pioggia appare l’arcobaleno? Perché il cielo è azzurro? Perché il focolare scoppietta?\nI gattini circondano la fanciulla e miagolano. Hanno fame, oppure considerano Alf una creatura della loro stessa specie?\nIl sole splende e la fanciulla è indaffarata. La luce solare illumina ogni sorta di novità che lei desidera scoprire e imparare insieme al suo maestro.",
+    "hidden_bio_en": "The Curiosity Mystery\n\nWhy is there a rainbow after rain? Why is the sky blue? Why does the hearth roar? The kittens surround the maid and mew. Are they hungry, or are they treating Alf as their own kind? The sun is shining, and the maid is busy. The sun shines upon all sorts of novelties that the maid wants to experience and learn with her master.",
+    "hidden_story_it": "Il mistero della curiosità\n\nPerché dopo la pioggia appare l’arcobaleno? Perché il cielo è azzurro? Perché il focolare scoppietta?\nI gattini circondano la fanciulla e miagolano. Hanno fame, oppure considerano Alf una creatura della loro stessa specie?\nIl sole splende e la fanciulla è indaffarata. La luce solare illumina ogni sorta di novità che lei desidera scoprire e imparare insieme al suo maestro.",
+    "hidden_story_en": "The Curiosity Mystery\n\nWhy is there a rainbow after rain? Why is the sky blue? Why does the hearth roar? The kittens surround the maid and mew. Are they hungry, or are they treating Alf as their own kind? The sun is shining, and the maid is busy. The sun shines upon all sorts of novelties that the maid wants to experience and learn with her master.",
+    "drip_img": "_multimedia/Personaggi/Drip Marketing/Alf Drip Marketing.jpg",
+    "profile_img": "_multimedia/Personaggi/Profile Art/Alf Profile Art.jpg",
+    "trailer_url": "https://www.youtube.com/watch?v=_jgw-zHYyTw",
+    "x_url": "https://x.com/SilverPalace_EN/status/2116734476298674523",
+    "x_post_url": "https://x.com/SilverPalace_EN/status/2116734476298674523",
+    "tags": [
+      "alf",
+      "miss",
+      "maid"
+    ]
+  },
+  {
+    "id": "case_argos",
+    "name": "Argos",
+    "faction": "MISS",
+    "role": "Barista",
+    "title_it": "Argos (Barista)",
+    "title_en": "Argos (Bartender)",
+    "quote_it": "Non tutti sono come te, mio ​​caro avventore. Il mio è più che altro un ruolo di supporto, sai? Un po' come un liquore forte che ha bisogno di una spruzzata d'acqua. Persino le menti più brillanti necessitano di un pizzico di astuzia da strada.",
+    "quote_en": "Not everyone's like you, my dear patron. I'm more of a supporting role, you know. Like strong liquor needs a splash of water. Even big brains need a bit of street smarts.",
+    "bio_it": "Argos (Barista)\n\nL'Occhio di Argos\n\n-- \"Non tutti sono come te, mio ​​caro avventore. Il mio è più che altro un ruolo di supporto, sai? Un po' come un liquore forte che ha bisogno di una spruzzata d'acqua. Persino le menti più brillanti necessitano di un pizzico di astuzia da strada.\"\n\n-- Un barista dall'eloquio raffinato, nonché misterioso osservatore celato nell'ombra. Lo si vede spesso far roteare il suo shaker, con il bastone-fucile sempre a portata di mano: il primo serve ad accogliere gli amici, il secondo a gestire eventuali guai. Presta ascolto a chiunque, dai nobili decaduti a coloro che si ritrovano travolti dai mutamenti di una società in pieno tumulto. Ed è così che egli coglie tutto ciò che accade a Silvernia, ogni evento, grande o piccolo che sia.",
+    "bio_en": "Argos (Bartender)\n\nThe Eye of Argos\n\n-- \"Not everyone's like you, my dear patron. I'm more of a supporting role, you know. Like strong liquor needs a splash of water. Even big brains need a bit of street smarts.\" -- An eloquent gent of a bartender, and a mysterious watcher of the shadows. Usually seen twirling his cocktail shaker with his cane gun close at hand; the former is a tool for hosting friends, and the latter is a weapon for handling trouble. He lends an ear to all, from fallen nobles to those caught in the currents of a society in upheaval. And so, he sees all that transpires in Silvernia, all events both big and small.",
+    "has_hidden": true,
+    "hidden_title_it": "Il mistero della doppiezza",
+    "hidden_title_en": "The Duplicity Mystery",
+    "hidden_bio_it": "Il mistero della doppiezza\n\nUn bravo barista stringe amicizie, o è sulla buona strada per farlo.\nUn cocktail speciale, con i suoi 30 millilitri di alcol, è capace di sciogliere in fretta qualsiasi lingua; poi, non resta che stare a sentire: che si tratti di un miscuglio di verità e sciocchezze, o di un groviglio di inganni e onestà.\nIl barista non è un esperto nel distinguere le une dagli altri, ma conosce qualcuno che lo è. L'enigma è già sotto gli occhi, e Argos attende chi sarà in grado di risolverlo.",
+    "hidden_bio_en": "The Duplicity Mystery\n\nA good bartender is either making friends, or on his way to making them. A special with 30 millilitres of alcohol can quickly loosen any tongue, then it's just a matter of listening afterwards, may it be a potpourri of truths and nonsense, or a jumble of deceit and honesty. The bartender is no expert at telling them apart, but he knows someone who is. The puzzle is already in sight, and Argos is waiting for the one who can solve it.",
+    "hidden_story_it": "Il mistero della doppiezza\n\nUn bravo barista stringe amicizie, o è sulla buona strada per farlo.\nUn cocktail speciale, con i suoi 30 millilitri di alcol, è capace di sciogliere in fretta qualsiasi lingua; poi, non resta che stare a sentire: che si tratti di un miscuglio di verità e sciocchezze, o di un groviglio di inganni e onestà.\nIl barista non è un esperto nel distinguere le une dagli altri, ma conosce qualcuno che lo è. L'enigma è già sotto gli occhi, e Argos attende chi sarà in grado di risolverlo.",
+    "hidden_story_en": "The Duplicity Mystery\n\nA good bartender is either making friends, or on his way to making them. A special with 30 millilitres of alcohol can quickly loosen any tongue, then it's just a matter of listening afterwards, may it be a potpourri of truths and nonsense, or a jumble of deceit and honesty. The bartender is no expert at telling them apart, but he knows someone who is. The puzzle is already in sight, and Argos is waiting for the one who can solve it.",
+    "drip_img": "_multimedia/Personaggi/Drip Marketing/Argos Drip Marketing.jpg",
+    "profile_img": "_multimedia/Personaggi/Profile Art/Argos Profile Art.jpg",
+    "trailer_url": "https://www.youtube.com/watch?v=mmvOmNaBZAc",
+    "x_url": "https://x.com/SilverPalace_EN/status/2117459251991888125",
+    "x_post_url": "https://x.com/SilverPalace_EN/status/2117459251991888125",
+    "tags": [
+      "argos",
+      "miss"
+    ]
+  },
+  {
+    "id": "case_bentham",
+    "name": "Bentham",
+    "faction": "UMI",
+    "role": "Segretaria",
+    "title_it": "Bentham (Segretaria)",
+    "title_en": "Bentham (Secretary)",
+    "quote_it": "Il futuro di Silvernia dipende da molte... 'variabili controllate'. Forse tu sei una di queste, detective.",
+    "quote_en": "Silvernia's future hinges on many... 'controlled variables'. Perhaps you are one of them, Detective.",
+    "bio_it": "Bentham (Segretaria)\n—— The Quartz Net (Rete di Quarzo) —— --\n\"Il futuro di Silvernia dipende da molte... 'variabili controllate'. Forse tu sei una di queste, detective.\" --\n\nProfessionista gentile e dai modi raffinati, detiene un grande potere dietro le quinte, muovendo i fili nell'ombra. Si desta di soprassalto, risvegliata dal ronzio del quarzo e dal movimento delle lancette. I sogni della sua infanzia sono ora la forza motrice che la spinge a salire sempre più in alto, instancabile come il ticchettio di un orologio. Eppure, i sogni privi di radici appassiscono insieme alla carne, e il logorio dell'ambizione non risparmia nessuno. E coloro che restano saldi, avanzando incessantemente verso il futuro, non sono mai, nel profondo, davvero innocenti.",
+    "bio_en": "Bentham (Secretary) \n—— The Quartz Net —— --\n\"Silvernia's future hinges on many... 'controlled variables'. Perhaps you are one of them, Detective.\" -- \n\nA kind and well-mannered professional, she holds great power behind the scenes as she pulls the strings. She jolts awake, the whirring of quartz and watch hands rousing her from slumber. Her childhood dreams are now a driving force that propels her to ascend ever higher, as tireless as the ticking hands of a clock. But dreams without root wither before the flesh, and the rot of ambition spares none. And those who remain strong, marching ever on into the future, are never truly innocent at heart.",
+    "has_hidden": true,
+    "hidden_title_it": "Il mistero dell'ufficio.",
+    "hidden_title_en": "The Office Mystery.",
+    "hidden_bio_it": "Il mistero dell'ufficio.\n\nDopo essere uscita vittoriosa dalla spietata arena della UMI, Bentham ha finalmente ottenuto un ufficio tutto suo. Solo lì può lasciar cadere, almeno per un po', la maschera che indossa: quella di un membro impeccabile dell'élite aziendale. Cosa sceglierà oggi? Una tazza di caffè macinato al momento? Un po' di musica pop? O magari un meritato riposo? Con il carico di lavoro che deve gestire, non ha né il tempo né le energie per preoccuparsi se la sua postura sia abbastanza «da signora» oppure no. Perciò, se hai finito di fare rapporto, esci pure e lasciala godersi la sua pausa.",
+    "hidden_bio_en": "The Office Mystery.\n\nHaving emerged victorious from the ruthless arena of UMI, Bentham finally secured her own private office. Only there could she temporarily drop her mask, that of a flawless corporate elite. What will it be today: a cup of hand-ground coffee? A little pop music? Or perhaps a well-needed nap? With a workload like hers, there's no time nor energy to fret over whether her posture is ladylike enough, or not. So if you've finished reporting, get out and let her take her break",
+    "hidden_story_it": "Il mistero dell'ufficio.\n\nDopo essere uscita vittoriosa dalla spietata arena della UMI, Bentham ha finalmente ottenuto un ufficio tutto suo. Solo lì può lasciar cadere, almeno per un po', la maschera che indossa: quella di un membro impeccabile dell'élite aziendale. Cosa sceglierà oggi? Una tazza di caffè macinato al momento? Un po' di musica pop? O magari un meritato riposo? Con il carico di lavoro che deve gestire, non ha né il tempo né le energie per preoccuparsi se la sua postura sia abbastanza «da signora» oppure no. Perciò, se hai finito di fare rapporto, esci pure e lasciala godersi la sua pausa.",
+    "hidden_story_en": "The Office Mystery.\n\nHaving emerged victorious from the ruthless arena of UMI, Bentham finally secured her own private office. Only there could she temporarily drop her mask, that of a flawless corporate elite. What will it be today: a cup of hand-ground coffee? A little pop music? Or perhaps a well-needed nap? With a workload like hers, there's no time nor energy to fret over whether her posture is ladylike enough, or not. So if you've finished reporting, get out and let her take her break",
+    "drip_img": "_multimedia/Personaggi/Drip Marketing/Bentham Drip Marketing.jpg",
+    "profile_img": "_multimedia/Personaggi/Profile Art/Bentham Profile Art.jpg",
+    "trailer_url": "https://www.youtube.com/watch?v=b8KzcX_peqs",
+    "x_url": "",
+    "x_post_url": "",
+    "tags": [
+      "bentham",
+      "secretary",
+      "quartznet",
+      "umi",
+      "arena"
+    ]
+  },
+  {
+    "id": "case_captain_kaboom",
+    "name": "Captain Kaboom",
+    "faction": "UMI",
+    "role": "Tecnico",
+    "title_it": "Capitan Kaboom (Tecnico)",
+    "title_en": "Captain Kaboom (Technician)",
+    "quote_it": "Dicono che i Kaboom portino cattive notizie, ma non è vero. Siamo bravi ragazzi, ci assicuriamo che tutto resti ben illuminato!",
+    "quote_en": "People say Kabooms bring bad news, but that's not true. We're good kids, keeping things lit bright!",
+    "bio_it": "Capitan Kaboom (Tecnico)\n\nDi congegni e melodie\n\n-- \"Dicono che i Kaboom portino cattive notizie, ma non è vero. Siamo bravi ragazzi, ci assicuriamo che tutto resti ben illuminato!\" --\n\nIl Team Kaboom è come un alveare di api operaie, che ronzano instancabili attorno agli Spinotrodes di Silvernia. Non rifiutano mai un po' di latte fresco o qualche moneta per le loro tasche, ma ciò che apprezzano più di ogni altra cosa è la compagnia dei loro cari compagni del Team Kaboom. Essendo bambini senza una casa, si riuniscono spesso, intonando tutti insieme il loro motto: \"Occhio alle scosse, controlla i cavi; tieni tutto in ordine, attiva quando è stabile!\"",
+    "bio_en": "Captain Kaboom (Technician)\n\nOf Tinkers and Tunes\n\n-- \"People say Kabooms bring bad news, but that's not true. We're good kids, keeping things lit bright!\" -- \n\nThe Kaboom Team are akin to a hive of industrious bees, buzzing tirelessly around Silvernia's Spinotrodes. They never turn down fresh milk and a coin or two for their purses, but most of all, it is the companionship of their beloved Kaboom Team fellows that they treasure. Children without a home, they often gather together, singing their motto as one: \"Mind for shocks, check the cables; keep things clean, activate once stable!\"",
+    "has_hidden": true,
+    "hidden_title_it": "Il mistero di chi vorrebbe essere un bambino",
+    "hidden_title_en": "The Would-Be Adult Mystery",
+    "hidden_bio_it": "Il mistero di chi vorrebbe essere un bambino\n\nCapitan Kaboom è feroce come una tigre e veloce come un passero; è così leggera da poter scalare qualsiasi altezza e abbastanza coraggiosa da tuffarsi in un fiume per trarre in salvo un piccolo Kaboom che sta annegando. Ogni membro del Team Kaboom lo sa bene. Eppure, di tanto in tanto, il Capitano si chiede come sarebbe vivere un’infanzia come quella di tutti gli altri bambini: dondolarsi al parco, scivolare giù dalla torre a forma di giraffa, infilarsi in un tubo di scarico per giocare a nascondino... Basterebbe anche solo una serata. Ma, non appena termina quel raro momento di riposo, lei torna subito a essere la capace e affidabile Capitan Kaboom.",
+    "hidden_bio_en": "The Would-Be Adult Mystery\n\nCaptain Kaboom is fierce as a tiger and swift as a sparrow, light enough to scale any height, and brave enough to dive into a river and pull a drowning little Kaboom to safety. Every member of the Kaboom Team knows it. Every so often, though, the Captain wonders what it might feel like to have a childhood like any other kid's: swinging in the park, sliding down the giraffe tower, squeezing into a drainpipe for a game of hide-and-seek... Just one evening would do. When the rare moment of rest is over, she snaps straight back into being the capable, dependable Captain Kaboom.",
+    "hidden_story_it": "Il mistero di chi vorrebbe essere un bambino\n\nCapitan Kaboom è feroce come una tigre e veloce come un passero; è così leggera da poter scalare qualsiasi altezza e abbastanza coraggiosa da tuffarsi in un fiume per trarre in salvo un piccolo Kaboom che sta annegando. Ogni membro del Team Kaboom lo sa bene. Eppure, di tanto in tanto, il Capitano si chiede come sarebbe vivere un’infanzia come quella di tutti gli altri bambini: dondolarsi al parco, scivolare giù dalla torre a forma di giraffa, infilarsi in un tubo di scarico per giocare a nascondino... Basterebbe anche solo una serata. Ma, non appena termina quel raro momento di riposo, lei torna subito a essere la capace e affidabile Capitan Kaboom.",
+    "hidden_story_en": "The Would-Be Adult Mystery\n\nCaptain Kaboom is fierce as a tiger and swift as a sparrow, light enough to scale any height, and brave enough to dive into a river and pull a drowning little Kaboom to safety. Every member of the Kaboom Team knows it. Every so often, though, the Captain wonders what it might feel like to have a childhood like any other kid's: swinging in the park, sliding down the giraffe tower, squeezing into a drainpipe for a game of hide-and-seek... Just one evening would do. When the rare moment of rest is over, she snaps straight back into being the capable, dependable Captain Kaboom.",
+    "drip_img": "_multimedia/Personaggi/Drip Marketing/Captain Kaboom Drip Marketing.jpg",
+    "profile_img": "_multimedia/Personaggi/Profile Art/Captain Kaboom Profile Art.jpg",
+    "trailer_url": "https://www.youtube.com/watch?v=aPdFyArmMUE",
+    "x_url": "https://x.com/SilverPalace_EN/status/2118546413600862716",
+    "x_post_url": "https://x.com/SilverPalace_EN/status/2118546413600862716",
+    "tags": [
+      "captainkaboom",
+      "spinotrodes",
+      "technician",
+      "bee",
+      "teamkaboom",
+      "umi"
+    ]
+  },
+  {
+    "id": "case_cinderella",
+    "name": "Cinderella",
+    "faction": "Fableborn",
+    "role": "La Formica Vendicativa",
+    "title_it": "La Formica Vendicativa",
+    "title_en": "The Vengeful Ant",
+    "quote_it": "Cenerentola",
+    "quote_en": "Cinderella",
+    "bio_it": "La Formica Vendicativa\n\nVerità e menzogne, gentilezza e inganno... non mi lascerò più ingannare.\n\nUna donna piena di segreti e assetata di vendetta. Sensibile, parsimoniosa e dotata di un acuto spirito di osservazione, è stata a lungo tormentata dall'insicurezza riguardo alle proprie origini.\n\nIn passato si era alleata con il Detective, unita a lui da obiettivi comuni, ma ha poi preso la propria strada quando i loro intenti hanno smesso di coincidere. Ora, sta bruciando le ultime tracce della sua vita in vista dello scontro finale. Un magma, a lungo compresso sotto il peso degli anni, che cova in silenzio fino a esplodere: un'eruzione nata dalla resistenza, un corpo forgiato come pietra incrollabile. È nota, dunque, come: \"Cenerentola\".",
+    "bio_en": "The Vengeful Ant\n\nTruth and lies, kindness and deceit... I will be fooled by them no longer\n\nA woman of secrets with a thirst for vengeance. Sensitive, thrifty, and keenly observant, she has long been weighed down by insecurities of her roots. She once allied with the Detective due to their common goals, but went her own way when they no longer aligned. Now, she is burning away the last vestiges of her life for a final showdown. Magma long suppressed beneath the weight of years, smouldering in silence until it breaks—an eruption born of endurance, a body forged like unyielding stone. Thus known as: \"Cinderella\".",
+    "has_hidden": false,
+    "hidden_title_it": "",
+    "hidden_title_en": "",
+    "hidden_bio_it": "",
+    "hidden_bio_en": "",
+    "hidden_story_it": "",
+    "hidden_story_en": "",
+    "drip_img": "_multimedia/Personaggi/Drip Marketing/Cinderella Drip Marketing.jpg",
+    "profile_img": "_multimedia/Personaggi/Profile Art/Cinderella Profile Art.jpg",
+    "trailer_url": "",
+    "x_url": "",
+    "x_post_url": "",
+    "tags": [
+      "fableborn",
+      "cinderella"
+    ]
+  },
+  {
+    "id": "case_cordelia",
+    "name": "Cordelia",
+    "faction": "Oz School of Metallurgy",
+    "role": "Tempi difficili",
+    "title_it": "Tempi difficili",
+    "title_en": "Hard Times",
+    "quote_it": "La scuola non è altro che un covo di leccapiedi ottusi, mentre il resto della città brulica di adulti orribili e puzzolenti! Argh! Che posto noioso!",
+    "quote_en": "School's nothing but brick-brained teacher's pets, while the rest of the city's crawling with horrible, stinky adults! Argh! This place is so booooring!",
+    "bio_it": "—— Tempi difficili —— --\n«La scuola non è altro che un covo di leccapiedi ottusi, mentre il resto della città brulica di adulti orribili e puzzolenti! Argh! Che posto noioso!» --\n\nUn’alunna problematica, una ragazza timida, una rosa selvatica, spine comprese. Abiti sgargianti, risposte taglienti, vestita di tutto punto — non per compiacere gli altri, ma solo se stessa. I dogmi non sostituiscono la verità, e non spetta certo solo agli adulti stabilire cosa sia giusto o sbagliato. Così, raduna i suoi amici e, insieme, scavalcano le recinzioni delle convenzioni.",
+    "bio_en": "—— Hard Times —— -- \n\"School's nothing but brick-brained teacher's pets, while the rest of the city's crawling with horrible, stinky adults! Argh! This place is so booooring!\" -- \n\nA troublesome pupil, a timid girl, an untamed rose, thorns and all. Garish clothes, sharp-tongued retorts, dressed to the nines for no one's approval but her own. Dogma is no substitute for truth, and right and wrong are not for grown-ups alone to decide. And thus she gathers her friends, and together they vault over the fences of convention.",
+    "has_hidden": false,
+    "hidden_title_it": "",
+    "hidden_title_en": "",
+    "hidden_bio_it": "",
+    "hidden_bio_en": "",
+    "hidden_story_it": "",
+    "hidden_story_en": "",
+    "drip_img": "_multimedia/Personaggi/Drip Marketing/Cordelia Drip Marketing.jpg",
+    "profile_img": "_multimedia/Personaggi/Profile Art/Cordelia Profile Art.jpg",
+    "trailer_url": "",
+    "x_url": "",
+    "x_post_url": "",
+    "tags": [
+      "cordelia",
+      "delinquent",
+      "ozschoolofmetallurgy"
+    ]
+  },
+  {
+    "id": "case_cynthia_ii",
+    "name": "Cynthia II",
+    "faction": "House Luna",
+    "role": "Il Bocciolo d'Oro",
+    "title_it": "Il Bocciolo d'Oro",
+    "title_en": "The Goldbud",
+    "quote_it": "Posso chiederti a quanto ammonta il tuo salario, detective? Mi piacerebbe molto pagarlo io, se solo tu volessi restare con me a giocare!",
+    "quote_en": "May I ask your wages, Detective? I'd quite like to pay them for you, if you'd just stay with me and play!",
+    "bio_it": "—— Il Bocciolo d'Oro ——\n«Posso chiederti a quanto ammonta il tuo salario, detective? Mi piacerebbe molto pagarlo io, se solo tu volessi restare con me a giocare!»\n\nIl Bocciolo d'Oro, la radiosa luna nascente di House Luna.\nUna giovane aristocratica innocente, dotata di quella capacità di percezione che, per la nobiltà, è un tratto naturale.\n\nOdia i topi, ma adora i gatti. Detesta le lezioni di danza classica, eppure ama sfoggiare le proprie abilità nel balletto.\nPiange facilmente, pur sforzandosi sempre di trattenere le lacrime. Sebbene nutra una grande ammirazione per sua cugina, la Regina, lei stessa è, a sua volta, oggetto dell'ammirazione di qualcun altro.",
+    "bio_en": "—— The Goldbud —— -- \n\"May I ask your wages, Detective? I'd quite like to pay them for you, if you'd just stay with me and play!\" -- \n\nThe Goldbud, and the shining new moon of House Luna. An innocent young aristocrat with a perceptiveness that comes naturally for nobility. Hates mice but loves cats. Hates ballet lessons but loves showing off ballet skills. Cries easily, but is always trying to hold back her tears. Though a great admirer of her cousin, the Queen, she is also somebody's focus of admiration.",
+    "has_hidden": true,
+    "hidden_title_it": "Il mistero del sogno a occhi aperti",
+    "hidden_title_en": "Hidden Pages | The Daydream Mystery",
+    "hidden_bio_it": "Il mistero del sogno a occhi aperti\n\nCynthia fece un sogno che riguardava sua cugina. Il Duca le disse che si trattava di un magnifico sogno di potere. La Contessa le disse che era un incantevole sogno legato ai vincoli di parentela. Un servitore stava accanto a sua cugina, stringendole il braccio. Un mantello la avvolgeva, attorcigliandosi attorno al suo collo.\n\nNel sogno, Cynthia radunò una legione di giocattoli e invocò cavalieri — incapaci anche solo di concepire il tradimento — affinché salvassero sua cugina... Poi si svegliò. Si scoprì che sua cugina era, in realtà, la porta d'accesso per tornare alla realtà.",
+    "hidden_bio_en": "Hidden Pages | The Daydream Mystery\n\nCynthia had a dream about her cousin. The Duke told her it was a beautiful dream of power. The Countess told her it was a lovely dream of kinship. A servant stood beside her cousin, gripping her arm. A cape draped over her, coiling around her neck. In the dream, Cynthia rallied the toy legion and called upon knights who would never think of betrayal to save her cousin... She then awoke. It turned out her cousin was the very gateway back to reality.",
+    "hidden_story_it": "Il mistero del sogno a occhi aperti\n\nCynthia fece un sogno che riguardava sua cugina. Il Duca le disse che si trattava di un magnifico sogno di potere. La Contessa le disse che era un incantevole sogno legato ai vincoli di parentela. Un servitore stava accanto a sua cugina, stringendole il braccio. Un mantello la avvolgeva, attorcigliandosi attorno al suo collo.\n\nNel sogno, Cynthia radunò una legione di giocattoli e invocò cavalieri — incapaci anche solo di concepire il tradimento — affinché salvassero sua cugina... Poi si svegliò. Si scoprì che sua cugina era, in realtà, la porta d'accesso per tornare alla realtà.",
+    "hidden_story_en": "Hidden Pages | The Daydream Mystery\n\nCynthia had a dream about her cousin. The Duke told her it was a beautiful dream of power. The Countess told her it was a lovely dream of kinship. A servant stood beside her cousin, gripping her arm. A cape draped over her, coiling around her neck. In the dream, Cynthia rallied the toy legion and called upon knights who would never think of betrayal to save her cousin... She then awoke. It turned out her cousin was the very gateway back to reality.",
+    "drip_img": "_multimedia/Personaggi/Drip Marketing/Cynthia Drip Marketing.jpg",
+    "profile_img": "_multimedia/Personaggi/Profile Art/Cynthia Profile Art.jpg",
+    "trailer_url": "https://www.youtube.com/watch?v=ooik-NFEYRY",
+    "x_url": "",
+    "x_post_url": "",
+    "tags": [
+      "goldbud",
+      "cynthia",
+      "houseluna",
+      "queen",
+      "royaltyandaristocracy"
+    ]
+  },
+  {
+    "id": "case_detective",
+    "name": "Detective",
+    "faction": "S.T.A.T.S.",
+    "role": "Gli Artigli del Corvo",
+    "title_it": "Gli Artigli del Corvo",
+    "title_en": "Detective",
+    "quote_it": "La società è un sistema caotico. Ciò che tiene uniti frammenti apparentemente slegati tra loro può essere la logica, ma potrebbe trattarsi anche di illusioni o cospirazioni.",
+    "quote_en": "Society is a system of chaos. What links seemingly unrelated fragments together may be logic, but it could also be illusions or conspiracies.",
+    "bio_it": "Gli Artigli del Corvo\n\n-- «La società è un sistema caotico. Ciò che tiene uniti frammenti apparentemente slegati tra loro può essere la logica, ma potrebbe trattarsi anche di illusioni o cospirazioni.» \n\n-- Sorella maggiore del celebre duo di investigatori della S.T.A.T.S., un tempo la detective più eminente della città. È scomparsa tre anni fa in un incidente aereo, legato all'assassinio della Regina.",
+    "bio_en": "Detective\n\nThe Raven's Claws\n\n-- \"Society is a system of chaos. What links seemingly unrelated fragments together may be logic, but it could also be illusions or conspiracies.\" -- The elder sister of the famed detective duo at S.T.A.T.S., once the city's most distinguished detective. She disappeared three years ago in an airship crash linked to the Queen's assassination.",
+    "has_hidden": true,
+    "hidden_title_it": "Il mistero del sosia",
+    "hidden_title_en": "The Doppelganger Mystery",
+    "hidden_bio_it": "Il mistero del sosia\n\nI fratelli detective formano una squadra perfetta. Basta uno sguardo o un gesto perché si scambino informazioni: marinare la scuola, lanciarsi in avventure, giocare a fare gli investigatori.\n\nUn tempo credevano che il legame di fiducia che li univa potesse durare per sempre, finché non è arrivato il giorno in cui lo specchio è diventato l'unico modo per vedere il volto dell'altro. Sui due lati del vetro, il riflesso e la sua fonte diventano, l'uno per l'altro, assistente, investigatore, causa ed effetto.",
+    "hidden_bio_en": "The Doppelganger Mystery\n\nThe Detective siblings make a perfect team. A glance or a gesture is enough for them to exchange information—skipping class, going on adventures, playing detective games together. They once believed that their blood-bound trust could last forever, until the day came when the mirror became the only way to see the other's face. On either side of the glass, the reflection and its source each become the other's assistant, detective, cause, and effect.",
+    "hidden_story_it": "Il mistero del sosia\n\nI fratelli detective formano una squadra perfetta. Basta uno sguardo o un gesto perché si scambino informazioni: marinare la scuola, lanciarsi in avventure, giocare a fare gli investigatori.\n\nUn tempo credevano che il legame di fiducia che li univa potesse durare per sempre, finché non è arrivato il giorno in cui lo specchio è diventato l'unico modo per vedere il volto dell'altro. Sui due lati del vetro, il riflesso e la sua fonte diventano, l'uno per l'altro, assistente, investigatore, causa ed effetto.",
+    "hidden_story_en": "The Doppelganger Mystery\n\nThe Detective siblings make a perfect team. A glance or a gesture is enough for them to exchange information—skipping class, going on adventures, playing detective games together. They once believed that their blood-bound trust could last forever, until the day came when the mirror became the only way to see the other's face. On either side of the glass, the reflection and its source each become the other's assistant, detective, cause, and effect.",
+    "drip_img": "_multimedia/Personaggi/Drip Marketing/Detective F Drip Marketing.jpg",
+    "profile_img": "_multimedia/Personaggi/Profile Art/Detective F Profile Art.jpg",
+    "trailer_url": "https://www.youtube.com/watch?v=X613mQHuQaA",
+    "x_url": "https://x.com/SilverPalace_EN/status/2115775664725049627",
+    "x_post_url": "https://x.com/SilverPalace_EN/status/2115775664725049627",
+    "tags": [
+      "detective",
+      "stats",
+      "queen",
+      "queenassassination",
+      "doppelganger"
+    ]
+  },
+  {
+    "id": "case_feys",
+    "name": "Feys",
+    "faction": "MISS",
+    "role": "Host",
+    "title_it": "Feys (Host) (Albergatrice)",
+    "title_en": "Feys (Host)",
+    "quote_it": "Riposarsi a dovere magari non ti farà fare il salto di qualità, ma di certo è un gran piacere! Ecco, questo sì che è un modo di pensare che non ti porterà fuori strada!",
+    "quote_en": "Plenty of rest might not take you the extra mile, but it sure feels good to get! Now, that's the sort of thinking that won't steer you wrong!",
+    "bio_it": "Feys (Host) (Albergatrice)\n\n—— Una nave alla deriva —— -- \n«Riposarsi a dovere magari non ti farà fare il salto di qualità, ma di certo è un gran piacere! Ecco, questo sì che è un modo di pensare che non ti porterà fuori strada!» -- \n\nL’addetta di grado più basso del MISS; l’antitesi assoluta della domestica perfetta. Riviste di gossip, una valigia scintillante e uno straordinario talento nel riuscire a sopravvivere, giorno dopo giorno, sotto il sole. L’assenza di grandi ambizioni non implica una mancanza di entusiasmo, e c’è una certa astuzia nel saper scegliere quando è meglio non sapere troppo. Dopotutto, il valore di una persona non si misura in base alla sua obbedienza.",
+    "bio_en": "Feys (Host)\n\n—— A Ship Adrift —— -- \n\"Plenty of rest might not take you the extra mile, but it sure feels good to get! Now, that's the sort of thinking that won't steer you wrong!\" -- \n\nThe Maid Institute, Society, and Services' lowest-ranked host; the very antithesis of a perfect maid. Gossip magazines, a glittering suitcase, and a knack for surviving one day at a time beneath the sun. A lack of grand ambitions does not mean a lack of enthusiasm, and there is a certain cleverness in knowing when not to know too much. For a person's worth is not measured by their obedience.",
+    "has_hidden": false,
+    "hidden_title_it": "",
+    "hidden_title_en": "",
+    "hidden_bio_it": "",
+    "hidden_bio_en": "",
+    "hidden_story_it": "",
+    "hidden_story_en": "",
+    "drip_img": "_multimedia/Personaggi/Drip Marketing/Feys Drip Marketing.jpg",
+    "profile_img": "_multimedia/Personaggi/Profile Art/Feys Profile Art.jpg",
+    "trailer_url": "",
+    "x_url": "",
+    "x_post_url": "",
+    "tags": [
+      "feys",
+      "host",
+      "miss"
+    ]
+  },
+  {
+    "id": "case_firtho",
+    "name": "Firtho",
+    "faction": "S.T.A.T.S.",
+    "role": "Firtho",
+    "title_it": "Firtho",
+    "title_en": "Firtho (Doctor)",
+    "quote_it": "",
+    "quote_en": "Dispensing drugs, performing surgeries, chemical analysis, forensics... I'm the only person in this city who meets all your needs, no?",
+    "bio_it": "",
+    "bio_en": "Firtho (Doctor)\n\nThe Medical Lancet\n\n-- \"Dispensing drugs, performing surgeries, chemical analysis, forensics... I'm the only person in this city who meets all your needs, no?\" -- \n\nA trustworthy doctor, examiner, and friend. She lives alongside death day after day, performing dissections and autopsies, bearing witness to the final testimonies of the deceased. Cares not for pity, debts of gratitude, nor farewells. Life is but a fleeting tide upon the river of the departed.\n\nTraduzione\n\nIl Bisturi Medico\n\n-- «Distribuire farmaci, eseguire interventi chirurgici, analisi chimiche, medicina legale... sono l'unica persona in questa città in grado di soddisfare ogni vostra esigenza, non è vero?» --\n\nUn medico, perito e amico di cui ci si può fidare. Vive a stretto contatto con la morte, giorno dopo giorno, eseguendo dissezioni e autopsie, facendosi testimone delle ultime rivelazioni di chi non c'è più. Non prova pietà, non cerca gratitudine, né si cura degli addii. La vita non è che una marea passeggera lungo il fiume dei defunti.\n\nImmagini\n\nTags",
+    "has_hidden": true,
+    "hidden_title_it": "Il mistero del battito cardiaco",
+    "hidden_title_en": "The Heart Rate Mystery",
+    "hidden_bio_it": "Il mistero del battito cardiaco\n\nRapido. Lento. Un battito mancato, o uno che martella con sempre maggiore intensità.\nUn battito accelerato era segno di pericolo; uno troppo lento, presagio di morte.\n\nLa ragazza, da sempre perseguitata dalla Morte in persona, aveva imparato fin dall'infanzia a scandire la propria esistenza al ritmo del suo battito cardiaco.\nEppure, dopo il ritorno di una certa persona, il suo cuore sembrava accelerare ogni volta che le era accanto. Ma perché? Dopotutto, il suo cuore non era nemmeno reale.",
+    "hidden_bio_en": "The Heart Rate Mystery\n\nRapid. Slow. Skipping a beat, or pounding ever harder. A fast heartbeat signaled danger; too slow, and it meant death. The girl, long haunted by the Grim Reaper, had learned to live by the rhythm of her pulse since childhood. Yet after a certain someone returned, her heart seemed to quicken somehow in their presence. But why? After all, her heart wasn't even real.",
+    "hidden_story_it": "Il mistero del battito cardiaco\n\nRapido. Lento. Un battito mancato, o uno che martella con sempre maggiore intensità.\nUn battito accelerato era segno di pericolo; uno troppo lento, presagio di morte.\n\nLa ragazza, da sempre perseguitata dalla Morte in persona, aveva imparato fin dall'infanzia a scandire la propria esistenza al ritmo del suo battito cardiaco.\nEppure, dopo il ritorno di una certa persona, il suo cuore sembrava accelerare ogni volta che le era accanto. Ma perché? Dopotutto, il suo cuore non era nemmeno reale.",
+    "hidden_story_en": "The Heart Rate Mystery\n\nRapid. Slow. Skipping a beat, or pounding ever harder. A fast heartbeat signaled danger; too slow, and it meant death. The girl, long haunted by the Grim Reaper, had learned to live by the rhythm of her pulse since childhood. Yet after a certain someone returned, her heart seemed to quicken somehow in their presence. But why? After all, her heart wasn't even real.",
+    "drip_img": "_multimedia/Personaggi/Drip Marketing/Firtho Drip Marketing.jpg",
+    "profile_img": "_multimedia/Personaggi/Profile Art/Firtho Profile Art.jpg",
+    "trailer_url": "https://www.youtube.com/watch?v=8jLgmoY1Z_A",
+    "x_url": "https://x.com/SilverPalace_EN/status/2118184030931747274",
+    "x_post_url": "https://x.com/SilverPalace_EN/status/2118184030931747274",
+    "tags": [
+      "firtho",
+      "doctor",
+      "thecornerclinic",
+      "stats"
+    ]
+  },
+  {
+    "id": "case_gratia",
+    "name": "Gratia",
+    "faction": "Casa Reale & Nobiltà",
+    "role": "Cavaliere",
+    "title_it": "Gratia (Cavaliere)",
+    "title_en": "Gratia (Knight)",
+    "quote_it": "Oh, grande detective! Ti aspetto da un'eternità! Che ne dici di fare un giro in città? Possiamo pattugliare le strade e acciuffare qualche malfattore, insieme!",
+    "quote_en": "O great Detective! I've been waiting ages for you! Fancy a walk around town? We can patrol and catch some evildoers together!",
+    "bio_it": "Gratia (Cavaliere)\n\nLa protetta di Sua Maestà\n\n-- \"Oh, grande detective! Ti aspetto da un'eternità! Che ne dici di fare un giro in città? Possiamo pattugliare le strade e acciuffare qualche malfattore, insieme!\" \n\n-- Un cavaliere di una lealtà incrollabile e una seguace coraggiosa (seppur un po' sciocca). Impugna spada e scudo in nome dell'onore cavalleresco e della grazia della Regina. Molti oscuri segreti covano sotto il trono. Preghiamo affinché gli illuminati scendano tra noi per condurci alla salvezza.",
+    "bio_en": "Gratia (Knight)\n\nHer Majesty's Protégé\n\n-- \"O great Detective! I've been waiting ages for you! Fancy a walk around town? We can patrol and catch some evildoers together!\" -- A fiercely loyal knight and a brave (if foolish) follower. She raises her sword and shield in the name of knightly honour and the Queen's grace. Many dark secrets fester beneath the throne. Pray that the enlightened shall descend to deliver us unto salvation.",
+    "has_hidden": true,
+    "hidden_title_it": "Il mistero della cavalleria",
+    "hidden_title_en": "The Chivalry Mystery",
+    "hidden_bio_it": "Il mistero della cavalleria\n\nLa cavalleria, celebrata nei poemi epici, è ormai sbiadita; la reputazione dei cavalieri, d’altro canto, non si è ancora ripresa dopo l’incidente del dirigibile. \nProteggere i deboli: è forse un torto verso qualcuno? Servire la nobiltà: che ne è, allora, del popolo? La cavaliera dalle orecchie di coniglio affronta i pericoli che le si parano davanti, gestisce le crisi alla sua portata e non compie mai nulla che vada contro la propria coscienza. \n\nUn cuore puro... si rivela essere, a sorpresa, una forma di forza. La giovane donna che detiene il potere ha sentenziato: che sia lei a farsi portavoce degli ideali cavallereschi, finché non torneremo a credere, ancora una volta, nelle virtù dell’onestà, della gentilezza e del coraggio.",
+    "hidden_bio_en": "The Chivalry Mystery\n\nThe chivalry sung of in epics has grown faint, and the Knights' reputation has yet to recover since the airship incident. To protect the weak—does that do injustice to anyone? To serve the nobility—what then of the people? The knight with rabbit ears handles the dangers within her sight, confronts the crises within her reach, and does nothing that goes against her conscience. A guileless heart... turns out to be a strength as well. The young woman in a position of power said: let her become the representative of chivalric ideals, until we once again believe in the virtues of honesty, kindness, and courage.",
+    "hidden_story_it": "Il mistero della cavalleria\n\nLa cavalleria, celebrata nei poemi epici, è ormai sbiadita; la reputazione dei cavalieri, d’altro canto, non si è ancora ripresa dopo l’incidente del dirigibile. \nProteggere i deboli: è forse un torto verso qualcuno? Servire la nobiltà: che ne è, allora, del popolo? La cavaliera dalle orecchie di coniglio affronta i pericoli che le si parano davanti, gestisce le crisi alla sua portata e non compie mai nulla che vada contro la propria coscienza. \n\nUn cuore puro... si rivela essere, a sorpresa, una forma di forza. La giovane donna che detiene il potere ha sentenziato: che sia lei a farsi portavoce degli ideali cavallereschi, finché non torneremo a credere, ancora una volta, nelle virtù dell’onestà, della gentilezza e del coraggio.",
+    "hidden_story_en": "The Chivalry Mystery\n\nThe chivalry sung of in epics has grown faint, and the Knights' reputation has yet to recover since the airship incident. To protect the weak—does that do injustice to anyone? To serve the nobility—what then of the people? The knight with rabbit ears handles the dangers within her sight, confronts the crises within her reach, and does nothing that goes against her conscience. A guileless heart... turns out to be a strength as well. The young woman in a position of power said: let her become the representative of chivalric ideals, until we once again believe in the virtues of honesty, kindness, and courage.",
+    "drip_img": "_multimedia/Personaggi/Drip Marketing/Gratia Drip Marketing.jpg",
+    "profile_img": "_multimedia/Personaggi/Profile Art/Gratia Profile Art.jpg",
+    "trailer_url": "https://www.youtube.com/watch?v=aR_OE6R1_gA",
+    "x_url": "https://x.com/SilverPalace_EN/status/2116017248725086680",
+    "x_post_url": "https://x.com/SilverPalace_EN/status/2116017248725086680",
+    "tags": [
+      "gratia",
+      "queen",
+      "royaltyandaristocracy",
+      "airshipincident"
+    ]
+  },
+  {
+    "id": "case_grimm",
+    "name": "Grimm",
+    "faction": "S.T.A.T.S.",
+    "role": "Protagonista dall'eloquenza affilata",
+    "title_it": "Protagonista dall'eloquenza affilata",
+    "title_en": "Grimm (Journalist)",
+    "quote_it": "Una verità priva di prove è assai fragile. Lo scontro diretto non fa per me; combatto le mie battaglie altrove.",
+    "quote_en": "Undocumented truth is really flimsy. Direct confrontation is not my thing. I fight my battles elsewhere.",
+    "bio_it": "—— Protagonista dall'eloquenza affilata ——\n-- \"Una verità priva di prove è assai fragile. Lo scontro diretto non fa per me; combatto le mie battaglie altrove.\" --\n\nGiovane giornalista nato negli strati più umili della società, è un uomo ambizioso, dotato di una mente tanto acuta quanto la sua lingua. Cronista della realtà contemporanea, non esita mai a correre rischi quando si presenta l'occasione giusta. Che si tratti di denunciare scandali o di dare voce a chi purtroppo non c'è più, egli è fermamente convinto che la verità possieda un potere assoluto e che, come tale, debba essere ascoltata.",
+    "bio_en": "Grimm (Journalist) \n—— Silver-Tongued Headliner —— \n-- \"Undocumented truth is really flimsy. Direct confrontation is not my thing. I fight my battles elsewhere.\" -- \n\nA young journalist born into the lower levels of society, he is an ambitious fellow with a mind just as sharp as his tongue. A chronicler of modern society, never hesitating to risk danger when opportunity knocks. Whether denouncing scandals or giving a voice to the sadly departed— He believes that the truth is all-powerful, and it must be heard.",
+    "has_hidden": true,
+    "hidden_title_it": "Il mistero del flash",
+    "hidden_title_en": "The Flashbulb Mystery",
+    "hidden_bio_it": "Il mistero del flash\nFotografa le prove.\nFotografa la scena del crimine. Fotografa le figure al centro della storia e le ombre sensazionali che proiettano. Le solite strade, l’ordinario e l’inaspettato, e tutti noi qui riuniti. E, naturalmente, fotografa la tua stessa espressione. Appare più felice di quanto avresti mai immaginato. Documenta tutto ciò che è reale. Usa le fotografie per opporti all’inesorabile scorrere del tempo. Quando il passato sarà svanito, portato via dal vento, il lampo del flash rimarrà: un faro di ricordi che brilla attraverso la distanza.",
+    "hidden_bio_en": "The Flashbulb Mystery\n\nPhotograph the evidence. \nPhotograph the crime scene. Photograph the figures at the centre of the story, and the sensational shadows they cast. The same old streets, the ordinary and the unexpected, and all of us who are gathered here together. And, of course, photograph your own expression. It looks happier than you ever imagined. Document all that is real. Use photographs to stand against the relentless tide of time. When the past has drifted away on the wind, the camera's flash will remain—a lighthouse of memories, shining across the distance.",
+    "hidden_story_it": "Il mistero del flash\nFotografa le prove.\nFotografa la scena del crimine. Fotografa le figure al centro della storia e le ombre sensazionali che proiettano. Le solite strade, l’ordinario e l’inaspettato, e tutti noi qui riuniti. E, naturalmente, fotografa la tua stessa espressione. Appare più felice di quanto avresti mai immaginato. Documenta tutto ciò che è reale. Usa le fotografie per opporti all’inesorabile scorrere del tempo. Quando il passato sarà svanito, portato via dal vento, il lampo del flash rimarrà: un faro di ricordi che brilla attraverso la distanza.",
+    "hidden_story_en": "The Flashbulb Mystery\n\nPhotograph the evidence. \nPhotograph the crime scene. Photograph the figures at the centre of the story, and the sensational shadows they cast. The same old streets, the ordinary and the unexpected, and all of us who are gathered here together. And, of course, photograph your own expression. It looks happier than you ever imagined. Document all that is real. Use photographs to stand against the relentless tide of time. When the past has drifted away on the wind, the camera's flash will remain—a lighthouse of memories, shining across the distance.",
+    "drip_img": "_multimedia/Personaggi/Drip Marketing/Grimm Drip Marketing.jpg",
+    "profile_img": "_multimedia/Personaggi/Profile Art/Grimm Profile Art.jpg",
+    "trailer_url": "https://www.youtube.com/watch?v=d9UavBwEqYw",
+    "x_url": "",
+    "x_post_url": "",
+    "tags": [
+      "grimm",
+      "journalist",
+      "stats"
+    ]
+  },
+  {
+    "id": "case_gucia",
+    "name": "Gucia",
+    "faction": "Ivory Tower",
+    "role": "Apprendista",
+    "title_it": "Gucia (Apprendista)",
+    "title_en": "Gucia (Apprentice)",
+    "quote_it": "Ho visto me stessa in quelle creature, sospese in una penombra tra la vita e la non-vita.",
+    "quote_en": "I saw myself in those creatures, existing in a shade between life and un-life.",
+    "bio_it": "Gucia (Apprendista)\n—— Dalla Ivory Tower (Torre d'Avorio) —— --\n\"Ho visto me stessa in quelle creature, sospese in una penombra tra la vita e la non-vita.\" \n\nUna cercatrice di conoscenza, una collezionista di segreti, una studiosa oltremodo appassionata. Si è sempre tenuta in disparte: una ragazza riservata e timida, dall'aria studiosa. Solo quando la conversazione vira verso eventi o esseri misteriosi e soprannaturali — verso ciò di cui si parla soltanto a bassa voce — lei interviene, con gli occhi che le brillano. Perché è proprio nell'ignoto insondabile che Gucia scorge un riflesso di se stessa.",
+    "bio_en": "Gucia (Apprentice) \n—— From the Ivory Tower —— -- \n\"I saw myself in those creatures, existing in a shade between life and un-life.\" -- \n\nA seeker of knowledge, a gatherer of secrets, and a most eager researcher. She had always distanced herself from others, a quiet and shy girl with a studious air. Only when conversation veered toward mysterious and supernatural happenings and beings, toward that which is spoken in hushed whispers, would she pipe up with eyes a-sparkling. For it is within the unfathomable unknown that she sees a reflection of herself.",
+    "has_hidden": true,
+    "hidden_title_it": "Il mistero della Ivory Tower",
+    "hidden_title_en": "The Ivory Tower Mystery",
+    "hidden_bio_it": "Il mistero della Ivory Tower\n\nGucia non si era mai interessata alle dinamiche di potere o alle sottili battaglie che si consumano negli ambienti di lavoro, né era mai riuscita a padroneggiare l'arte della retorica tipica del mondo degli affari. No, gli interessi di Gucia risiedevano altrove: nella vita non umana.\nUna forma di vita che non aveva bisogno né di denaro né di amici. Decise di raccogliere ulteriori informazioni, di documentare altri fenomeni di questo tipo, finché un giorno non Cfosse riuscita a comprendere la sofferenza umana attraverso ciò che umano non era.",
+    "hidden_bio_en": "The Ivory Tower Mystery\n\nGucia had never cared for office politics or the subtle battles of the workplace, nor could she master the silver tongues of businesspeople. No, Gucia's interests lay elsewhere: in non-human life. Life that needed neither money nor friends. She decided to collect more information, document more such phenomena, until the day she could come to understand human suffering through what was not human.",
+    "hidden_story_it": "Il mistero della Ivory Tower\n\nGucia non si era mai interessata alle dinamiche di potere o alle sottili battaglie che si consumano negli ambienti di lavoro, né era mai riuscita a padroneggiare l'arte della retorica tipica del mondo degli affari. No, gli interessi di Gucia risiedevano altrove: nella vita non umana.\nUna forma di vita che non aveva bisogno né di denaro né di amici. Decise di raccogliere ulteriori informazioni, di documentare altri fenomeni di questo tipo, finché un giorno non Cfosse riuscita a comprendere la sofferenza umana attraverso ciò che umano non era.",
+    "hidden_story_en": "The Ivory Tower Mystery\n\nGucia had never cared for office politics or the subtle battles of the workplace, nor could she master the silver tongues of businesspeople. No, Gucia's interests lay elsewhere: in non-human life. Life that needed neither money nor friends. She decided to collect more information, document more such phenomena, until the day she could come to understand human suffering through what was not human.",
+    "drip_img": "_multimedia/Personaggi/Drip Marketing/Gucia Drip Marketing.jpg",
+    "profile_img": "_multimedia/Personaggi/Profile Art/Gucia Profile Art.jpg",
+    "trailer_url": "https://www.youtube.com/watch?v=poJFBBF8rnY&pp=0gcJCcgHAYcqIYzv",
+    "x_url": "https://x.com/SilverPalace_EN/status/2118908805274857564",
+    "x_post_url": "https://x.com/SilverPalace_EN/status/2118908805274857564",
+    "tags": [
+      "gucia",
+      "ivorytower",
+      "apprentice",
+      "huntersguild"
+    ]
+  },
+  {
+    "id": "case_lorin",
+    "name": "Lorin",
+    "faction": "River Constabulary",
+    "role": "Ispettore Capo",
+    "title_it": "Lorin (Ispettore Capo)",
+    "title_en": "Lorin (Chief Inspector)",
+    "quote_it": "Teniamo a bada questi monelli, così potremo goderci le vacanze in santa pace.",
+    "quote_en": "Let's keep those brats in check, and then we'll get to have our vacation in peace.",
+    "bio_it": "Lorin (Ispettore Capo)\n\n—— L'Indispensabile ——\n\n-- \"Teniamo a bada questi monelli, così potremo goderci le vacanze in santa pace.\" --\n\nUn ispettore capo degno della vostra fiducia: un’anima buona, sempre in movimento Ldall’alba al tramonto. In gioventù si fece un nome per la potenza dei suoi pugni, ma ha poi appeso i guantoni al chiodo per impugnare una penna e dedicarsi a una pila di fascicoli che lo tengono impegnato per tutta la notte. Oggi, fiero nella sua divisa, si schiera contro la violenza; perché la giustizia e l'equità non dipendono certo dalla forza di un pugno.",
+    "bio_en": "Lorin (Chief Inspector)\n\n—— The Indispensable ——\n\n-- \"Let's keep those brats in check, and then we'll get to have our vacation in peace.\" -- \n\nA chief inspector worthy of your trust—a good soul who's always on his feet from dawn till dusk. Rose to some fame in his youth for the strength of his punches, but hung up his gloves for a pen and a stack of case files that'll keep him busy all night. Today, he takes a stance against violence as he stands proudly in uniform. For justice and fairness depend on more than how hard you can throw a punch.",
+    "has_hidden": true,
+    "hidden_title_it": "Il mistero del formalismo",
+    "hidden_title_en": "The Formalism Mystery",
+    "hidden_bio_it": "Il mistero del formalismo\n\nRapporti investigativi, verbali di interrogatorio, appunti sui casi. Un lavoro logorante e senza fine, al confronto del quale sradicare la criminalità dalle strade sembra quasi una passeggiata. Rendiconti finanziari, resoconti mensili, valutazioni per i bonus: un ciclo incessante, sostenuto da regole inflessibili e procedure puramente formali. Ma chi diavolo ha inventato tutto questo? È un enigma fatto di burocrazia che metterebbe in difficoltà persino l'ispettore più navigato.",
+    "hidden_bio_en": "The Formalism Mystery\n\nInvestigation reports, interrogation logs, case notes. An endless drudgery that makes stamping out crime in the streets look easy by comparison. Financial statements, monthly reports, bonus evaluations produced in a ceaseless cycle, upheld by steadfast rules and superficial processes. Honestly, who on earth came up with it all? It's a riddle of red tape that could stump even the most seasoned of inspectors.",
+    "hidden_story_it": "Il mistero del formalismo\n\nRapporti investigativi, verbali di interrogatorio, appunti sui casi. Un lavoro logorante e senza fine, al confronto del quale sradicare la criminalità dalle strade sembra quasi una passeggiata. Rendiconti finanziari, resoconti mensili, valutazioni per i bonus: un ciclo incessante, sostenuto da regole inflessibili e procedure puramente formali. Ma chi diavolo ha inventato tutto questo? È un enigma fatto di burocrazia che metterebbe in difficoltà persino l'ispettore più navigato.",
+    "hidden_story_en": "The Formalism Mystery\n\nInvestigation reports, interrogation logs, case notes. An endless drudgery that makes stamping out crime in the streets look easy by comparison. Financial statements, monthly reports, bonus evaluations produced in a ceaseless cycle, upheld by steadfast rules and superficial processes. Honestly, who on earth came up with it all? It's a riddle of red tape that could stump even the most seasoned of inspectors.",
+    "drip_img": "_multimedia/Personaggi/Drip Marketing/Lorin Drip Marketing.jpg",
+    "profile_img": "_multimedia/Personaggi/Profile Art/Lorin Profile Art.jpg",
+    "trailer_url": "https://www.youtube.com/watch?v=qk5pR5im4cU",
+    "x_url": "https://x.com/SilverPalace_EN/status/2117821641837498553",
+    "x_post_url": "https://x.com/SilverPalace_EN/status/2117821641837498553",
+    "tags": [
+      "riverconstabulary",
+      "lorin",
+      "chiefinspector"
+    ]
+  },
+  {
+    "id": "case_red_rose",
+    "name": "Red Rose",
+    "faction": "Casa Reale & Nobiltà",
+    "role": "Ballerina",
+    "title_it": "Red Rose (Ballerina)",
+    "title_en": "Red Rose (Dancer)",
+    "quote_it": "Cala il sipario; ed eccomi giunta a te. Dopo una lunga separazione, quanto sarà breve il nostro incontro?",
+    "quote_en": "The curtain falls; thus have I come to thee. Long parted, how brief shall our meeting be?",
+    "bio_it": "Red Rose (Ballerina)\n\nLa Rosa come macchina da guerra\n\n-- \"Cala il sipario; ed eccomi giunta a te. Dopo una lunga separazione, quanto sarà breve il nostro incontro?\" \n\n-- Padrona della Midsummer Night's Ballroom (Sala da Ballo di Mezza Estate), è una ballerina che non si ferma mai. Cacciatrice e assassina. Una rosa cremisi che fiorisce in un terreno intriso di sangue; il suo splendore brilla attraverso un involucro irto di spine. \n\nEppure, un pallido chiarore lunare e nebbie venefiche la avvolgono, lasciando cicatrici nella sua stessa anima. Nonostante il nome che richiama il rosso, il destino le ha riservato una sorte oscura e crudele. Solo nell'amore o nella morte le sarà concesso il perdono.",
+    "bio_en": "Red Rose (Dancer)\n\nThe Rose as an Engine of War\n\n-- \"The curtain falls; thus have I come to thee. Long parted, how brief shall our meeting be?\" -- Master of the Midsummer Night's Ballroom, she is a dancer who never stops. A hunter, and an assassin. A crimson rose that flourishes in blood-soaked soil, her brilliance shining through her thorny exterior. Yet wan moonlight and noxious mists pervade, enshrouding her, and scarring her very soul. Though red by name, the hand given to her by fate is dark and cruel. Only in love or in death shall she be granted forgiveness.",
+    "has_hidden": false,
+    "hidden_title_it": "",
+    "hidden_title_en": "",
+    "hidden_bio_it": "",
+    "hidden_bio_en": "",
+    "hidden_story_it": "",
+    "hidden_story_en": "",
+    "drip_img": "_multimedia/Personaggi/Profile Art/Red Rose Profile Art.jpg",
+    "profile_img": "_multimedia/Personaggi/Profile Art/Red Rose Profile Art.jpg",
+    "trailer_url": "",
+    "x_url": "",
+    "x_post_url": "",
+    "tags": [
+      "redrose",
+      "royaltyandaristocracy",
+      "midsummernightsballroom"
+    ]
+  },
+  {
+    "id": "case_rex",
+    "name": "Rex",
+    "faction": "River Constabulary",
+    "role": "Sovrintendente",
+    "title_it": "Rex (Sovrintendente)",
+    "title_en": "Rex (Superintendent)",
+    "quote_it": "Chi fa rispettare la legge non deve mostrare alcuna clemenza, se vuole preservarne l'autorità.",
+    "quote_en": "Enforcers of the law must show no leniency to maintain its authority.",
+    "bio_it": "Rex (Sovrintendente)\n—— La bilancia del bianco e del nero ——\n-- \"Chi fa rispettare la legge non deve mostrare alcuna clemenza, se vuole preservarne l'autorità.\" --\n\nUn giovane sovrintendente, pronto a intervenire con prontezza nei momenti di crisi, che nutre una fede nell'ordine ai limiti del fanatismo. Giusto e sbagliato. Bianco e nero. La legge non ammette compromessi. Per farla rispettare, bisogna bandire ogni forma di pietà: ai suoi occhi, infatti, il male non conosce sfumature di grigio.",
+    "bio_en": "Rex (Superintendent) \n—— The Scales of Black and White —— \n-- \"Enforcers of the law must show no leniency to maintain its authority.\" -- \n\nA young superintendent who is quick to step up in times of crisis, with a belief in order that borders on the fanatical. Right and wrong. Black and white. The law knows no compromise. To enforce the law, one must cast out all notions of mercy— For in his eyes, evil has no shades of grey.",
+    "has_hidden": true,
+    "hidden_title_it": "Il mistero dell'ordinamento",
+    "hidden_title_en": "The Ordinance Mystery",
+    "hidden_bio_it": "Il mistero dell'ordinamento\n\nIl primo obiettivo: estirpare la corruzione tra le fila delle forze dell'ordine. Le regole scritte sui manuali si deformano sempre al contatto con la realtà, e persino l'istinto più acuto non riesce sempre a distinguere un bugiardo da una persona onesta.\n\nGli agenti inattivi sono semplicemente pigri, o nascondono qualcosa di più sinistro? Cosa hanno portato via con sé coloro che se ne sono andati? Correnti complesse erodono i confini dell'ordine, proprio come la pioggia sfuma i contorni di una città. Eppure, la sua determinazione resta incrollabile. All'interno dello spazio ancora sotto il suo controllo, preserverà quell'ordine che non deve essere infranto.",
+    "hidden_bio_en": "The Ordinance Mystery\n\nThe first order: root out the corrupt within the force. The rules written in textbooks always warp when they meet the real world, and even the sharpest instincts cannot always distinguish a liar from an honest man. Are idle constables merely lazy, or hiding something more sinister? What did those who left take with them? Complex currents erode the edges of order, like rain blurring the outline of a city. Yet his resolve remains unshaken. Within the space still under his control, he will preserve the order that must not be broken.",
+    "hidden_story_it": "Il mistero dell'ordinamento\n\nIl primo obiettivo: estirpare la corruzione tra le fila delle forze dell'ordine. Le regole scritte sui manuali si deformano sempre al contatto con la realtà, e persino l'istinto più acuto non riesce sempre a distinguere un bugiardo da una persona onesta.\n\nGli agenti inattivi sono semplicemente pigri, o nascondono qualcosa di più sinistro? Cosa hanno portato via con sé coloro che se ne sono andati? Correnti complesse erodono i confini dell'ordine, proprio come la pioggia sfuma i contorni di una città. Eppure, la sua determinazione resta incrollabile. All'interno dello spazio ancora sotto il suo controllo, preserverà quell'ordine che non deve essere infranto.",
+    "hidden_story_en": "The Ordinance Mystery\n\nThe first order: root out the corrupt within the force. The rules written in textbooks always warp when they meet the real world, and even the sharpest instincts cannot always distinguish a liar from an honest man. Are idle constables merely lazy, or hiding something more sinister? What did those who left take with them? Complex currents erode the edges of order, like rain blurring the outline of a city. Yet his resolve remains unshaken. Within the space still under his control, he will preserve the order that must not be broken.",
+    "drip_img": "_multimedia/Personaggi/Drip Marketing/Rex Drip Marketing.jpg",
+    "profile_img": "_multimedia/Personaggi/Profile Art/Rex Profile Art.jpg",
+    "trailer_url": "https://www.youtube.com/watch?v=w_ozRoQ4tDQ",
+    "x_url": "",
+    "x_post_url": "",
+    "tags": [
+      "rex",
+      "superintendent",
+      "riverconstabulary",
+      "corruzione"
+    ]
+  },
+  {
+    "id": "case_skink",
+    "name": "Skink",
+    "faction": "Crag Edgers",
+    "role": "La Lingua Melliflua",
+    "title_it": "La Lingua Melliflua",
+    "title_en": "The Honeyed Tongue",
+    "quote_it": "Il mio nome è Skink, consulente dei Crag Edger. Sono specializzato nella mediazione di dispute interpersonali e... in altre faccende, decisamente meno nobili. Non vedo l'ora di lavorare con voi.",
+    "quote_en": "My name is Skink, consultant to the Crag Edgers. I specialise in mediating interpersonal disputes and... other, less savoury matters. I look forward to working with you.",
+    "bio_it": "—— La Lingua Melliflua —— --\n\"Il mio nome è Skink, consulente dei Crag Edger. Sono specializzato nella mediazione di dispute interpersonali e... in altre faccende, decisamente meno nobili. Non vedo l'ora di lavorare con voi.\" --\n\nQuesto rettile, proveniente da una terra lontana, è approdato a Silvernia dopo essere sopravvissuto a un brutale massacro. Per sua fortuna, è riuscito a tenere le sue scaglie lucenti al riparo dalla luce solare, sfruttando le lunghe ombre di Middensea.\n\nCol passare del tempo, la benevolenza che un tempo gli scorreva nelle vene si è spenta. Ora vive tra creature a sangue caldo, servendosi di lame avvelenate e astuti stratagemmi per guadagnarsi da vivere.",
+    "bio_en": "—— The Honeyed Tongue —— --\n\"My name is Skink, consultant to the Crag Edgers. I specialise in mediating interpersonal disputes and... other, less savoury matters. I look forward to working with you.\" --\n\nThis reptile from a distant land washed up in Silvernia after having survived a game of slaughter. He has mercifully managed to keep his gleaming scales out of the sunlight thanks to the long shadows in Middensea.\n\nOver time, the kindness that once ran in his blood cooled. Now, he lives among warm-blooded creatures, plying poisoned blades and cunning tricks to earn his keep.",
+    "has_hidden": false,
+    "hidden_title_it": "",
+    "hidden_title_en": "",
+    "hidden_bio_it": "",
+    "hidden_bio_en": "",
+    "hidden_story_it": "",
+    "hidden_story_en": "",
+    "drip_img": "_multimedia/Personaggi/Drip Marketing/Sking Drip Marketing.jpg",
+    "profile_img": "_multimedia/Personaggi/Profile Art/Skink Profile Art.jpg",
+    "trailer_url": "",
+    "x_url": "",
+    "x_post_url": "",
+    "tags": [
+      "skink",
+      "cragedgers",
+      "middensea",
+      "strategist"
+    ]
+  },
+  {
+    "id": "case_susan",
+    "name": "Susan",
+    "faction": "UMI",
+    "role": "Messaggera",
+    "title_it": "Susan (Messaggera)",
+    "title_en": "Susan (Messenger)",
+    "quote_it": "Le lettere... trasmettono sentimenti. Se posso aiutare a... portare un po' di felicità... allora anch'io... ne provo.",
+    "quote_en": "Letters c—carry feelings. If I c—can help d—deliver happiness... that makes me happy, t—too.",
+    "bio_it": "Susan (Messaggera)\n\n—— L'uccello senza canto, smarrito —— --\n«Le lettere... trasmettono sentimenti. Se posso aiutare a... portare un po' di felicità... allora anch'io... ne provo.» --\n\nUna messaggera silenziosa, un uccello meccanico che reca ordini. Fedele ai desideri altrui, capace di ricordare ogni strada e ogni vicolo, segue le direttive alla lettera; sia i suoi movimenti che il suo modo di parlare appaiono, per natura, alquanto meccanici. Eppure, le sue stesse parole non hanno più una meta, smarrite in anni di silenzio. Fluttua come un uccello sperduto, in balia dei venti. Senza rendersi conto che, spesso, la fortuna si trova a un breve volo di distanza dalla sventura in cui ci ritroviamo invischiati...",
+    "bio_en": "Susan (Messenger)\n\n—— The Songless Bird, Lost —— --\n\"Letters c—carry feelings. If I c—can help d—deliver happiness... that makes me happy, t—too.\" --\n\nA silent messenger, a clockwork bird bearing commands. Faithful to the wishes of others, remembering every road and alleyway, she follows orders to the letter, both her movements and speech somewhat mechanical in nature. Yet her own words have nowhere left to go, lost in years of silence. She floats like a lost bird upon the winds. Unaware that fortune is often only a short flight away from the misfortune we find ourselves mired within...",
+    "has_hidden": false,
+    "hidden_title_it": "",
+    "hidden_title_en": "",
+    "hidden_bio_it": "",
+    "hidden_bio_en": "",
+    "hidden_story_it": "",
+    "hidden_story_en": "",
+    "drip_img": "_multimedia/Personaggi/Drip Marketing/Susan Drip Marketing.jpg",
+    "profile_img": "_multimedia/Personaggi/Profile Art/Susan Profile Art.jpg",
+    "trailer_url": "",
+    "x_url": "",
+    "x_post_url": "",
+    "tags": [
+      "susan",
+      "messenger",
+      "umi"
+    ]
+  },
+  {
+    "id": "case_tinsley",
+    "name": "Tinsley",
+    "faction": "Oz School of Metallurgy",
+    "role": "Studentessa modello",
+    "title_it": "Tinsley (Studentessa modello)",
+    "title_en": "Tinsley (Star Student)",
+    "quote_it": "Un progetto perfetto è solo una base di partenza. Ho ancora molta strada da fare prima di potermi definire una vera grande inventrice.",
+    "quote_en": "A perfect design is merely a foundation. I've a long way to go before I can call myself a truly great inventor.",
+    "bio_it": "Tinsley (Studentessa modello)\n\nGrandi aspettative\n\n-- \"Un progetto perfetto è solo una base di partenza. Ho ancora molta strada da fare prima di potermi definire una vera grande inventrice.\"\n\n-- Un genio, una ragazza adorabile, un'allieva modello; un'inventrice dal cuore vuoto. Mentre l'industria estrattiva continua a brontolare incessantemente, lei studia gli ingranaggi, li mette in moto, finendo per diventare, a sua volta, nient'altro che un altro ingranaggio nel meccanismo. I pionieri avanzano, e il grande boato del mondo si avvicina, giungendo da lontano. I progetti si srotolano, gli ingranaggi girano, e lei deve trovare un desiderio che possa dirsi veramente suo.",
+    "bio_en": "Tinsley (Star Student)\n\nGreat Expectations\n\n-- \"A perfect design is merely a foundation. I've a long way to go before I can call myself a truly great inventor.\" \n\n-- A genius, a darling, a model pupil; an inventor with an empty heart. As the mining industry rumbles on without end, she studies the gears, sets them turning, and is herself no more than another cog in the machine. The pioneers forge ahead, and the world's great rumbling draws nearer from afar. The blueprints unfurl, the gears turn, and she must seek out a desire she can call her own.",
+    "has_hidden": false,
+    "hidden_title_it": "",
+    "hidden_title_en": "",
+    "hidden_bio_it": "",
+    "hidden_bio_en": "",
+    "hidden_story_it": "",
+    "hidden_story_en": "",
+    "drip_img": "_multimedia/Personaggi/Drip Marketing/Tinsley Drip Marketing.webp",
+    "profile_img": "_multimedia/Personaggi/Profile Art/Tinsley Profile Art.webp",
+    "trailer_url": "",
+    "x_url": "",
+    "x_post_url": "",
+    "tags": [
+      "ozschoolofmetallurgy",
+      "tinsley",
+      "starstudent"
+    ]
+  }
+];
+
+    const DEFAULT_DISPATCHES = [
+  {
+    "id": "disp_1",
+    "title": "Cinthyia Sky",
+    "type": "Extra Lore Story",
+    "date": "2026",
+    "desc_en": "Fleeing the bores of her private lessons, Cynthia escaped the cushy confines of her gilded cage. She skipped toward the swings that soar high into azure skies, where knights and plush companions wander as they please. For today, each and every house is home to clouds galore. McBarley mascots patrol the skies above, bearing endless sweets for all to enjoy. Well, don't just stand there and gawp, Detective! Even you are allowed to have a little fun today!",
+    "desc_it": "Stanca della noia delle sue lezioni private, Cynthia è fuggita dagli agi della sua gabbia dorata. È corsa verso le altalene, che si slanciano alte verso un cielo azzurro, dove cavalieri e compagni di peluche vagano in piena libertà. Per oggi, ogni singola casa ospita una miriade di nuvole. Le mascotte dei McBarley pattugliano il cielo, portando con sé dolciumi a non finire per la gioia di tutti. Ehi, non restare lì a bocca aperta, detective! Anche a te è concesso un po’ di divertimento, oggi!",
+    "cover_img": "_multimedia/Personaggi/Official Art/Cynthia Sky Art.jpg",
+    "link": "",
+    "tags": [
+      "cynthia",
+      "mcbarley"
+    ]
+  },
+  {
+    "id": "disp_2",
+    "title": "Gratia Moonlight",
+    "type": "Extra Lore Story",
+    "date": "2026",
+    "desc_en": "How did that carrot cake end up in the sky? Looks like I will have to pluck it down so everyone can taste its fluffy sweetness in their dreams. The moon dons the golden cape gifted by the sun and opens its pockets wide. Its gathered light spills forth, illuminating the secrets of the night. But even a loyal knight can have a little soft spot. Detective, I'll leave the tastiest sliver of moonlight just for you.",
+    "desc_it": "Come ha fatto quella torta di carote a finire nel cielo?\nMi sa che dovrò tirarla giù, così tutti potranno assaporarne la soffice dolcezza nei propri sogni.\n\nLa luna indossa il mantello dorato donatole dal sole e spalanca le sue tasche.\nLa luce che vi ha raccolto trabocca, illuminando i segreti della notte.\n\nMa anche un cavaliere leale può avere un piccolo punto debole.\nDetective, terrò da parte proprio per te la fetta di chiaro di luna più gustosa.\n\nTags",
+    "cover_img": "_multimedia/Personaggi/Official Art/Gratia Moonlight Post.jpg",
+    "link": "",
+    "tags": [
+      "gratia"
+    ]
+  },
+  {
+    "id": "disp_3",
+    "title": "20 Milioni Pre Reg ART",
+    "type": "Annuncio Ufficiale",
+    "date": "2026",
+    "desc_en": "",
+    "desc_it": "",
+    "cover_img": "_multimedia/Art Per Eventi/20 Milioni Pre REG.jpg",
+    "link": "",
+    "tags": [
+      "cynthia"
+    ]
+  },
+  {
+    "id": "disp_4",
+    "title": "4 Milioni PRE REG",
+    "type": "Annuncio Ufficiale",
+    "date": "2026",
+    "desc_en": "",
+    "desc_it": "",
+    "cover_img": "_multimedia/Art Per Eventi/4 Milioni PRE REG.jpg",
+    "link": "",
+    "tags": []
+  },
+  {
+    "id": "disp_5",
+    "title": "Beta Test End",
+    "type": "Annuncio Ufficiale",
+    "date": "2026",
+    "desc_en": "",
+    "desc_it": "",
+    "cover_img": "_multimedia/Art Per Eventi/Beta Test End.jpg",
+    "link": "",
+    "tags": [
+      "redrose"
+    ]
+  },
+  {
+    "id": "disp_6",
+    "title": "Beta Test Recruitment",
+    "type": "Annuncio Ufficiale",
+    "date": "2026",
+    "desc_en": "",
+    "desc_it": "",
+    "cover_img": "_multimedia/Art Per Eventi/Beta Test Artwork.jpg",
+    "link": "",
+    "tags": [
+      "detective"
+    ]
+  },
+  {
+    "id": "disp_7",
+    "title": "Global Pre Registration",
+    "type": "Annuncio Ufficiale",
+    "date": "2026",
+    "desc_en": "",
+    "desc_it": "",
+    "cover_img": "_multimedia/Art Per Eventi/Global Pre Reg Art.jpg",
+    "link": "",
+    "tags": []
+  },
+  {
+    "id": "disp_8",
+    "title": "Anime EXPO 2026",
+    "type": "Live Event Internazionale",
+    "date": "2026",
+    "desc_en": "",
+    "desc_it": "",
+    "cover_img": "_multimedia/Art Per Eventi/Anime EXPO 2026.jpg",
+    "link": "",
+    "tags": []
+  },
+  {
+    "id": "disp_9",
+    "title": "Gamescom 2026",
+    "type": "Live Event Internazionale",
+    "date": "2026",
+    "desc_en": "",
+    "desc_it": "",
+    "cover_img": "_multimedia/Art Per Eventi/Gamescom 2026.jpg",
+    "link": "",
+    "tags": []
+  },
+  {
+    "id": "disp_10",
+    "title": "Japan EXPO 2026",
+    "type": "Live Event Internazionale",
+    "date": "2026",
+    "desc_en": "",
+    "desc_it": "",
+    "cover_img": "_multimedia/Art Per Eventi/Japan EXPO 2026.jpg",
+    "link": "",
+    "tags": []
+  },
+  {
+    "id": "disp_11",
+    "title": "Thailand Gameshow 2026",
+    "type": "Live Event Internazionale",
+    "date": "2026",
+    "desc_en": "",
+    "desc_it": "",
+    "cover_img": "_multimedia/Art Per Eventi/Thailand Gameshow 2026.jpg",
+    "link": "",
+    "tags": [
+      "detective"
+    ]
+  },
+  {
+    "id": "disp_12",
+    "title": "Sticker Collection",
+    "type": "Extra Multimediali",
+    "date": "2026",
+    "desc_en": "###### Sticker Pack Vol. 2\n\n###### Sticker Pack Vol 1",
+    "desc_it": "",
+    "cover_img": "",
+    "link": "https://x.com/SilverPalace_EN/status/2100057090899558681",
+    "tags": []
+  },
+  {
+    "id": "disp_13",
+    "title": "April Fools 2026",
+    "type": "Evento Festività",
+    "date": "2026",
+    "desc_en": "",
+    "desc_it": "",
+    "cover_img": "_multimedia/Art Per Festività/April Fool Alf.jpg",
+    "link": "",
+    "tags": [
+      "alf"
+    ]
+  },
+  {
+    "id": "disp_14",
+    "title": "Halloween 2026",
+    "type": "Evento Festività",
+    "date": "2026",
+    "desc_en": "A Night When Magic Lingers Her skirt swirls into a ring of magic, her heartbeat murmuring an incantation. \"Detective, do you think my new dress suits me?\" Spurning the illusory ball, the witch for the night takes matters into her own hands, finding a new purpose for a pumpkin. \"This one's me.\" A little round face. \"And the biggest one is the Detective.\" The most extraordinary eyes. Her pointed hat sits at a jaunty angle, and her knack for mischief quietly takes root. \"Even if you hand over your sweets, don't think you can get rid of me that easily.\"",
+    "desc_it": "Una notte in cui aleggia la magia. La sua gonna vortica formando un cerchio incantato, mentre il battito del suo cuore mormora un incantesimo. \"Detective, pensi che questo nuovo vestito mi stia bene?\" Ignorando il ballo illusorio, la strega per una notte prende in mano la situazione, trovando un nuovo scopo per una zucca. \"Questa sono io.\" Un visino tondo. \"E quella più grande è il Detective.\" Occhi straordinari. Il cappello a punta è inclinato con aria sbarazzina, e la sua propensione per i dispetti inizia a farsi strada. \"Anche se mi dai i tuoi dolciumi, non credere di poterti liberare di me così facilmente.\"\n\nTags",
+    "cover_img": "_multimedia/Art Per Festività/Halloween 2026.jpg",
+    "link": "",
+    "tags": [
+      "halloween"
+    ]
+  },
+  {
+    "id": "disp_15",
+    "title": "Dichotomy Beta Test Gameplay Showcase - The Raven and the Rose",
+    "type": "Trailer Ufficiale",
+    "date": "2026",
+    "desc_en": "The curtain rises on a pageant of human nature laid bare. Some mask their sins upon the dance floor, while others reconstruct truth from ruin and bone. An unseen author has inscribed fate's first stroke. When the final act dissolves into silence, the crowd disperses, twilight descends, and the ravens fly homeward once more. Tell me, Detective, what answer do you hope to find?",
+    "desc_it": "Si alza il sipario su uno spettacolo in cui la natura umana viene messa a nudo.\nC’è chi cela i propri peccati sulla pista da ballo, e chi invece ricostruisce la verità partendo da rovine e ossa.\n\nUn autore invisibile ha tracciato il primo segno del destino. Quando l’atto finale svanisce nel silenzio, la folla si disperde, cala il crepuscolo e i corvi tornano, ancora una volta, verso casa. Dimmi, detective: quale risposta speri di trovare?",
+    "cover_img": "",
+    "link": "https://www.youtube.com/watch?v=ofTnT5Bk1_Y",
+    "tags": [
+      "redrose",
+      "detective",
+      "eternalsummer"
+    ]
+  },
+  {
+    "id": "disp_16",
+    "title": "Dichotomy Beta Test Trailer - Black Knights' Tango",
+    "type": "Trailer Ufficiale",
+    "date": "2026",
+    "desc_en": "When gravity turns, so too does the tide of offence and defence. Human relations are like Silverium, ever flowing, ever changing... Yesterday's foe may well be today's friend. And, naturally, today's friend may become tomorrow's foe.",
+    "desc_it": "Quando la gravità muta, muta anche la dinamica tra attacco e difesa.\nLe relazioni umane sono come il Silverium: in costante flusso, in continuo mutamento...\nIl nemico di ieri potrebbe benissimo essere l'amico di oggi.\nE, naturalmente, l'amico di oggi potrebbe diventare il nemico di domani.",
+    "cover_img": "",
+    "link": "https://www.youtube.com/watch?v=5kn2PqGuhY4",
+    "tags": [
+      "silverium",
+      "detective",
+      "redrose",
+      "bentham",
+      "reactor",
+      "stats"
+    ]
+  },
+  {
+    "id": "disp_17",
+    "title": "gamescom 2026 Special Trailer - The Price of Truth",
+    "type": "Trailer Ufficiale",
+    "date": "2026",
+    "desc_en": "Emotion is but greed given a name, an obsession we cannot escape. Wealth, fame, or perhaps a relentless pursuit of truth and the regrets that haunt us... Are you ready to place your soul upon the scales, and pay the price for the answer buried within?",
+    "desc_it": "L'emozione non è altro che avidità a cui è stato dato un nome, un'ossessione da cui non possiamo sfuggire. Ricchezza, fama, o magari l'incessante ricerca della verità, insieme ai rimpianti che ci perseguitano... Sei pronto a porre la tua anima sulla bilancia e a pagare il prezzo per la risposta che vi giace sepolta?",
+    "cover_img": "",
+    "link": "https://www.youtube.com/watch?v=hDHFxsh02aE",
+    "tags": []
+  },
+  {
+    "id": "disp_18",
+    "title": "Monotype Beta Test Trailer",
+    "type": "Trailer Ufficiale",
+    "date": "2026",
+    "desc_en": "Ashen words upon the wall, in misfortune's wake lies revelation. \"Tis some visitor tapping at your chamber door.\" Only this and nothing more.",
+    "desc_it": "Parole color cenere sulla parete; sulla scia della sventura giunge una rivelazione.\n«È un visitatore che bussa alla porta della tua stanza.»\nSolo questo, e nulla più.",
+    "cover_img": "",
+    "link": "https://www.youtube.com/watch?v=H_mgS0oQQM0",
+    "tags": []
+  },
+  {
+    "id": "disp_19",
+    "title": "The Golden Age of Detectives",
+    "type": "Trailer Ufficiale",
+    "date": "2026",
+    "desc_en": "In the third year of Queen Feliana’s reign, the detective returns. Silvernia straddles the crossroads of splendor and decay, where reality blurs with fables. Through diplomacy, deduction, instinct, and steel—trace the origin of that fatal shot. Your choice will carve not just your destiny... but the fate of many.",
+    "desc_it": "Nel terzo anno del regno della regina Feliana, il detective fa ritorno. Silvernia si trova al crocevia tra splendore e decadenza, un luogo in cui la realtà si confonde con la favola. Affidandoti alla diplomazia, alla deduzione, all'istinto e all'acciaio, risali all'origine di quel colpo fatale. Le tue scelte non determineranno soltanto il tuo destino... ma anche quello di molti altri.",
+    "cover_img": "",
+    "link": "https://www.youtube.com/watch?v=ELC4r7fbKEQ",
+    "tags": [
+      "feliana",
+      "queen",
+      "detective",
+      "fables",
+      "fate",
+      "author"
+    ]
+  },
+  {
+    "id": "disp_20",
+    "title": "Cynthia Trailer Link",
+    "type": "Character Trailer",
+    "date": "2026",
+    "desc_en": "A doll's house fashioned from a hundred measures of gold; its young scion has yet to understand that power takes the form of a tightening noose. A hundred keys grant passage to infinite spectacle and privilege. With her head held high and her hands on her hips, she leads a steadfast company of loyal knights. A game within a mirror, a dream within a cage. The Goldbud journeys forth unto the moonlit court.",
+    "desc_it": "Una casa delle bambole forgiata con cento misure d’oro; la sua giovane erede deve ancora comprendere che il potere assume le sembianze di un cappio che si stringe. Cento chiavi aprono il varco verso uno spettacolo e un privilegio infiniti. A testa alta e con le mani sui fianchi, ella guida una schiera incrollabile di cavalieri fedeli. Un gioco dentro uno specchio, un sogno dentro una gabbia. Il Germoglio d’Oro muove verso la corte baciata dal chiarore lunare.",
+    "cover_img": "",
+    "link": "https://www.youtube.com/watch?v=ZcDBkBs7J6g",
+    "tags": [
+      "cynthia"
+    ]
+  },
+  {
+    "id": "disp_21",
+    "title": "Gratia Trailer Descrizione e Link",
+    "type": "Character Trailer",
+    "date": "2026",
+    "desc_en": "What manner of knight deserves to be praised? The bunny knight's ears drooped, as she racked her brains for an answer. Guided by a sage, she ventured forth tentatively, searching step by step. Until... a piercing shriek rang out above the city, and a storm descended without warning. With no time to ponder, she spurred her steed skywards and charged forth, sword in hand. Once again, through her actions and by following her heart, Gratia had found her answer.",
+    "desc_it": "Che sorta di cavaliere merita di essere lodato? Le orecchie della cavaliere-coniglio si abbassarono, mentre si scervellava alla ricerca di una risposta. Guidata da un saggio, si avventurò con cautela, procedendo passo dopo passo. Finché... un grido lacerante risuonò sopra la città e, senza alcun preavviso, si scatenò una tempesta. Senza tempo per riflettere, spronò il suo destriero verso il cielo e si lanciò in avanti, spada in pugno. Ancora una volta, attraverso le sue azioni e seguendo il proprio cuore, Gratia aveva trovato la risposta.",
+    "cover_img": "",
+    "link": "https://www.youtube.com/watch?v=HdbINn5ciIs",
+    "tags": [
+      "gratia"
+    ]
+  }
+];
+
+    const DEFAULT_FACTIONS = [
+  {
+    "name": "MISS",
+    "alias": "Maid Institute Society and Services",
+    "desc_it": "Maid Institute Society and Services",
+    "desc_en": "Maid Institute Society and Services",
+    "banner": "",
+    "tags": [
+      "miss"
+    ]
+  },
+  {
+    "name": "River Constabulary",
+    "alias": "Polizia Fluviale di Silvernia",
+    "desc_it": "Un filo della storia | River Constabulary (Polizia Fluviale)\n\nUn corpo di pubblica sicurezza istituito dalla Marina, per volere della Corona e finanziato dall' United Mining Industry (UMI) I suoi agenti operano all'interno di un vecchio edificio — abbandonato dopo il trasferimento della Marina in sedi più moderne — e si impegnano a fondo per mantenere l'ordine a Silvernia. Nonostante i loro sforzi, sono privi di reale autorità e vengono costantemente ostacolati dagli interessi dei ricchi e dei potenti; ciò porta persino la gente comune a dubitare delle loro capacità. Il fascio di una torcia non illumina mai molto lontano: una verità che gli agenti di pattuglia notturna conoscono fin troppo bene.",
+    "desc_en": "A Thread of the Story | River Constabulary \n\nA law enforcement agency established by the Navy, at the behest of the Crown, and funded by the United Mining Industry. Its constables operate out of an old office building—vacated when the Navy moved to newer premises—working hard to keep the peace in Silvernia. Despite their efforts, they lack authority and are hampered at every turn by the interests of the rich and powerful, leaving even the common folk to doubt their capabilities. The beam of a flashlight barely reaches far, a truth that night patrol constables know all too well.",
+    "banner": "_multimedia/Art Per Fazioni/RIVER CONSTABULARY Art.jpg",
+    "tags": [
+      "riverconstabulary"
+    ]
+  },
+  {
+    "name": "S.T.A.T.S.",
+    "alias": "Surveillance, Tracking and Troubleshooting Services",
+    "desc_it": "L'ufficio S.T.A.T.S. in Morgue Street è il luogo in cui risiede il Detective. Dopo un grave incidente, la sede è rimasta sigillata per tre anni, ma ora ha riaperto i battenti. I collaboratori del Detective vi fanno spesso visita: si riuniscono, lavorano in sinergia e custodiscono gelosamente i segreti che portano dentro di sé – una verità soffocata da cospirazioni, un corpo segnato fin dalla nascita, una cicatrice da tenere nascosta, identità ancora sfumate e indefinite... Indagare sui casi significa svelare le anime celate. Ciò che emerge attraverso le parole non è che la punta dell'iceberg.",
+    "desc_en": "A Thread of the Story | S.T.A.T.S.\n\nThe S.T.A.T.S. office on Morgue Street is where the Detective lives. It was sealed off for three years after a major incident, but the establishment has been reopened for business. The Detective's partners often pay a visit to this place. They gather, collaborate, and carefully guard the secrets they carry within: a truth smothered by conspiracies, a body marked since birth, a scar not to be disclosed, and selves still blurred and undefined... To investigate cases is to unveil the hidden souls. What surfaces in words is but the tip of the iceberg.",
+    "banner": "_multimedia/Art Per Fazioni/STATS Faction Art.jpg",
+    "tags": [
+      "stats"
+    ]
+  },
+  {
+    "name": "UMI",
+    "alias": "United Mining Industry",
+    "desc_it": "United Mining Industry",
+    "desc_en": "United Mining Industry",
+    "banner": "",
+    "tags": [
+      "umi"
+    ]
+  },
+  {
+    "name": "House Luna",
+    "alias": "La Casata Reale di Silvernia",
+    "desc_it": "Casata nobiliare e dinastia reale di Silvernia citata negli atti di Cynthia II e della Regina.",
+    "desc_en": "Royal house of Silvernia referenced in Cynthia II and Queen lore.",
+    "banner": "",
+    "tags": [
+      "houseluna",
+      "queen",
+      "royaltyandaristocracy"
+    ]
+  },
+  {
+    "name": "Crag Edgers",
+    "alias": "Fazione Portuale di Middensea",
+    "desc_it": "Organizzazione operante nel distretto di Middensea associata a Skink.",
+    "desc_en": "Organization operating in Middensea harbor district associated with Skink.",
+    "banner": "",
+    "tags": [
+      "cragedgers",
+      "middensea"
+    ]
+  },
+  {
+    "name": "Oz School of Metallurgy",
+    "alias": "Accademia di Metallurgia",
+    "desc_it": "Metallurgia\ndisciplina tecnico-scientifica che studia i metalli, il loro comportamento chimico-fisico, i processi di estrazione dai minerali e le tecniche di lavorazione e trasformazione per l'uso industriale\n\nData di creazione:\n2026-11-19 13:44",
+    "desc_en": "Academy of Metallurgy referenced in Tinsley and Cordelia records.",
+    "banner": "",
+    "tags": [
+      "ozschoolofmetallurgy"
+    ]
+  }
+];
+
+    const DEFAULT_LEXICON = [
+  {
+    "term": "Dogma",
+    "category": "Terminologia & Concetti",
+    "def_it": "Nel suo senso più ampio, si tratta di una qualsiasi convinzione sostenuta in modo definitivo e senza alcuna possibilità di revisione. Può presentarsi sotto forma di un sistema ufficiale di principi o dottrine:\n\ndi una religione, come l'ebraismo, il cristianesimo (cattolicesimo romano, protestantesimo) o l'islam;\ndelle posizioni di un filosofo o di una scuola filosofica, come lo stoicismo o il marxismo;\ndei postulati o degli assiomi politici propri di sistemi di pensiero politico, quali il fascismo, il socialismo, il progressismo, il liberalismo o il conservatorismo",
+    "def_en": "in its broadest sense, is any belief held definitively and without the possibility of reform. It may be in the form of an official system of principles or doctrines:\n\nof a religion, such as Judaism, Christianity (Roman Catholicism, Protestantism) or Islam\nof the positions of a philosopher or of a philosophical school, such as Stoicism or Marxism\nof the postulates or political axioms of political belief-systems such as fascism, socialism, progressivism, liberalism, or conservatism",
+    "source_file": "Dizionario/Dogma.md"
+  },
+  {
+    "term": "Eloquenza",
+    "category": "Terminologia & Concetti",
+    "def_it": "L'eloquenza è l'arte e la capacità di parlare o scrivere in modo chiaro, efficace, elegante e persuasivo, così da convincere l'interlocutore o emozionare chi ascolta.",
+    "def_en": "Eloquence is the art and ability to speak or write in a clear, effective, elegant, and persuasive manner, so as to convince the person you are addressing or to stir the emotions of those who are listening.",
+    "source_file": "Dizionario/Eloquenza.md"
+  },
+  {
+    "term": "Metallurgy",
+    "category": "Terminologia & Concetti",
+    "def_it": "Metallurgia\ndisciplina tecnico-scientifica che studia i metalli, il loro comportamento chimico-fisico, i processi di estrazione dai minerali e le tecniche di lavorazione e trasformazione per l'uso industriale",
+    "def_en": "Science and engineering discipline that studies the physical and chemical behavior of metallic elements, intermetallic compounds, and alloys, as well as the processes used to extract, refine, shape, and treat them.",
+    "source_file": "Dizionario/Metallurgy.md"
+  },
+  {
+    "term": "High Peers & Spinotrode",
+    "category": "Mappe & Ambientazione",
+    "def_it": "High Peers. Il gioiello più prezioso di Silvernia: un luogo splendente, tranquillo e prospero. A dominare il distretto si ergono le Spinotrode — particolari reattori dalla sommità conica che trasformano il Silverium in energia elettrica. Esse costituiscono la spina dorsale dell'infrastruttura elettrica della città e sono le artefici delle sue meraviglie moderne. È qui che gli abitanti si dedicano a festeggiamenti e piaceri lussuosi, chiudendo deliberatamente un occhio sulla presenza di non umani che si celano tra loro. High Peers non è priva di ombre, ma il giorno in cui le sue torri dorate crolleranno non è ancora giunto... per ora.",
+    "def_en": "Footnotes // High Peers & Spinotrode\n\nHigh Peers. The gleaming, tranquil, and prosperous crowning jewel of Silvernia. Dominating the district stand the Spinotrodes—a type of cone-tipped reactor that convert Silverium into electricity. They are the spinal column of the city's electrical infrastructure and the architects of its modern marvels. This is the place where residents host celebrations and indulge in luxuries while turning a blind eye to the non-humans disguised among them. High Peers is not without its shadows, but the day when the gilded towers fall hasn't arrived... yet.",
+    "image": "_multimedia/Art Per Mappe/High Peers e Spinotrodes.jpg",
+    "source_file": "Mappe/Footnotes/High Peers & Spinotrode.md"
+  },
+  {
+    "term": "The Incynerator Abyss",
+    "category": "Mappe & Ambientazione",
+    "def_it": "L'abisso dell'inceneritore\nLe strutture sotterranee dell'inceneritore, situato in periferia, sono collegate alla rete fognaria dell'impianto di fusione. Anni di abbandono hanno ridotto ogni cosa sull'orlo del crollo. Fanghi metallici scorrono in cicli infiniti di raffreddamento e riaccensione. Da qualche parte, lontano da sguardi indiscreti, un fiume silenzioso erompe con furia bruciante, rispecchiando la verità che viene a galla. \"Questa è la notte... in cui tutto finisce.\"",
+    "def_en": "Footnotes // The Incinerator's Abyss\n\nThe underground structures of the suburban Incinerator are connected to the sewage network of the smelting works. Years of neglect have left everything on the verge of collapse. Metal sludge flows in endless cycles of cooling and reigniting. Somewhere unseen, the silent river erupts with scalding fury, mirroring the unfolding truth. \"This is the night... where everything ends.\"",
+    "image": "_multimedia/Art Per Mappe/Incinerator Abyss.jpg",
+    "source_file": "Mappe/Footnotes/The Incynerator Abyss.md"
+  },
+  {
+    "term": "Middensea",
+    "category": "Distretti & Aree Notabili",
+    "def_it": "Distretto censito negli atti ufficiali del database.",
+    "def_en": "District registered in official database records.",
+    "source_file": "Mappe/Distretti ed Aree Menzionate/Middensea.md"
+  },
+  {
+    "term": "Midsummer Night's Ballroom",
+    "category": "Distretti & Aree Notabili",
+    "def_it": "Distretto censito negli atti ufficiali del database.",
+    "def_en": "District registered in official database records.",
+    "source_file": "Mappe/Distretti ed Aree Menzionate/Midsummer Night's Ballroom.md"
+  }
+];
+
+    // Auto-sync with SPVault DB Alerts
+    const VAULT_ALERTS = [];
+
+    // Auto-sync with SPVault DB Version
+    const SDB_VERSION = "spvault_sync_1795171874428";
+    if (localStorage.getItem('sdb_version') !== SDB_VERSION) {
+      localStorage.setItem('sdb_cases', JSON.stringify(DEFAULT_CASES));
+      localStorage.setItem('sdb_dispatches', JSON.stringify(DEFAULT_DISPATCHES));
+      localStorage.setItem('sdb_factions', JSON.stringify(DEFAULT_FACTIONS));
+      localStorage.setItem('sdb_lexicon', JSON.stringify(DEFAULT_LEXICON));
+      localStorage.setItem('sdb_version', SDB_VERSION);
+    }
+
+    let cases = JSON.parse(localStorage.getItem('sdb_cases')) || DEFAULT_CASES;
+    let dispatches = JSON.parse(localStorage.getItem('sdb_dispatches')) || DEFAULT_DISPATCHES;
+    let factions = JSON.parse(localStorage.getItem('sdb_factions')) || DEFAULT_FACTIONS;
+    let lexicon = JSON.parse(localStorage.getItem('sdb_lexicon')) || DEFAULT_LEXICON;
+
+    let currentLocale = 'it';
+    let currentFaction = 'ALL';
+    let currentRarity = 'ALL';
+    let activeChar = cases[0];
+
+    document.addEventListener('DOMContentLoaded', () => {
+      populateFactionPills();
+      populateFactionSelect();
+      renderRoster();
+      renderTimeline();
+      renderFactions();
+      renderLexicon();
+      
+      // Keyboard navigation (ESC to close modals and drawers)
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') {
+          closeCharacterDrawer();
+          document.getElementById('lightbox')?.classList.add('hidden');
+          closeAdminGate();
+        }
+      });
+    });
+
+    // --- VAULT CONTENT ALERTS (PANNELLO ADMIN) ---
+    function renderAdminVaultStatus() {
+      const alerts = (typeof VAULT_ALERTS !== "undefined") ? VAULT_ALERTS : [];
+      const icon = document.getElementById("admin-vault-icon");
+      const badge = document.getElementById("admin-vault-badge");
+      const msg = document.getElementById("admin-vault-msg");
+      const actions = document.getElementById("admin-vault-actions");
+      const detail = document.getElementById("admin-vault-alerts-detail");
+      const list = document.getElementById("admin-vault-alerts-list");
+      if (!icon || !badge || !msg || !actions || !detail || !list) return;
+
+      if (alerts && alerts.length > 0) {
+        icon.className = "w-8 h-8 rounded-lg bg-amber-500/10 border border-amber-500/30 text-amber-400 flex items-center justify-center shrink-0";
+        icon.innerHTML = `<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/></svg>`;
+        badge.className = "px-2 py-0.5 rounded text-[10px] font-mono bg-amber-500/10 text-amber-400 border border-amber-500/30";
+        badge.textContent = alerts.length + " da mappare";
+        msg.textContent = "Rilevati " + alerts.length + " nuovi file o sezioni nel Vault non ancora mappate graficamente nel database.";
+        actions.classList.remove("hidden");
+        detail.classList.remove("hidden");
+        list.innerHTML = alerts.map(a => `
+          <div class="p-2.5 rounded-lg bg-surface border border-border/80 space-y-1">
+            <div class="flex items-center justify-between gap-2">
+              <span class="font-semibold text-amber-400">${a.title}</span>
+              <span class="text-[10px] px-1.5 py-0.5 rounded bg-amber-500/10 text-amber-300 font-mono shrink-0">${a.location}</span>
+            </div>
+            <p class="text-slate-300 text-xs leading-relaxed">${a.preview || "File o sezione rilevata nella cartella del Vault."}</p>
+          </div>
+        `).join("");
+      } else {
+        icon.className = "w-8 h-8 rounded-lg bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 flex items-center justify-center shrink-0";
+        icon.innerHTML = `<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>`;
+        badge.className = "px-2 py-0.5 rounded text-[10px] font-mono bg-emerald-500/10 text-emerald-400 border border-emerald-500/20";
+        badge.textContent = "Allineato 100%";
+        msg.textContent = "Tutti i 19 personaggi, le 7 fazioni e i 21 post del repository ufficiale sono sincronizzati al 100%. Nessun file pendente.";
+        actions.classList.add("hidden");
+        detail.classList.add("hidden");
+        list.innerHTML = "";
+      }
+    }
+
+    function copyAlertPrompt() {
+      const alerts = (typeof VAULT_ALERTS !== "undefined") ? VAULT_ALERTS : [];
+      const summary = alerts.map(a => "- " + a.title + " (" + a.location + ")").join("\n");
+      const prompt = "Ciao Antigravity, l'auto-sync ha rilevato nuovi contenuti caricati da Catalyst nel Vault:\n\n" + summary + "\n\nPer favore, integra la grafica, le schede o le tab necessarie nel sito per questi nuovi contenuti.";
+      navigator.clipboard.writeText(prompt).then(() => {
+        const textSpan = document.getElementById("admin-btn-copy-text");
+        if (textSpan) {
+          const original = textSpan.textContent;
+          textSpan.textContent = "Richiesta Copiata! Incollamela in chat ✓";
+          setTimeout(() => { textSpan.textContent = original; }, 3000);
+        }
+      });
+    }
+
+    // --- VIEW SWITCHING ---
+    function setView(view) {
+      const views = ['characters', 'timeline', 'factions', 'lexicon'];
+      views.forEach(v => {
+        const el = document.getElementById(`view-${v}`);
+        const btn = document.getElementById(`nav-${v}`);
+        if (v === view) {
+          el?.classList.remove('hidden');
+          if (btn) btn.className = "px-3.5 py-1.5 rounded-md text-white bg-surface-raised border border-border transition-colors";
+        } else {
+          el?.classList.add('hidden');
+          if (btn) btn.className = "px-3.5 py-1.5 rounded-md text-muted hover:text-white transition-colors";
+        }
+      });
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    // --- ROSTER RENDERING (GACHA CARDS) ---
+    function renderRoster() {
+      const grid = document.getElementById('roster-grid');
+      const search = (document.getElementById('char-search')?.value || '').toLowerCase().trim();
+
+      const filtered = cases.filter(c => {
+        if (currentFaction !== 'ALL' && c.faction !== currentFaction) return false;
+        if (search) {
+          const matchName = c.name.toLowerCase().includes(search);
+          const matchFaction = c.faction.toLowerCase().includes(search);
+          const matchTitle = (c.title_it + ' ' + c.title_en).toLowerCase().includes(search);
+          if (!matchName && !matchFaction && !matchTitle) return false;
+        }
+        return true;
+      });
+
+      if (filtered.length === 0) {
+        grid.innerHTML = `
+          <div class="col-span-full py-16 text-center space-y-3">
+            <div class="w-12 h-12 rounded-full bg-surface-raised border border-border flex items-center justify-center mx-auto text-slate-400">
+              <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+            </div>
+            <p class="font-serif text-lg text-white">Nessun personaggio trovato con i filtri attuali.</p>
+            <p class="text-xs text-slate-400">Prova a modificare il termine di ricerca o la fazione selezionata.</p>
+            <button onclick="clearSearch(); setFactionFilter('ALL');" class="mt-2 px-4 py-2 rounded-lg bg-surface-raised border border-border text-xs text-gold hover:border-gold transition-colors font-medium">
+              Reimposta Tutti i Filtri
+            </button>
+          </div>
+        `;
+        return;
+      }
+
+      grid.innerHTML = filtered.map(c => {
+        const title = currentLocale === 'it' ? c.title_it : c.title_en;
+        const cardBorder = 'border-border hover:border-gold/60 border-b-2 border-b-gold/50';
+        const elementShort = (c.element || '').split('/')[0].split('-')[0].trim();
+
+        return `
+          <div onclick="openCharacterDrawer('${c.id}')" class="group cursor-pointer rounded-xl bg-surface border ${cardBorder} card-hover-glow hover:-translate-y-1 transition-all duration-300 p-2.5 flex flex-col space-y-2.5 shadow-sm">
+            
+            <!-- Art Frame with Aspect Ratio -->
+            <div class="aspect-[3/4] w-full rounded-lg overflow-hidden bg-canvas relative shadow-inner">
+              <img src="${c.drip_img}" alt="${c.name}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" loading="lazy">
+              
+              <!-- Top Right: Element Chip -->
+              ${elementShort ? `
+                <div class="absolute top-2 right-2 px-1.5 py-0.5 rounded bg-canvas/85 backdrop-blur-md border border-border/70 text-[10px] font-medium text-slate-300 shadow-sm">
+                  ${elementShort}
+                </div>
+              ` : ''}
+
+              <!-- Bottom Gradient Blend -->
+              <div class="absolute inset-x-0 bottom-0 h-12 bg-gradient-to-t from-surface via-surface/40 to-transparent"></div>
+            </div>
+
+            <!-- Identity Info (High Contrast & Clear Readability) -->
+            <div class="space-y-1 px-1 pb-0.5">
+              <div class="flex items-center justify-between gap-1">
+                <h3 class="font-serif font-bold text-base text-white group-hover:text-gold transition-colors truncate">
+                  ${c.name}
+                </h3>
+                <span class="text-[10px] font-semibold uppercase tracking-wider text-slate-400 truncate max-w-[48%] text-right font-sans">
+                  ${c.faction}
+                </span>
+              </div>
+              <p class="text-xs text-slate-300 font-sans truncate font-medium">
+                ${title}
+              </p>
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    function populateFactionPills() {
+      const container = document.getElementById('faction-filter-pills');
+      const activeClass = "bg-gold/15 text-gold border-gold/50 font-semibold shadow-sm";
+      const inactiveClass = "bg-surface/60 text-slate-300 border-border hover:border-slate-500 hover:text-white hover:bg-surface";
+
+      let html = `
+        <button onclick="setFactionFilter('ALL')" id="fpill-ALL" class="px-3.5 py-1.5 rounded-lg border text-xs whitespace-nowrap transition-all ${currentFaction === 'ALL' ? activeClass : inactiveClass}">
+          Tutti i Personaggi
+        </button>
+      `;
+
+      factions.forEach(f => {
+        const isActive = currentFaction === f.name;
+        html += `
+          <button onclick="setFactionFilter('${f.name}')" id="fpill-${f.name}" class="px-3.5 py-1.5 rounded-lg border text-xs whitespace-nowrap transition-all ${isActive ? activeClass : inactiveClass}">
+            ${f.name}
+          </button>
+        `;
+      });
+
+      container.innerHTML = html;
+    }
+
+    function setFactionFilter(fac) {
+      currentFaction = fac;
+      populateFactionPills();
+      renderRoster();
+    }
+
+    function setRarityFilter(rarity) {
+      // Kept as no-op for backward compatibility
+    }
+
+    function filterRoster() {
+      const search = (document.getElementById('char-search')?.value || '').trim();
+      const clearBtn = document.getElementById('clear-search-btn');
+      if (clearBtn) {
+        if (search.length > 0) clearBtn.classList.remove('hidden');
+        else clearBtn.classList.add('hidden');
+      }
+      renderRoster();
+    }
+
+    function clearSearch() {
+      const input = document.getElementById('char-search');
+      if (input) {
+        input.value = '';
+        document.getElementById('clear-search-btn')?.classList.add('hidden');
+        renderRoster();
+      }
+    }
+
+    // --- CHARACTER DETAIL DRAWER ---
+    function openCharacterDrawer(id) {
+      const c = cases.find(item => item.id === id);
+      if (!c) return;
+      activeChar = c;
+
+      const breadcrumbEl = document.getElementById('drawer-breadcrumb-name');
+      if (breadcrumbEl) breadcrumbEl.innerText = c.name;
+
+      document.getElementById('drawer-name').innerText = c.name;
+      document.getElementById('drawer-title').innerText = currentLocale === 'it' ? c.title_it : c.title_en;
+      document.getElementById('drawer-quote').innerText = currentLocale === 'it' ? c.quote_it : c.quote_en;
+      document.getElementById('drawer-portrait').src = c.drip_img;
+      document.getElementById('drawer-faction-badge').innerText = c.faction;
+      const drawerFactionEl = document.getElementById('drawer-faction'); if (drawerFactionEl) drawerFactionEl.innerText = c.faction;
+      document.getElementById('drawer-role').innerText = c.role;
+
+      document.getElementById('drawer-bio-it').innerText = c.bio_it;
+      document.getElementById('drawer-bio-en').innerText = c.bio_en;
+      document.getElementById('drawer-creator-notes').innerText = c.creator_notes || "Nessun appunto personale registrato nel vault per questo fascicolo. Puoi discutere le teorie e i misteri sul server Discord di CatalystOnline.";
+      document.getElementById('drawer-media-title').innerText = (c.trailer_title || "Trailer Ufficiale").replace('//', '—');
+      
+      const ytId = extractYouTubeId(c.trailer_url || "ZcDBkBs7J6g");
+      const videoUrl = c.trailer_url || `https://www.youtube.com/watch?v=${ytId}`;
+      document.getElementById('drawer-media-external-link').href = videoUrl;
+
+      // Reset video cover container
+      resetDrawerVideo(ytId);
+
+      // Tags with clear styling
+      document.getElementById('drawer-tags').innerHTML = c.tags.map(t => `
+        <span class="px-2.5 py-1 rounded-md bg-canvas border border-border text-xs text-slate-300 font-sans">#${t}</span>
+      `).join('');
+
+      // Gallery with zoom prompt
+      document.getElementById('drawer-gallery-grid').innerHTML = `
+        <div class="space-y-1.5">
+          <p class="text-xs text-slate-300 font-medium">Drip Marketing Art</p>
+          <div class="aspect-[3/4] rounded-xl overflow-hidden border border-border bg-canvas cursor-pointer group relative shadow-md" onclick="openLightbox('${c.drip_img}')">
+            <img src="${c.drip_img}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+            <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 flex items-center justify-center transition-opacity text-xs text-white gap-1 font-medium">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v6m3-3H7"/></svg>
+              Ingrandisci
+            </div>
+          </div>
+        </div>
+        <div class="space-y-1.5">
+          <p class="text-xs text-slate-300 font-medium">Profile Art</p>
+          <div class="aspect-[3/4] rounded-xl overflow-hidden border border-border bg-canvas cursor-pointer group relative shadow-md" onclick="openLightbox('${c.profile_img}')">
+            <img src="${c.profile_img}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+            <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 flex items-center justify-center transition-opacity text-xs text-white gap-1 font-medium">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v6m3-3H7"/></svg>
+              Ingrandisci
+            </div>
+          </div>
+        </div>
+        <div class="space-y-1.5">
+          <p class="text-xs text-slate-300 font-medium">Hidden Pages Art</p>
+          <div class="aspect-[3/4] rounded-xl overflow-hidden border border-border bg-canvas cursor-pointer group relative shadow-md" onclick="openLightbox('${c.hidden_img}')">
+            <img src="${c.hidden_img}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+            <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 flex items-center justify-center transition-opacity text-xs text-white gap-1 font-medium">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v6m3-3H7"/></svg>
+              Ingrandisci
+            </div>
+          </div>
+        </div>
+      `;
+
+      document.getElementById('drawer-hidden-title').innerText = currentLocale === 'it' ? (c.hidden_title_it || c.hidden_title_en || 'Dossier Segreto') : (c.hidden_title_en || 'Secret Dossier');
+      document.getElementById('drawer-hidden-story-it').innerText = c.hidden_story_it || "Nessun estratto delle Pagine Nascoste disponibile al momento.";
+      document.getElementById('drawer-hidden-story-en').innerText = c.hidden_story_en || "No Hidden Pages lore excerpt currently available.";
+
+      const extraLinkEl = document.getElementById('drawer-hidden-extra-link');
+      const linksHtml = [];
+      if (c.x_post_url) {
+        linksHtml.push(`<a href="${c.x_post_url}" target="_blank" class="px-2.5 py-1 rounded-md bg-surface border border-border hover:border-gold hover:text-gold text-xs text-slate-300 flex items-center gap-1.5 transition-colors font-medium"><span>Post Ufficiale su X</span> <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg></a>`);
+      }
+      if (c.trailer_url) {
+        linksHtml.push(`<a href="${c.trailer_url}" target="_blank" class="px-2.5 py-1 rounded-md bg-surface border border-border hover:border-red-500 hover:text-red-400 text-xs text-slate-300 flex items-center gap-1.5 transition-colors font-medium"><span>Teaser su YouTube</span> <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg></a>`);
+      }
+      if (linksHtml.length > 0) {
+        extraLinkEl.innerHTML = `<span class="text-slate-400 text-xs">Fonti Ufficiali:</span> <div class="flex flex-wrap items-center gap-2">${linksHtml.join('')}</div>`;
+      } else {
+        extraLinkEl.innerHTML = `<span class="text-slate-400 text-xs">Archivio Ufficiale Silver Palace — Elementa Games</span>`;
+      }
+
+      setDrawerTab('bio');
+
+      const drawer = document.getElementById('character-drawer');
+      const panel = document.getElementById('character-drawer-panel');
+      if (drawer && panel) {
+        drawer.classList.remove('opacity-0', 'pointer-events-none');
+        drawer.classList.add('opacity-100', 'pointer-events-auto');
+        requestAnimationFrame(() => {
+          panel.classList.remove('translate-x-full');
+          panel.classList.add('translate-x-0');
+        });
+        document.body.classList.add('overflow-hidden');
+      }
+    }
+
+    function closeCharacterDrawer() {
+      const drawer = document.getElementById('character-drawer');
+      const panel = document.getElementById('character-drawer-panel');
+      if (!drawer || !panel) return;
+
+      panel.classList.remove('translate-x-0');
+      panel.classList.add('translate-x-full');
+
+      drawer.classList.remove('opacity-100', 'pointer-events-auto');
+      drawer.classList.add('opacity-0');
+
+      setTimeout(() => {
+        drawer.classList.add('pointer-events-none');
+        document.body.classList.remove('overflow-hidden');
+      }, 320);
+    }
+
+    function handleDrawerBackdropClick(e) {
+      if (e.target === document.getElementById('character-drawer')) {
+        closeCharacterDrawer();
+      }
+    }
+
+    function setDrawerTab(tab) {
+      ['bio', 'hidden', 'gallery', 'media', 'notes'].forEach(t => {
+        const btn = document.getElementById(`d-tab-${t}`);
+        const content = document.getElementById(`drawer-tab-content-${t}`);
+        if (t === tab) {
+          btn.className = "px-4 py-3 border-b-2 border-gold text-white font-semibold transition-colors";
+          content.classList.remove('hidden');
+        } else {
+          btn.className = "px-4 py-3 border-b-2 border-transparent text-muted hover:text-white transition-colors";
+          content.classList.add('hidden');
+        }
+      });
+    }
+
+    function resetDrawerVideo(ytId) {
+      const container = document.getElementById('drawer-video-container');
+      container.innerHTML = `
+        <div onclick="playDrawerVideo('${ytId}')" class="group w-full h-full relative cursor-pointer">
+          <img src="https://img.youtube.com/vi/${ytId}/maxresdefault.jpg" alt="Trailer Thumbnail" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 opacity-85 group-hover:opacity-100" onerror="this.src='https://img.youtube.com/vi/${ytId}/hqdefault.jpg'">
+          <div class="absolute inset-0 flex items-center justify-center">
+            <div class="w-14 h-14 rounded-full bg-red-600 group-hover:bg-red-500 text-white flex items-center justify-center shadow-xl transition-all duration-300 group-hover:scale-110">
+              <svg class="w-6 h-6 fill-current translate-x-0.5" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+            </div>
+          </div>
+          <div class="absolute bottom-2.5 right-2.5 px-2.5 py-1 rounded bg-black/80 text-[11px] font-medium text-white">
+            ▶ Guarda Video
+          </div>
+        </div>
+      `;
+    }
+
+    function playDrawerVideo(ytId) {
+      const container = document.getElementById('drawer-video-container');
+      container.innerHTML = `
+        <iframe 
+          src="https://www.youtube.com/embed/${ytId}?autoplay=1&rel=0" 
+          title="Character Trailer" 
+          class="w-full h-full border-0" 
+          referrerpolicy="strict-origin-when-cross-origin"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+          allowfullscreen>
+        </iframe>
+      `;
+    }
+
+    // --- TIMELINE RENDERING ---
+    function renderTimeline() {
+      const container = document.getElementById('timeline-list');
+      const filter = document.getElementById('timeline-type-filter')?.value || 'ALL';
+
+      const filtered = dispatches.filter(d => filter === 'ALL' || d.type === filter);
+
+      // Semantic post type badge styling
+      const getBadgeStyle = (type) => {
+        switch (type) {
+          case 'Trailer Ufficiale':
+            return 'bg-red-500/15 border-red-500/40 text-red-300';
+          case 'Drip Marketing':
+            return 'bg-gold/15 border-gold/40 text-gold';
+          case 'Storia Extra Personaggio':
+            return 'bg-purple-500/15 border-purple-500/40 text-purple-300';
+          case 'Annuncio Ufficiale':
+            return 'bg-sky-500/15 border-sky-500/40 text-sky-300';
+          case 'Evento Live Internazionale':
+            return 'bg-emerald-500/15 border-emerald-500/40 text-emerald-300';
+          default:
+            return 'bg-surface-raised border-border text-slate-300';
+        }
+      };
+
+      container.innerHTML = filtered.map(d => {
+        const badgeStyle = getBadgeStyle(d.type);
+        const desc = currentLocale === 'it' ? d.desc_it : (d.desc_en || d.desc_it);
+        const isVideo = d.type.includes('Trailer') || d.type.includes('Video') || (d.link && d.link.includes('youtube'));
+
+        return `
+          <div class="p-5 sm:p-6 rounded-xl bg-surface border border-border hover:border-border-active transition-all space-y-3.5 shadow-sm">
+            <div class="flex items-center justify-between text-xs">
+              <div class="flex items-center gap-2">
+                <span class="px-2.5 py-0.5 rounded-md border font-semibold ${badgeStyle}">${d.type}</span>
+                <span class="text-slate-600">•</span>
+                <span class="font-medium text-slate-400 font-sans">${d.date}</span>
+              </div>
+              <a href="${d.link}" target="_blank" rel="noopener noreferrer" class="px-2.5 py-1 rounded-md border border-border/80 bg-surface-raised hover:border-gold/60 text-slate-300 hover:text-gold flex items-center gap-1.5 font-medium transition-colors">
+                <span>${isVideo ? 'Guarda Video' : 'Fonte Ufficiale'}</span>
+                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
+              </a>
+            </div>
+
+            ${d.cover_img ? `
+              <div class="rounded-xl overflow-hidden border border-border bg-canvas aspect-[16/9] sm:aspect-[21/9] cursor-pointer group relative shadow-md" onclick="openLightbox('${d.cover_img}')">
+                <img src="${d.cover_img}" alt="${d.title}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" loading="lazy">
+                <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-70 group-hover:opacity-40 transition-opacity"></div>
+                <span class="absolute bottom-2.5 right-2.5 px-2.5 py-1 rounded-md bg-black/80 backdrop-blur-sm text-[11px] text-slate-200 border border-border flex items-center gap-1">
+                  <svg class="w-3.5 h-3.5 text-gold" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v6m3-3H7"/></svg>
+                  Ingrandisci Illustrazione
+                </span>
+              </div>
+            ` : ''}
+
+            <div class="space-y-1.5">
+              <h3 class="font-serif font-bold text-xl sm:text-2xl text-white tracking-tight">${d.title}</h3>
+              <p class="text-sm text-slate-300 leading-relaxed font-sans whitespace-pre-line">${desc}</p>
+            </div>
+            
+            ${d.tags && d.tags.length ? `
+              <div class="flex flex-wrap gap-1.5 pt-1 text-[11px] text-slate-400">
+                ${d.tags.map(t => `<span class="px-2 py-0.5 rounded bg-canvas border border-border-subtle">#${t}</span>`).join('')}
+              </div>
+            ` : ''}
+          </div>
+        `;
+      }).join('');
+    }
+
+    // --- FACTIONS RENDERING ---
+    function renderFactions() {
+      const container = document.getElementById('factions-grid');
+      container.innerHTML = factions.map(f => {
+        const initial = f.name.charAt(0);
+        const hasBanner = !!f.banner;
+        const members = cases.filter(c => c.faction && c.faction.toLowerCase().trim() === f.name.toLowerCase().trim());
+
+        return `
+          <div class="p-6 rounded-xl bg-surface border border-border hover:border-border-active transition-all flex flex-col justify-between space-y-4 shadow-sm">
+            <div class="space-y-4">
+              ${hasBanner ? `
+                <div class="rounded-lg overflow-hidden border border-border bg-canvas aspect-[21/9] cursor-pointer group relative shadow-inner" onclick="openLightbox('${f.banner}')">
+                  <img src="${f.banner}" alt="${f.name}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" loading="lazy">
+                  <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-70 group-hover:opacity-40 transition-opacity"></div>
+                  <span class="absolute bottom-2 right-2 px-2 py-0.5 rounded bg-black/80 text-[10px] text-slate-300 border border-border flex items-center gap-1">
+                    <svg class="w-3 h-3 text-gold" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v6m3-3H7"/></svg>
+                    Ingrandisci Banner
+                  </span>
+                </div>
+              ` : `
+                <div class="rounded-lg border border-border/80 bg-gradient-to-br from-surface-raised via-canvas to-surface-raised aspect-[21/9] p-5 flex flex-col items-center justify-center relative overflow-hidden shadow-inner group">
+                  <div class="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-gold/10 via-transparent to-transparent opacity-60"></div>
+                  <div class="absolute top-2.5 left-2.5 w-3 h-3 border-t border-l border-gold/40"></div>
+                  <div class="absolute top-2.5 right-2.5 w-3 h-3 border-t border-r border-gold/40"></div>
+                  <div class="absolute bottom-2.5 left-2.5 w-3 h-3 border-b border-l border-gold/40"></div>
+                  <div class="absolute bottom-2.5 right-2.5 w-3 h-3 border-b border-r border-gold/40"></div>
+                  <div class="w-12 h-12 rounded-xl bg-surface/90 border border-gold/40 flex items-center justify-center font-serif text-2xl font-bold text-gold flex-shrink-0 shadow-md relative z-10 group-hover:scale-105 transition-transform duration-300">
+                    ${initial}
+                  </div>
+                  <div class="text-center relative z-10 mt-2">
+                    <span class="text-[10px] font-semibold uppercase tracking-widest text-gold/90 block">Sigillo Ufficiale</span>
+                    <span class="text-[11px] text-slate-400 font-serif italic">Silver Palace Archive • Divisione Censita</span>
+                  </div>
+                </div>
+              `}
+
+              <div class="flex items-center justify-between pt-1">
+                <div>
+                  <h3 class="font-serif font-bold text-xl text-white">${f.name}</h3>
+                  <p class="text-xs text-gold font-serif italic">${f.alias || ''}</p>
+                </div>
+                <button onclick="setFactionFilter('${f.name}'); setView('characters');" class="px-3 py-1.5 rounded-lg bg-surface-raised border border-border hover:border-gold hover:text-gold text-xs text-slate-300 transition-colors flex items-center gap-1 font-medium shadow-sm">
+                  <span>Vedi Membri</span>
+                  <span>→</span>
+                </button>
+              </div>
+
+              <p class="text-sm text-slate-300 leading-relaxed font-sans pt-1 whitespace-pre-line">${currentLocale === 'it' ? (f.desc_it || f.desc) : (f.desc_en || f.desc_it || f.desc)}</p>
+            </div>
+
+            <div class="space-y-2 pt-2">
+              ${members.length > 0 ? `
+                <div class="pt-3 border-t border-border flex items-center justify-between text-xs">
+                  <span class="text-slate-400 font-medium">Operativi Noti:</span>
+                  <div class="flex flex-wrap gap-1 justify-end max-w-[70%]">
+                    ${members.map(m => `
+                      <span onclick="event.stopPropagation(); setFactionFilter('${f.name}'); setView('characters'); selectCase('${m.id}');" class="px-2 py-0.5 rounded bg-surface-raised border border-border/80 hover:border-gold hover:text-gold text-[11px] text-slate-300 cursor-pointer transition-colors" title="Apri fascicolo di ${m.name}">
+                        ${m.name}
+                      </span>
+                    `).join('')}
+                  </div>
+                </div>
+              ` : ''}
+
+              ${f.leader ? `
+                <div class="pt-2 border-t border-border/60 flex items-center justify-between text-xs">
+                  <span class="text-slate-400 font-medium">Figure Chiave / Leader:</span>
+                  <strong class="text-white font-semibold text-right max-w-[65%] truncate">${f.leader}</strong>
+                </div>
+              ` : ''}
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    // --- LEXICON RENDERING ---
+    function renderLexicon() {
+      const container = document.getElementById('lexicon-grid');
+      container.innerHTML = lexicon.map(l => {
+        const def = currentLocale === 'it' ? (l.def_it || l.def) : (l.def_en || l.def_it || l.def);
+
+        return `
+          <div class="p-5 rounded-xl bg-surface border border-border hover:border-border-active transition-all space-y-3 flex flex-col justify-between shadow-sm">
+            <div class="space-y-2">
+              ${l.image ? `
+                <div class="rounded-lg overflow-hidden border border-border bg-canvas aspect-[16/9] mb-3 cursor-pointer group relative shadow-inner" onclick="openLightbox('${l.image}')">
+                  <img src="${l.image}" alt="${l.term}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" loading="lazy">
+                  <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent opacity-60 group-hover:opacity-30 transition-opacity"></div>
+                  <span class="absolute bottom-2 right-2 px-2 py-0.5 rounded bg-black/80 text-[10px] text-slate-300 border border-border flex items-center gap-1">
+                    <svg class="w-3 h-3 text-gold" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v6m3-3H7"/></svg>
+                    Art
+                  </span>
+                </div>
+              ` : ''}
+              <span class="text-[11px] text-gold font-semibold uppercase tracking-wider px-2 py-0.5 rounded bg-gold/10 border border-gold/25 inline-block">${l.category}</span>
+              <h4 class="font-serif font-bold text-lg text-white pt-0.5">${l.term}</h4>
+              <p class="text-xs text-slate-300 leading-relaxed whitespace-pre-line font-sans">${def}</p>
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    // --- LANGUAGE TOGGLE ---
+    function setLanguage(lang) {
+      currentLocale = lang;
+      document.getElementById('lang-it').className = `px-2.5 py-1 rounded-md text-xs font-semibold ${lang === 'it' ? 'bg-surface-raised text-white shadow-sm' : 'text-slate-400 hover:text-white'} transition-all`;
+      document.getElementById('lang-en').className = `px-2.5 py-1 rounded-md text-xs font-semibold ${lang === 'en' ? 'bg-surface-raised text-white shadow-sm' : 'text-slate-400 hover:text-white'} transition-all`;
+      renderRoster();
+      renderTimeline();
+      renderFactions();
+      renderLexicon();
+            if (activeChar) {
+        document.getElementById('drawer-title').innerText = lang === 'it' ? activeChar.title_it : activeChar.title_en;
+        document.getElementById('drawer-quote').innerText = lang === 'it' ? activeChar.quote_it : activeChar.quote_en;
+        const hiddenTitleEl = document.getElementById('drawer-hidden-title');
+        if (hiddenTitleEl) {
+          hiddenTitleEl.innerText = lang === 'it' ? (activeChar.hidden_title_it || activeChar.hidden_title_en || 'Dossier Segreto') : (activeChar.hidden_title_en || 'Secret Dossier');
+        }
+      }
+    }
+
+    // --- ADMIN GATE & DASHBOARD ---
+    const ADMIN_KEY = "catascemo";
+
+    function openAdminGate() {
+      if (sessionStorage.getItem('sdb_auth') === 'true') {
+        openAdminDashboard();
+      } else {
+        document.getElementById('gate-password').value = '';
+        document.getElementById('gate-error').classList.add('hidden');
+        document.getElementById('admin-gate').classList.remove('hidden');
+        setTimeout(() => document.getElementById('gate-password').focus(), 100);
+      }
+    }
+
+    function closeAdminGate() {
+      document.getElementById('admin-gate').classList.add('hidden');
+    }
+
+    function handleAdminLogin(e) {
+      e.preventDefault();
+      const pwd = document.getElementById('gate-password').value;
+      if (pwd === ADMIN_KEY) {
+        sessionStorage.setItem('sdb_auth', 'true');
+        closeAdminGate();
+        openAdminDashboard();
+      } else {
+        document.getElementById('gate-error').classList.remove('hidden');
+      }
+    }
+
+    function openAdminDashboard() {
+      document.getElementById('admin-dashboard').classList.remove('hidden');
+      renderAdminVaultStatus();
+      setAdminTab('character');
+      updateAdminCharPreview();
+    }
+
+    function closeAdminDashboard() {
+      document.getElementById('admin-dashboard').classList.add('hidden');
+    }
+
+    function logoutAdmin() {
+      sessionStorage.removeItem('sdb_auth');
+      closeAdminDashboard();
+      alert('Disconnesso con successo.');
+    }
+
+    function setAdminTab(tab) {
+      ['char', 'disp', 'fac', 'lex'].forEach(t => {
+        const btn = document.getElementById(`ad-tab-${t}`);
+        const form = document.getElementById(`ad-form-${t}`);
+        const isMatch = (t === 'char' && tab === 'character') || 
+                        (t === 'disp' && tab === 'dispatch') || 
+                        (t === 'fac' && tab === 'faction') || 
+                        (t === 'lex' && tab === 'lexicon');
+        if (isMatch) {
+          btn.className = "px-3.5 py-2 rounded-lg bg-gold text-canvas font-semibold transition-colors";
+          form.classList.remove('hidden');
+        } else {
+          btn.className = "px-3.5 py-2 rounded-lg border border-border bg-surface text-slate-300 hover:text-white transition-colors";
+          form.classList.add('hidden');
+        }
+      });
+    }
+
+    function populateFactionSelect() {
+      const select = document.getElementById('fc-faction');
+      select.innerHTML = factions.map(f => `<option value="${f.name}">${f.name}</option>`).join('') + `<option value="__NEW__">+ Nuova Fazione...</option>`;
+    }
+
+    function checkCustomFaction(select) {
+      const customInput = document.getElementById('fc-custom-faction');
+      if (select.value === '__NEW__') {
+        customInput.classList.remove('hidden');
+        customInput.focus();
+      } else {
+        customInput.classList.add('hidden');
+      }
+    }
+
+    function updateAdminCharPreview() {
+      const nameEl = document.getElementById('prev-card-name');
+      const titleEl = document.getElementById('prev-card-title');
+      const imgEl = document.getElementById('prev-card-img');
+      const starsEl = document.getElementById('prev-card-stars');
+      if (nameEl) nameEl.innerText = document.getElementById('fc-name')?.value || 'Nome';
+      if (titleEl) titleEl.innerText = document.getElementById('fc-title')?.value || 'Titolo';
+      if (imgEl && document.getElementById('fc-img')) imgEl.src = document.getElementById('fc-img').value;
+      if (starsEl) {
+        const r = document.getElementById('fc-rarity')?.value || '';
+        starsEl.innerText = r ? (r + '★') : '';
+      }
+    }
+
+    function saveCharacter(e) {
+      e.preventDefault();
+      let faction = document.getElementById('fc-faction').value;
+      if (faction === '__NEW__') {
+        faction = document.getElementById('fc-custom-faction').value.trim() || 'Indipendente';
+        if (!factions.find(f => f.name.toLowerCase() === faction.toLowerCase())) {
+          factions.push({ name: faction, alias: faction, desc: 'Nuova fazione registrata.', leader: '' });
+          localStorage.setItem('sdb_factions', JSON.stringify(factions));
+          populateFactionPills();
+          populateFactionSelect();
+          renderFactions();
+        }
+      }
+
+      const newChar = {
+        id: document.getElementById('fc-name').value.toLowerCase().replace(/\s+/g, '-'),
+        name: document.getElementById('fc-name').value,
+        title_en: document.getElementById('fc-title').value,
+        title_it: document.getElementById('fc-title').value,
+        faction: faction,
+        rarity: parseInt(document.getElementById('fc-rarity').value),
+        element: document.getElementById('fc-element').value,
+        role: "Tattico",
+        quote_en: document.getElementById('fc-quote').value,
+        quote_it: document.getElementById('fc-quote').value,
+        bio_en: document.getElementById('fc-bio-en').value,
+        bio_it: document.getElementById('fc-bio-it').value,
+        drip_img: document.getElementById('fc-img').value,
+        profile_img: document.getElementById('fc-img').value,
+        hidden_img: document.getElementById('fc-img').value,
+        trailer_title: "Trailer di Presentazione",
+        trailer_url: document.getElementById('fc-trailer').value,
+        tags: [document.getElementById('fc-name').value.toLowerCase(), faction.toLowerCase()],
+        creator_notes: document.getElementById('fc-notes').value
+      };
+
+      cases.unshift(newChar);
+      localStorage.setItem('sdb_cases', JSON.stringify(cases));
+      renderRoster();
+      closeAdminDashboard();
+      openCharacterDrawer(newChar.id);
+      alert(`Personaggio "${newChar.name}" salvato nel database!`);
+    }
+
+    function saveDispatch(e) {
+      e.preventDefault();
+      const newD = {
+        id: "d_" + Date.now(),
+        title: document.getElementById('fd-title').value,
+        type: document.getElementById('fd-type').value,
+        date: document.getElementById('fd-date').value,
+        desc_it: document.getElementById('fd-desc-it').value,
+        link: document.getElementById('fd-link').value
+      };
+      dispatches.unshift(newD);
+      localStorage.setItem('sdb_dispatches', JSON.stringify(dispatches));
+      renderTimeline();
+      closeAdminDashboard();
+      setView('timeline');
+      alert(`Notizia "${newD.title}" pubblicata!`);
+    }
+
+    function saveFaction(e) {
+      e.preventDefault();
+      const newF = {
+        name: document.getElementById('ff-name').value,
+        alias: document.getElementById('ff-name').value,
+        leader: document.getElementById('ff-leader').value,
+        desc: document.getElementById('ff-desc').value
+      };
+      factions.push(newF);
+      localStorage.setItem('sdb_factions', JSON.stringify(factions));
+      populateFactionPills();
+      populateFactionSelect();
+      renderFactions();
+      closeAdminDashboard();
+      setView('factions');
+      alert(`Fazione "${newF.name}" registrata!`);
+    }
+
+    function saveLexicon(e) {
+      e.preventDefault();
+      const newL = {
+        term: document.getElementById('fl-term').value,
+        category: document.getElementById('fl-cat').value,
+        def: document.getElementById('fl-def').value
+      };
+      lexicon.unshift(newL);
+      localStorage.setItem('sdb_lexicon', JSON.stringify(lexicon));
+      renderLexicon();
+            closeAdminDashboard();
+      setView('lexicon');
+      alert(`Termine "${newL.term}" salvato nel glossario!`);
+    }
+
+    function extractYouTubeId(url) {
+      if (!url) return 'ZcDBkBs7J6g';
+      const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/;
+      const match = url.match(regExp);
+      return (match && match[2].length === 11) ? match[2] : (url.length === 11 ? url : 'ZcDBkBs7J6g');
+    }
+
+    function openLightbox(src) {
+      document.getElementById('lightbox-img').src = src;
+      document.getElementById('lightbox').classList.remove('hidden');
+    }
+  </script>
+</body>
+</html>
