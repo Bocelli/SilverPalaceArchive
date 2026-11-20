@@ -541,5 +541,25 @@ if (casesStart !== -1 && sdbVersionStart !== -1) {
   log('ERRORE: marker non trovati in index.html');
 }
 
+// 5. Push automatico su GitHub Pages (se disponibile)
+try {
+  const remotes = execSync(`git -C "${SITE_DIR}" remote`, { encoding: 'utf8' }).trim();
+  if (remotes.includes('origin')) {
+    log('Controllo modifiche per GitHub Pages...');
+    execSync(`git -C "${SITE_DIR}" add index.html _multimedia`, { encoding: 'utf8' });
+    const diff = execSync(`git -C "${SITE_DIR}" status --porcelain`, { encoding: 'utf8' }).trim();
+    if (diff) {
+      log('Spinta aggiornamenti su GitHub Pages...');
+      execSync(`git -C "${SITE_DIR}" commit -m "Auto-sync vault update [${new Date().toISOString()}]"`, { encoding: 'utf8' });
+      execSync(`git -C "${SITE_DIR}" push origin main`, { encoding: 'utf8' });
+      log('GitHub Pages aggiornato con successo!');
+    } else {
+      log('Nessuna modifica da caricare su GitHub (già allineato).');
+    }
+  }
+} catch (e) {
+  log(`Nota push GitHub: ${e.message}`);
+}
+
 log(`Riepilogo: ${cases.length} personaggi, ${factions.length} fazioni, ${lexicon.length} termini dizionario, ${dispatches.length} post.`);
 log('=== COMPLETATO CON SUCCESSO ===');
