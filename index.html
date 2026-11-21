@@ -1896,7 +1896,7 @@
             
             <!-- Art Frame with Aspect Ratio -->
             <div class="aspect-[3/4] w-full rounded-lg overflow-hidden bg-canvas relative shadow-inner">
-              <img src="${c.drip_img}" alt="${c.name}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" loading="lazy">
+              <img src="${c.profile_img || c.drip_img}" alt="${c.name}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" loading="lazy">
               
               <!-- Top Right: Element Chip -->
               ${elementShort ? `
