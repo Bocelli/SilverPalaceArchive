@@ -3039,7 +3039,7 @@
     const VAULT_ALERTS = [];
 
     // Auto-sync with SPVault DB Version
-    const SDB_VERSION = "spvault_sync_1795258595258";
+    const SDB_VERSION = "spvault_sync_1795258956040";
     if (localStorage.getItem('sdb_version') !== SDB_VERSION) {
       localStorage.setItem('sdb_cases', JSON.stringify(DEFAULT_CASES));
       localStorage.setItem('sdb_dispatches', JSON.stringify(DEFAULT_DISPATCHES));
@@ -3149,6 +3149,8 @@
 
     // --- VIEW SWITCHING ---
     function setView(view) {
+      if (typeof closeCharacterDrawer === 'function') closeCharacterDrawer();
+      if (typeof closeLightbox === 'function') closeLightbox();
       const views = ['characters', 'timeline', 'factions', 'lexicon', 'multimedia'];
       views.forEach(v => {
         const el = document.getElementById(`view-${v}`);
@@ -3420,6 +3422,13 @@
       const panel = document.getElementById('character-drawer-panel');
       if (!drawer || !panel) return;
 
+      // Stop and reset character video iframe immediately on close
+      const vContainer = document.getElementById('drawer-video-container');
+      if (vContainer && activeChar) {
+        const ytId = extractYouTubeId(activeChar.trailer_url || "ZcDBkBs7J6g");
+        resetDrawerVideo(ytId);
+      }
+
       panel.classList.remove('translate-x-0');
       panel.classList.add('translate-x-full');
 
@@ -3439,6 +3448,13 @@
     }
 
     function setDrawerTab(tab) {
+      if (tab !== 'media') {
+        const vContainer = document.getElementById('drawer-video-container');
+        if (vContainer && activeChar) {
+          const ytId = extractYouTubeId(activeChar.trailer_url || "ZcDBkBs7J6g");
+          resetDrawerVideo(ytId);
+        }
+      }
       ['bio', 'hidden', 'gallery', 'media', 'notes'].forEach(t => {
         const btn = document.getElementById(`d-tab-${t}`);
         const content = document.getElementById(`drawer-tab-content-${t}`);
