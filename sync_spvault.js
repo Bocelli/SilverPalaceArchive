@@ -49,6 +49,7 @@ copyRecursive(multimediaSrc, multimediaDest);
 // 3. Extract vault data
 log('Parsing dei dati del vault...');
 
+
 function cleanObsidianProse(text) {
   if (!text) return '';
   // Cut any trailing sections (Post, Video, Immagini, Tags, Fonti, Dettagli, Data di creazione)
@@ -510,6 +511,87 @@ charFolders.forEach(cName => {
   });
 });
 
+// Scansione della cartella multimediale e trailer per Archivio Multimediale
+function extractMultimedia(repoContent, siteDir) {
+  const mmList = [];
+  let idCounter = 1;
+  const mmBase = path.join(siteDir, '_multimedia');
+
+  function scanDir(dir, relCategory, labelIt, labelEn) {
+    if (!fs.existsSync(dir)) return;
+    const files = fs.readdirSync(dir, { withFileTypes: true });
+    for (const f of files) {
+      if (f.isDirectory()) continue;
+      if (f.name === 'index.md' || f.name.startsWith('.')) continue;
+
+      const ext = path.extname(f.name).toUpperCase().replace('.', '');
+      const baseName = path.basename(f.name, path.extname(f.name));
+      const relPath = path.relative(siteDir, path.join(dir, f.name)).replace(/\\/g, '/');
+
+      const tags = [relCategory];
+      baseName.toLowerCase().split(/[\s\-_]+/).forEach(w => {
+        if (w.length > 2 && !tags.includes(w)) tags.push(w);
+      });
+
+      mmList.push({
+        id: 'mm_' + (idCounter++),
+        title: baseName,
+        category: relCategory,
+        category_label_it: labelIt,
+        category_label_en: labelEn,
+        type: 'image',
+        src: relPath,
+        format: ext,
+        tags: tags
+      });
+    }
+  }
+
+  scanDir(path.join(mmBase, 'Art Per Eventi'), 'eventi', 'Art Eventi', 'Event Art');
+  scanDir(path.join(mmBase, 'Art Per Festività'), 'festivita', 'Festività', 'Holiday Art');
+  scanDir(path.join(mmBase, 'Art Per Fazioni'), 'fazioni_mappe', 'Fazioni & Mappe', 'Factions & Maps');
+  scanDir(path.join(mmBase, 'Art Per Mappe'), 'fazioni_mappe', 'Fazioni & Mappe', 'Factions & Maps');
+  scanDir(path.join(mmBase, 'Personaggi/Drip Marketing'), 'personaggi_drip', 'Drip Marketing', 'Drip Marketing');
+  scanDir(path.join(mmBase, 'Personaggi/Profile Art'), 'personaggi_profile', 'Profile Art (Tarocchi)', 'Profile Art (Tarot)');
+  scanDir(path.join(mmBase, 'Personaggi/Hidden Pages'), 'personaggi_hidden', 'Pagine Segrete', 'Hidden Pages Art');
+  scanDir(path.join(mmBase, 'Personaggi/Official Art'), 'personaggi_official', 'Official Art Personaggi', 'Official Character Art');
+  scanDir(path.join(mmBase, 'Web Event/Mystery Unveiled'), 'webevent', 'Web Event (Mystery Unveiled)', 'Web Event (Mystery Unveiled)');
+
+  // Trailers da Post Ufficiali/Trailers/Presentazione Gioco
+  const trailersDir = path.join(repoContent, 'Post Ufficiali/Trailers/Presentazione Gioco');
+  if (fs.existsSync(trailersDir)) {
+    const tFiles = fs.readdirSync(trailersDir);
+    for (const tf of tFiles) {
+      if (!tf.endsWith('.md')) continue;
+      const raw = fs.readFileSync(path.join(trailersDir, tf), 'utf8');
+      const baseName = path.basename(tf, '.md');
+      const linkMatch = raw.match(/https?:\/\/(?:www\.)?(?:youtube\.com\/watch\?v=|youtu\.be\/)([a-zA-Z0-9_\-]+)/);
+      const ytId = linkMatch ? linkMatch[1] : '';
+      const ytUrl = linkMatch ? linkMatch[0] : '';
+      const tags = ['trailer', 'video', 'ufficiale'];
+
+      mmList.push({
+        id: 'mm_' + (idCounter++),
+        title: baseName,
+        category: 'trailers',
+        category_label_it: 'Trailer & Video',
+        category_label_en: 'Official Trailers',
+        type: 'video',
+        youtube_id: ytId,
+        video_url: ytUrl,
+        src: ytId ? `https://img.youtube.com/vi/${ytId}/maxresdefault.jpg` : '',
+        format: 'YouTube HD',
+        tags: tags
+      });
+    }
+  }
+
+  return mmList;
+}
+
+const multimediaList = extractMultimedia(repoContent, SITE_DIR);
+log(`Estratti ${multimediaList.length} asset multimediali.`);
+
 // 4. Mappatura file o sezioni non ancora mappate (Alerts)
 log('Rilevamento file e sezioni non ancora mappate nel Vault...');
 const alerts = [];
@@ -589,10 +671,11 @@ if (casesStart !== -1 && sdbVersionStart !== -1) {
   const newDispatchesBlock = 'const DEFAULT_DISPATCHES = ' + JSON.stringify(dispatches, null, 2) + ';\n\n    ';
   const newFactionsBlock = 'const DEFAULT_FACTIONS = ' + JSON.stringify(factions, null, 2) + ';\n\n    ';
   const newLexiconBlock = 'const DEFAULT_LEXICON = ' + JSON.stringify(lexicon, null, 2) + ';\n\n    ';
+  const newMultimediaBlock = 'const DEFAULT_MULTIMEDIA = ' + JSON.stringify(multimediaList, null, 2) + ';\n\n    ';
   const newAlertsBlock = '// Auto-sync with SPVault DB Alerts\n    const VAULT_ALERTS = ' + JSON.stringify(alerts, null, 2) + ';\n\n    ';
 
   const newTimestamp = Date.now();
-  html = beforeCases + newCasesBlock + newDispatchesBlock + newFactionsBlock + newLexiconBlock + newAlertsBlock + afterLexicon;
+  html = beforeCases + newCasesBlock + newDispatchesBlock + newFactionsBlock + newLexiconBlock + newMultimediaBlock + newAlertsBlock + afterLexicon;
   html = html.replace(/const SDB_VERSION = "[^"]+";/, `const SDB_VERSION = "spvault_sync_${newTimestamp}";`);
   fs.writeFileSync(INDEX_HTML, html, 'utf8');
   log(`index.html aggiornato con successo a versione spvault_sync_${newTimestamp}!`);
