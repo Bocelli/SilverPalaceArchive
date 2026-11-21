@@ -234,7 +234,7 @@
     <div id="character-drawer-panel" class="w-full max-w-3xl bg-surface border-l border-border h-full overflow-y-auto flex flex-col shadow-2xl transform translate-x-full" onclick="event.stopPropagation()">
       
       <!-- Drawer Top Bar -->
-      <div class="px-4 sm:px-6 py-3 border-b border-border bg-canvas/90 backdrop-blur-md flex items-center justify-between sticky top-0 z-20">
+      <div class="flex-shrink-0 px-4 sm:px-6 py-3 border-b border-border bg-canvas/90 backdrop-blur-md flex items-center justify-between sticky top-0 z-20">
         <div class="flex items-center gap-2.5">
           <span class="text-xs text-slate-400 font-sans">Archivio / <span id="drawer-breadcrumb-name" class="text-white font-medium">Nome</span></span>
           <span class="text-slate-600">•</span>
@@ -247,7 +247,7 @@
       </div>
 
       <!-- Drawer Hero Profile -->
-      <div class="p-4 sm:p-6 border-b border-border bg-gradient-to-b from-surface-raised/90 via-surface to-surface flex flex-col sm:flex-row gap-4 sm:gap-6 items-start">
+      <div class="flex-shrink-0 p-4 sm:p-6 border-b border-border bg-gradient-to-b from-surface-raised/90 via-surface to-surface flex flex-col sm:flex-row gap-4 sm:gap-6 items-start">
         <!-- Portrait -->
         <div class="w-36 aspect-[1/2] sm:w-44 rounded-xl overflow-hidden border border-border/80 flex-shrink-0 bg-canvas relative shadow-xl group cursor-pointer" onclick="openLightbox(activeChar ? (activeChar.profile_img || activeChar.drip_img) : '')">
           <img id="drawer-portrait" src="" alt="Portrait" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
@@ -284,7 +284,7 @@
       </div>
 
             <!-- Tab Navigation (Horizontally scrollable on mobile) -->
-      <div id="drawer-tab-nav" class="flex items-center border-b border-border bg-canvas px-4 sm:px-6 text-xs font-medium overflow-x-auto no-scrollbar scroll-smooth space-x-1" style="-webkit-overflow-scrolling: touch;">
+      <div id="drawer-tab-nav" class="flex-shrink-0 flex items-center border-b border-border bg-canvas px-4 sm:px-6 text-xs font-medium overflow-x-auto no-scrollbar scroll-smooth space-x-1 min-h-[46px] w-full sticky top-[49px] z-10 shadow-sm" style="-webkit-overflow-scrolling: touch;">
         <button onclick="setDrawerTab('bio')" id="d-tab-bio" class="px-3.5 py-3 border-b-2 border-gold text-white font-semibold transition-colors whitespace-nowrap flex-shrink-0">
           Panoramica & Lore
         </button>
