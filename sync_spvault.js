@@ -136,7 +136,7 @@ function extractQuote(text) {
   return m ? cleanObsidianProse(m[1].replace(/\n/g, ' ')) : '';
 }
 
-/** Toglie dal corpo titolo, sottotitolo decorativo, citazione già mostrata e nome ripetuto in coda. */
+/** Toglie dal corpo titolo, sottotitolo, citazione già mostrata e nome ripetuto in coda. */
 function cleanBio(text, title, name) {
   if (!text) return '';
   const norm = (s) => String(s || '').toLowerCase().replace(/[^a-z0-9à-ÿ]+/gi, ' ').trim();
@@ -149,14 +149,31 @@ function cleanBio(text, title, name) {
     const first = norm(lines[0]);
     if (first === titleN || (nameN && first.startsWith(nameN) && first.length <= titleN.length + 6)) lines.shift();
   }
+
+  // righe decorative tipo "—— Una storia tutta vostra ——"
   lines = lines.filter(l => !/^\s*[—–-]{2,}.*[—–-]{2,}\s*$/.test(l));
+
+  // sottotitolo senza decorazioni ("Grandi aspettative", "L'Occhio di Argos")
+  while (lines.length && !lines[0].trim()) lines.shift();
+  const isSubtitle = (s) => {
+    const v = s.trim();
+    return v.length > 0 && v.length < 70 && !/[.!?:…]$/.test(v) && !/^["«'—–-]/.test(v);
+  };
+  if (lines.length > 1 && isSubtitle(lines[0])) {
+    const rest = lines.slice(1).join('\n').trim();
+    const words = lines[0].trim().split(/\s+/).length;
+    if (/^(--|"|«|_)/.test(rest) || words <= 6) lines.shift();
+  }
+
   let body = lines.join('\n').trim();
-  body = body.replace(/^--\s*["«][\s\S]*?["»]\s*--\s*/i, '');
+  // citazione già mostrata nel drawer: -- "…" --
+  body = body.replace(/^(\s*)--\s*["«][\s\S]*?["»]\s*--\s*/i, '').trim();
+
   const tail = body.split('\n');
   while (tail.length > 1 && nameN && norm(tail[tail.length - 1]) === nameN) tail.pop();
-  body = tail.join('\n').trim();
-  return body;
+  return tail.join('\n').trim();
 }
+
 
 // ---------------------------------------------------------------- mapping
 
