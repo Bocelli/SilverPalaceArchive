@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="it" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex">
+  <title>Stato archivio — Silverium Database</title>
+  <meta name="description" content="Diagnostica del vault SPVault: contenuti non ancora mappati nella UI del Silverium Database.">
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,600;0,700;1,600&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: { extend: { colors: {
+        canvas: '#090B10', surface: '#11141D', 'surface-raised': '#171B26', border: '#23293A',
+        'border-active': '#45506E', gold: '#D4AF37', silver: '#E2E8F0', muted: '#8592A6'
+      }, fontFamily: { serif: ['"Playfair Display"', 'Georgia', 'serif'], sans: ['"Inter"', 'system-ui', 'sans-serif'] } } }
+    };
+  </script>
+  <style>
+    body { background:#090B10; color:#E2E8F0; font-family:'Inter', sans-serif; }
+    ::-webkit-scrollbar { width:6px; height:6px; }
+    ::-webkit-scrollbar-track { background:#090B10; }
+    ::-webkit-scrollbar-thumb { background:#23293A; border-radius:3px; }
+    .no-scrollbar::-webkit-scrollbar { display:none; }
+  </style>
+</head>
+<body class="min-h-screen antialiased selection:bg-gold/20 selection:text-gold">
+
+  <header class="border-b border-border bg-canvas/95 backdrop-blur-md sticky top-0 z-30">
+    <div class="max-w-5xl mx-auto px-4 sm:px-6 py-3 flex items-center justify-between gap-3">
+      <div class="flex items-center gap-3 min-w-0">
+        <a href="index.html" class="flex items-center gap-2 text-xs text-slate-300 hover:text-gold transition-colors border border-border rounded-lg px-3 py-1.5">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"/></svg>
+          <span>Archivio</span>
+        </a>
+        <div class="min-w-0">
+          <h1 class="font-serif text-lg sm:text-xl font-bold text-white truncate">Stato archivio</h1>
+          <p class="text-[11px] text-muted truncate">Drift tra vault SPVault e interfaccia del sito</p>
+        </div>
+      </div>
+      <span id="sync-version" class="hidden sm:inline text-[10px] font-mono text-slate-500 truncate max-w-[40%]"></span>
+    </div>
+  </header>
+
+  <main class="max-w-5xl mx-auto px-4 sm:px-6 py-8 space-y-8">
+
+    <section id="summary" class="grid grid-cols-2 sm:grid-cols-5 gap-3">
+      <div class="p-4 rounded-xl bg-surface border border-border">
+        <span class="text-[10px] uppercase tracking-wider text-muted font-semibold">Personaggi</span>
+        <p id="count-cases" class="font-serif text-2xl font-bold text-white">—</p>
+      </div>
+      <div class="p-4 rounded-xl bg-surface border border-border">
+        <span class="text-[10px] uppercase tracking-wider text-muted font-semibold">Fazioni</span>
+        <p id="count-factions" class="font-serif text-2xl font-bold text-white">—</p>
+      </div>
+      <div class="p-4 rounded-xl bg-surface border border-border">
+        <span class="text-[10px] uppercase tracking-wider text-muted font-semibold">Post</span>
+        <p id="count-dispatches" class="font-serif text-2xl font-bold text-white">—</p>
+      </div>
+      <div class="p-4 rounded-xl bg-surface border border-border">
+        <span class="text-[10px] uppercase tracking-wider text-muted font-semibold">Asset</span>
+        <p id="count-multimedia" class="font-serif text-2xl font-bold text-white">—</p>
+      </div>
+      <div class="p-4 rounded-xl bg-surface border border-border col-span-2 sm:col-span-1">
+        <span class="text-[10px] uppercase tracking-wider text-muted font-semibold">Da mappare</span>
+        <p id="count-drift" class="font-serif text-2xl font-bold text-gold">—</p>
+      </div>
+    </section>
+
+    <section id="drift-box" class="rounded-xl border border-border bg-surface overflow-hidden">
+      <div class="p-4 sm:p-5 flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-border">
+        <div class="flex items-start gap-3 min-w-0">
+          <div id="drift-icon" class="w-9 h-9 rounded-lg flex items-center justify-center shrink-0 border bg-surface-raised border-border text-muted">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01M5 19h14a2 2 0 001.73-3L13.7 4a2 2 0 00-3.46 0L3.27 16A2 2 0 005 19z"/></svg>
+          </div>
+          <div class="min-w-0">
+            <div class="flex items-center gap-2 flex-wrap">
+              <h2 id="drift-title" class="font-serif text-base font-bold text-white">Contenuto non mappato</h2>
+              <span id="drift-badge" class="px-2 py-0.5 rounded text-[10px] font-mono bg-surface-raised border border-border text-muted">—</span>
+            </div>
+            <p id="drift-msg" class="text-xs text-muted mt-0.5">Caricamento…</p>
+          </div>
+        </div>
+        <button id="copy-btn" onclick="copyPrompt()" class="shrink-0 px-3.5 py-2 rounded-lg bg-gold text-canvas font-semibold text-xs hover:bg-gold/90 transition-colors flex items-center justify-center gap-1.5 shadow">
+          <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/></svg>
+          <span id="copy-btn-text">Copia prompt</span>
+        </button>
+      </div>
+
+      <div id="type-filters" class="flex items-center gap-2 overflow-x-auto no-scrollbar px-4 sm:px-5 py-3 border-b border-border text-xs"></div>
+
+      <div id="drift-list" class="p-4 sm:p-5 space-y-2 max-h-[60vh] overflow-y-auto"></div>
+    </section>
+
+    <section class="rounded-xl border border-border bg-surface p-5 space-y-2 text-xs text-muted">
+      <h3 class="font-serif text-sm font-bold text-white">Come funziona</h3>
+      <p>Il sync legge il vault <a class="text-gold hover:underline" href="https://github.com/Bocelli/SPVault" target="_blank" rel="noopener">Bocelli/SPVault</a>, genera <code class="text-slate-300">data/archive.json</code> e <code class="text-slate-300">data/drift.json</code> e aggiorna le due pagine. Questa pagina non contiene segreti e non scrive nulla: è solo diagnostica.</p>
+      <p>Quando qui compare qualcosa, il contenuto esiste nel vault ma il sito non ha una UI per mostrarlo. Copia il prompt e incollalo in chat: si mappa la UI, si aggiorna <code class="text-slate-300">docs/DATA-CONTRACT.md</code> se serve, poi si ririlancia <code class="text-slate-300">node sync_spvault.js</code>.</p>
+    </section>
+
+    <p id="generated" class="text-[11px] text-slate-600 text-center"></p>
+  </main>
+
+  <script>
+    window.VAULT_DRIFT = /*DRIFT_START*/[
+  {
+    "type": "sezione-non-mappata",
+    "title": "Sezione \"Immagini e Link\" in Tinsley/Tinsley Drip Marketing.md",
+    "location": "../spvault_repo/content/Personaggi/Tinsley/Tinsley Drip Marketing.md",
+    "why": "Questa sezione del vault non ha una UI dedicata: va aggiunta una tab o mappata.",
+    "preview": "Immagini e Link"
+  }
+]/*DRIFT_END*/;
+    const SYNC_META = /*META_START*/{"version":"spvault_sync_1795265612285","generated_at":"2026-11-21T12:53:32.285Z","counts":{"cases":19,"dispatches":21,"factions":10,"lexicon":7,"multimedia":75}}/*META_END*/;
+
+    const TYPE_LABELS = {
+      'file-non-mappato': 'File non mappato',
+      'sezione-non-mappata': 'Sezione non mappata',
+      'cartella-vault': 'Cartella nuova',
+      'tag-fazione-non-mappato': 'Tag fazione',
+      'categoria-asset-nuova': 'Categoria asset',
+      'immagine-mancante': 'Immagine mancante',
+      'dato-mancante': 'Dato mancante',
+      'fazione-da-classificare': 'Fazione da classificare',
+      'categoria-post-nuova': 'Categoria post',
+      'frontmatter-ignorato': 'Frontmatter'
+    };
+
+    const SEVERITY = {
+      'immagine-mancante': 'bad',
+      'file-non-mappato': 'bad',
+      'sezione-non-mappata': 'bad',
+      'cartella-vault': 'bad',
+      'categoria-asset-nuova': 'bad',
+      'categoria-post-nuova': 'bad',
+      'tag-fazione-non-mappato': 'warn',
+      'fazione-da-classificare': 'warn',
+      'frontmatter-ignorato': 'warn',
+      'dato-mancante': 'info'
+    };
+
+    let activeType = 'ALL';
+
+    function esc(v) {
+      return String(v == null ? '' : v).replace(/[&<>"']/g, ch => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[ch]));
+    }
+
+    function badgeClass(sev) {
+      if (sev === 'bad') return 'bg-rose-500/10 border-rose-500/40 text-rose-300';
+      if (sev === 'warn') return 'bg-amber-500/10 border-amber-500/40 text-amber-300';
+      return 'bg-sky-500/10 border-sky-500/40 text-sky-300';
+    }
+
+    function items() {
+      return Array.isArray(window.VAULT_DRIFT) ? window.VAULT_DRIFT : [];
+    }
+
+    function renderSummary() {
+      const c = (SYNC_META && SYNC_META.counts) || {};
+      document.getElementById('count-cases').textContent = c.cases ?? '—';
+      document.getElementById('count-factions').textContent = c.factions ?? '—';
+      document.getElementById('count-dispatches').textContent = c.dispatches ?? '—';
+      document.getElementById('count-multimedia').textContent = c.multimedia ?? '—';
+      const list = items();
+      document.getElementById('count-drift').textContent = list.length;
+      document.getElementById('sync-version').textContent = (SYNC_META && SYNC_META.version) || '';
+      document.getElementById('generated').textContent = SYNC_META && SYNC_META.generated_at
+        ? 'Ultimo sync: ' + new Date(SYNC_META.generated_at).toLocaleString('it-IT')
+        : '';
+    }
+
+    function renderFilters() {
+      const box = document.getElementById('type-filters');
+      const list = items();
+      const counts = {};
+      list.forEach(it => { counts[it.type] = (counts[it.type] || 0) + 1; });
+      const types = Object.keys(counts).sort((a, b) => counts[b] - counts[a]);
+      if (types.length === 0) { box.classList.add('hidden'); return; }
+      const pill = (id, label, n) => `<button onclick="setType('${esc(id)}')" class="px-3 py-1.5 rounded-lg border whitespace-nowrap transition-colors ${activeType === id ? 'bg-gold text-canvas border-gold font-semibold' : 'bg-surface-raised border-border text-slate-300 hover:border-border-active hover:text-white'}">${esc(label)} <span class="opacity-60">(${n})</span></button>`;
+      box.innerHTML = pill('ALL', 'Tutti', list.length) + types.map(t => pill(t, TYPE_LABELS[t] || t, counts[t])).join('');
+    }
+
+    function setType(t) {
+      activeType = t;
+      renderFilters();
+      renderList();
+    }
+
+    function renderList() {
+      const box = document.getElementById('drift-list');
+      const all = items();
+      const list = activeType === 'ALL' ? all : all.filter(it => it.type === activeType);
+
+      if (all.length === 0) {
+        box.innerHTML = `
+          <div class="py-10 text-center space-y-2">
+            <div class="w-11 h-11 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 flex items-center justify-center mx-auto">
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+            </div>
+            <p class="font-serif text-lg text-white">Tutto mappato</p>
+            <p class="text-xs text-muted">Nessun contenuto del vault è rimasto fuori dall'interfaccia.</p>
+          </div>`;
+        return;
+      }
+
+      box.innerHTML = list.map(it => `
+        <article class="p-3.5 rounded-lg bg-canvas border border-border space-y-1.5">
+          <div class="flex items-start justify-between gap-3">
+            <h2 class="font-semibold text-sm text-white leading-snug">${esc(it.title)}</h2>
+            <span class="shrink-0 px-2 py-0.5 rounded border text-[10px] font-semibold ${badgeClass(SEVERITY[it.type] || 'info')}">${esc(TYPE_LABELS[it.type] || it.type)}</span>
+          </div>
+          ${it.location ? `<p class="text-[11px] font-mono text-slate-500 break-all">${esc(it.location)}</p>` : ''}
+          ${it.why ? `<p class="text-xs text-slate-300 leading-relaxed">${esc(it.why)}</p>` : ''}
+          ${it.preview ? `<p class="text-[11px] text-slate-500 bg-surface rounded p-2 border border-border/60 line-clamp-3">${esc(it.preview)}</p>` : ''}
+        </article>
+      `).join('');
+    }
+
+    function buildPrompt() {
+      const list = items();
+      const lines = list.map(it => {
+        const label = TYPE_LABELS[it.type] || it.type;
+        const where = it.location ? ` | ${it.location}` : '';
+        const why = it.why ? `\n    perché: ${it.why}` : '';
+        const preview = it.preview ? `\n    anteprima: ${it.preview}` : '';
+        return `- [${label}] ${it.title}${where}${why}${preview}`;
+      });
+      return `Ciao, nel progetto Silverium Archive (C:\\Users\\Irvine\\.gemini\\antigravity\\scratch\\silveriumdb-archive) il vault SPVault ha ${list.length} elementi che la UI del sito non sa ancora mostrare.
+
+Contesto: dati in data/archive.json, drift in data/drift.json, contratto in docs/DATA-CONTRACT.md, pipeline in sync_spvault.js.
+
+Elementi da mappare:
+${lines.join('\n')}
+
+Cosa serve: aggiungi la UI mancante (tab, campo o sezione) senza rompere il design esistente, aggiorna docs/DATA-CONTRACT.md se cambia lo schema, poi rigenera con node sync_spvault.js e verifica che il contatore drift scenda.`;
+    }
+
+    function copyPrompt() {
+      const text = buildPrompt();
+      const done = () => {
+        const el = document.getElementById('copy-btn-text');
+        const old = el.textContent;
+        el.textContent = 'Copiato ✓';
+        setTimeout(() => { el.textContent = old; }, 2500);
+      };
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(text).then(done).catch(() => fallbackCopy(text, done));
+      } else {
+        fallbackCopy(text, done);
+      }
+    }
+
+    function fallbackCopy(text, done) {
+      const ta = document.createElement('textarea');
+      ta.value = text;
+      ta.setAttribute('readonly', '');
+      ta.style.position = 'fixed';
+      ta.style.opacity = '0';
+      document.body.appendChild(ta);
+      ta.select();
+      try { document.execCommand('copy'); done(); } catch (_) {}
+      document.body.removeChild(ta);
+    }
+
+    function init() {
+      renderSummary();
+      renderFilters();
+      renderList();
+      const list = items();
+      const icon = document.getElementById('drift-icon');
+      const badge = document.getElementById('drift-badge');
+      const msg = document.getElementById('drift-msg');
+      if (list.length) {
+        icon.className = 'w-9 h-9 rounded-lg flex items-center justify-center shrink-0 border bg-amber-500/10 border-amber-500/30 text-amber-400';
+        badge.className = 'px-2 py-0.5 rounded text-[10px] font-mono bg-amber-500/10 border border-amber-500/30 text-amber-300';
+        badge.textContent = list.length + ' da mappare';
+        msg.textContent = 'Il vault contiene file, sezioni o tag che il sito non mostra ancora.';
+        const bad = list.filter(it => SEVERITY[it.type] === 'bad').length;
+        if (bad) msg.textContent += ` Di questi, ${bad} rompono o impoveriscono una vista esistente.`;
+      } else {
+        icon.className = 'w-9 h-9 rounded-lg flex items-center justify-center shrink-0 border bg-emerald-500/10 border-emerald-500/30 text-emerald-400';
+        badge.className = 'px-2 py-0.5 rounded text-[10px] font-mono bg-emerald-500/10 border border-emerald-500/20 text-emerald-400';
+        badge.textContent = 'Allineato';
+        msg.textContent = 'Tutto ciò che è nel vault ha una UI nel sito.';
+        document.getElementById('copy-btn').classList.add('hidden');
+      }
+    }
+
+    document.addEventListener('DOMContentLoaded', init);
+  </script>
+</body>
+</html>

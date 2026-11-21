@@ -1,0 +1,14 @@
+{
+  "version": "spvault_sync_1795265612285",
+  "generated_at": "2026-11-21T12:53:32.285Z",
+  "count": 1,
+  "items": [
+    {
+      "type": "sezione-non-mappata",
+      "title": "Sezione \"Immagini e Link\" in Tinsley/Tinsley Drip Marketing.md",
+      "location": "../spvault_repo/content/Personaggi/Tinsley/Tinsley Drip Marketing.md",
+      "why": "Questa sezione del vault non ha una UI dedicata: va aggiunta una tab o mappata.",
+      "preview": "Immagini e Link"
+    }
+  ]
+}

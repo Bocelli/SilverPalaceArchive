@@ -1,50 +1,63 @@
-# Silverium Archive // Silver Palace Database & Detective Dossier
+# Silverium Archive // Silver Palace Database
 
-Prototipo operativo e architettura per il database di **Silver Palace**, concepito per **CatalystOnline** e per il dominio [silveriumdb.cc](https://silveriumdb.cc/).
+Database statico e bilingue (IT/EN) di **Silver Palace**, costruito sui contenuti del vault Obsidian
+[`Bocelli/SPVault`](https://github.com/Bocelli/SPVault) e pubblicato su GitHub Pages:
+<https://bocelli.github.io/SilverPalaceArchive/>.
 
----
+Progetto personale, non il sito ufficiale di CatalystOnline (`silveriumdb.cc` è il loro dominio).
 
-## 🔍 Cosa risolve questo progetto
-1. **Facile Scrittura per il Creator**:
-   - Elimina la necessità di editare file YAML e Markdown a mano.
-   - Fornisce un pannello grafico con pulsanti, menu a tendina per le fazioni, selettori di rarità, box di traduzione affiancati e preview live.
-   - Sotto il cofano genera file Markdown standard con frontmatter pronti per GitHub.
-2. **Facile Lettura per la Community**:
-   - Design tematico **Vittoriano Steampunk / Gothic Noir / Silverium** (nessun template generico o "AI slop").
-   - Schede personaggio unificate a schede (*Dossier*, *Galleria*, *Media/Audio*, *Combattimento*, *Note del Detective*).
-   - Filtri istantanei per Fazione, Rarità e barra di ricerca live.
-   - Selettore lingua `[ IT | EN ]` per alternare con un clic tra l'inglese originale e la traduzione italiana di Catalyst.
-3. **Area Admin Protetta da Password**:
-   - Pagina protetta da password configurata con la chiave: `catascemo`.
-   - Accesso con feedback di errore (animazione a scossa se la password è errata) e salvataggio della sessione.
+## Come funziona
 
----
-
-## 🚀 Come testare il prototipo in locale
-
-Puoi aprire direttamente il file nel browser:
-```powershell
-# Apri direttamente in Edge o Chrome
-Start-Process "C:\Users\Irvine\.gemini\antigravity\scratch\silveriumdb-archive\index.html"
+```
+SPVault (Obsidian, git)  →  node sync_spvault.js  →  index.html + status.html + data/*.json  →  push manuale
 ```
 
-Oppure avviando un web server locale rapido con Python:
+Il **vault è l'unica fonte di verità**. Il sito non scrive mai contenuti: nessun editor, nessuna
+password, nessun salvataggio dal browser. I dati vengono rigenerati dal vault.
+
+| File | Ruolo |
+|---|---|
+| `index.html` | applicazione completa: 5 viste, scheda personaggio, timeline, glossario, archivio media |
+| `status.html` | diagnostica: cosa c'è nel vault e non ha ancora una UI (**drift**) + prompt da copiare |
+| `sync_spvault.js` | estrae il vault, valida, genera dati e pagine |
+| `data/archive.json` `data/drift.json` | dati generati, leggibili e diffabili |
+| `_multimedia/` | asset originali (55 MB) |
+| `_thumbs/` | versioni leggere per le card (420 px, q74) |
+| `tools/thumbs.py` | rigenera le thumb con Pillow |
+| `docs/` | architettura e contratto dati |
+
+## Uso
+
 ```powershell
-cd "C:\Users\Irvine\.gemini\antigravity\scratch\silveriumdb-archive"
+# 1. sincronizza dal vault (genera dati, pagine, thumb, commit locale)
+.\sync.bat
+
+# 2. pubblica (manuale, di proposito)
+git push origin main
+git push origin main:gh-pages
+
+# anteprima locale
 python -m http.server 3000
+# → http://localhost:3000
 ```
-E aprendo `http://localhost:3000` nel browser.
 
----
+Il sync non fa push: controlli il risultato su `http://localhost:3000` e pubblichi quando sei convinto.
 
-## 🔐 Sicurezza della Password: Dal Prototipo alla Produzione
+## Cosa c'è nel sito
 
-### Nel Prototipo Locale
-* La chiave `catascemo` è gestita via JavaScript/SessionStorage per permettere a te e al creator di testare subito il flusso grafico senza dover configurare server o token esterni.
+- **Personaggi** — 19 dossier con card 1:2, ricerca live, filtro per fazione, scheda a 5 tab
+  (lore bilingue, pagine segrete, galleria, trailer, note).
+- **Timeline** — 21 dispatch con data reale (dal commit git del file), raggruppati per mese.
+- **Fazioni** — 10 fazioni, incluse quelle presenti nel vault solo tramite tag.
+- **Glossario** — termini, luoghi, distretti.
+- **Multimedia** — 75 asset indicizzati per categoria, con lightbox e player YouTube.
+- **Deep link** — ogni vista e ogni scheda hanno un indirizzo: `#/personaggi/case_alf`, `#/fazioni`, `#/multimedia`.
+- **Bilingue** — IT/EN salvo in `localStorage`, `<html lang>` aggiornato, chrome tradotta.
 
-### Per la Messa Online Ufficiale su `silveriumdb.cc`
-Dato che il sito è ospitato su GitHub Pages con Cloudflare:
-1. **Opzione Cloudflare Access / Zero Trust (Consigliata)**:
-   - Dato che `silveriumdb.cc` passa già attraverso Cloudflare, si può attivare una regola gratuita che protegge l'URL `/admin` chiedendo la password prima ancora che la richiesta arrivi al browser. Nessun visitatore o bot può bypassarla.
-2. **Opzione GitHub OAuth (Keystatic)**:
-   - Solo l'account GitHub di CatalystOnline può salvare e pubblicare le modifiche. Chiunque altro non vedrà il pulsante di salvataggio.
+## Quando il vault cambia
+
+Apri `status.html`: se compare qualcosa lì, il content creator ha aggiunto un file, una sezione o un
+tag che il sito non mostra ancora. Il bottone **Copia prompt** produce il testo pronto da incollare in
+chat per far mappare la UI; poi si rilancia il sync e il contatore scende.
+
+Le regole di mappatura stanno in `docs/DATA-CONTRACT.md`.

@@ -1,0 +1,2437 @@
+{
+  "version": "spvault_sync_1795265612285",
+  "generated_at": "2026-11-21T12:53:32.285Z",
+  "counts": {
+    "cases": 19,
+    "dispatches": 21,
+    "factions": 10,
+    "lexicon": 7,
+    "multimedia": 75
+  },
+  "cases": [
+    {
+      "id": "case_alf",
+      "name": "Alf",
+      "faction": "MISS",
+      "role": "Cameriera",
+      "title_it": "Alf (Cameriera)",
+      "title_en": "Alf (Maid)",
+      "quote_it": "Avete molti pensieri per la testa, Padrone? Forse posso occuparmene io. Ci tengo davvero tanto ad aiutarvi.",
+      "quote_en": "Got a lot on your mind, Master? Perhaps I can do some of it for you. Because I really really want to help.",
+      "bio_it": "Una cameriera piuttosto goffa che segue sempre il Detective. Purtroppo, è del tutto priva di buon senso, non sa cogliere le situazioni, è negata per le faccende domestiche e ha la memoria di un pesciolino rosso. È il punto di partenza di una storia ancora tutta da svelare. \"Chi sono, in realtà?\", si chiede spesso davanti allo specchio. Eppure, il suo riflesso non le ha ancora dato una risposta.",
+      "bio_en": "A somewhat clumsy maid who's always tagging along with the Detective. Unfortunately, she lacks any common sense, struggles to read the room, has terrible housekeeping skills, and also has the memory of a goldfish. She stands as the start to a story that's yet to unfold. \"Who am I, really?\", she often asks herself in the mirror. Yet her reflection has yet to yield her an answer. ALF",
+      "has_hidden": true,
+      "hidden_title_it": "Il mistero della curiosità",
+      "hidden_title_en": "The Curiosity Mystery",
+      "hidden_bio_it": "Perché dopo la pioggia appare l’arcobaleno? Perché il cielo è azzurro? Perché il focolare scoppietta?\nI gattini circondano la fanciulla e miagolano. Hanno fame, oppure considerano Alf una creatura della loro stessa specie?\nIl sole splende e la fanciulla è indaffarata. La luce solare illumina ogni sorta di novità che lei desidera scoprire e imparare insieme al suo maestro.",
+      "hidden_bio_en": "Why is there a rainbow after rain? Why is the sky blue? Why does the hearth roar? The kittens surround the maid and mew. Are they hungry, or are they treating Alf as their own kind? The sun is shining, and the maid is busy. The sun shines upon all sorts of novelties that the maid wants to experience and learn with her master.",
+      "hidden_story_it": "Perché dopo la pioggia appare l’arcobaleno? Perché il cielo è azzurro? Perché il focolare scoppietta?\nI gattini circondano la fanciulla e miagolano. Hanno fame, oppure considerano Alf una creatura della loro stessa specie?\nIl sole splende e la fanciulla è indaffarata. La luce solare illumina ogni sorta di novità che lei desidera scoprire e imparare insieme al suo maestro.",
+      "hidden_story_en": "Why is there a rainbow after rain? Why is the sky blue? Why does the hearth roar? The kittens surround the maid and mew. Are they hungry, or are they treating Alf as their own kind? The sun is shining, and the maid is busy. The sun shines upon all sorts of novelties that the maid wants to experience and learn with her master.",
+      "drip_img": "_multimedia/Personaggi/Drip Marketing/Alf Drip Marketing.jpg",
+      "profile_img": "_multimedia/Personaggi/Profile Art/Alf Profile Art.jpg",
+      "thumb": "_thumbs/Personaggi/Profile Art/Alf Profile Art.jpg",
+      "thumb_hidden": "_thumbs/Personaggi/Hidden Pages/Alf Hidden pages.jpg",
+      "thumb_official": "",
+      "hidden_img": "_multimedia/Personaggi/Hidden Pages/Alf Hidden pages.jpg",
+      "hidden_imgs": [
+        "_multimedia/Personaggi/Hidden Pages/Alf Hidden pages.jpg"
+      ],
+      "official_art": "",
+      "trailer_url": "https://www.youtube.com/watch?v=_jgw-zHYyTw",
+      "x_url": "https://x.com/SilverPalace_EN/status/2116734476298674523",
+      "x_post_url": "https://x.com/SilverPalace_EN/status/2116734476298674523",
+      "tags": [
+        "alf",
+        "miss",
+        "maid"
+      ]
+    },
+    {
+      "id": "case_argos",
+      "name": "Argos",
+      "faction": "MISS",
+      "role": "Barista",
+      "title_it": "Argos (Barista)",
+      "title_en": "Argos (Bartender)",
+      "quote_it": "Non tutti sono come te, mio ​​caro avventore. Il mio è più che altro un ruolo di supporto, sai? Un po' come un liquore forte che ha bisogno di una spruzzata d'acqua. Persino le menti più brillanti necessitano di un pizzico di astuzia da strada.",
+      "quote_en": "Not everyone's like you, my dear patron. I'm more of a supporting role, you know. Like strong liquor needs a splash of water. Even big brains need a bit of street smarts.",
+      "bio_it": "L'Occhio di Argos\n\n-- \"Non tutti sono come te, mio ​​caro avventore. Il mio è più che altro un ruolo di supporto, sai? Un po' come un liquore forte che ha bisogno di una spruzzata d'acqua. Persino le menti più brillanti necessitano di un pizzico di astuzia da strada.\"\n\n-- Un barista dall'eloquio raffinato, nonché misterioso osservatore celato nell'ombra. Lo si vede spesso far roteare il suo shaker, con il bastone-fucile sempre a portata di mano: il primo serve ad accogliere gli amici, il secondo a gestire eventuali guai. Presta ascolto a chiunque, dai nobili decaduti a coloro che si ritrovano travolti dai mutamenti di una società in pieno tumulto. Ed è così che egli coglie tutto ciò che accade a Silvernia, ogni evento, grande o piccolo che sia.",
+      "bio_en": "The Eye of Argos\n\n-- \"Not everyone's like you, my dear patron. I'm more of a supporting role, you know. Like strong liquor needs a splash of water. Even big brains need a bit of street smarts.\" -- An eloquent gent of a bartender, and a mysterious watcher of the shadows. Usually seen twirling his cocktail shaker with his cane gun close at hand; the former is a tool for hosting friends, and the latter is a weapon for handling trouble. He lends an ear to all, from fallen nobles to those caught in the currents of a society in upheaval. And so, he sees all that transpires in Silvernia, all events both big and small.",
+      "has_hidden": true,
+      "hidden_title_it": "Il mistero della doppiezza",
+      "hidden_title_en": "The Duplicity Mystery",
+      "hidden_bio_it": "Un bravo barista stringe amicizie, o è sulla buona strada per farlo.\nUn cocktail speciale, con i suoi 30 millilitri di alcol, è capace di sciogliere in fretta qualsiasi lingua; poi, non resta che stare a sentire: che si tratti di un miscuglio di verità e sciocchezze, o di un groviglio di inganni e onestà.\nIl barista non è un esperto nel distinguere le une dagli altri, ma conosce qualcuno che lo è. L'enigma è già sotto gli occhi, e Argos attende chi sarà in grado di risolverlo.",
+      "hidden_bio_en": "A good bartender is either making friends, or on his way to making them. A special with 30 millilitres of alcohol can quickly loosen any tongue, then it's just a matter of listening afterwards, may it be a potpourri of truths and nonsense, or a jumble of deceit and honesty. The bartender is no expert at telling them apart, but he knows someone who is. The puzzle is already in sight, and Argos is waiting for the one who can solve it.",
+      "hidden_story_it": "Un bravo barista stringe amicizie, o è sulla buona strada per farlo.\nUn cocktail speciale, con i suoi 30 millilitri di alcol, è capace di sciogliere in fretta qualsiasi lingua; poi, non resta che stare a sentire: che si tratti di un miscuglio di verità e sciocchezze, o di un groviglio di inganni e onestà.\nIl barista non è un esperto nel distinguere le une dagli altri, ma conosce qualcuno che lo è. L'enigma è già sotto gli occhi, e Argos attende chi sarà in grado di risolverlo.",
+      "hidden_story_en": "A good bartender is either making friends, or on his way to making them. A special with 30 millilitres of alcohol can quickly loosen any tongue, then it's just a matter of listening afterwards, may it be a potpourri of truths and nonsense, or a jumble of deceit and honesty. The bartender is no expert at telling them apart, but he knows someone who is. The puzzle is already in sight, and Argos is waiting for the one who can solve it.",
+      "drip_img": "_multimedia/Personaggi/Drip Marketing/Argos Drip Marketing.jpg",
+      "profile_img": "_multimedia/Personaggi/Profile Art/Argos Profile Art.jpg",
+      "thumb": "_thumbs/Personaggi/Profile Art/Argos Profile Art.jpg",
+      "thumb_hidden": "",
+      "thumb_official": "",
+      "hidden_img": "",
+      "hidden_imgs": [],
+      "official_art": "",
+      "trailer_url": "https://www.youtube.com/watch?v=mmvOmNaBZAc",
+      "x_url": "https://x.com/SilverPalace_EN/status/2117459251991888125",
+      "x_post_url": "https://x.com/SilverPalace_EN/status/2117459251991888125",
+      "tags": [
+        "argos",
+        "miss"
+      ]
+    },
+    {
+      "id": "case_bentham",
+      "name": "Bentham",
+      "faction": "UMI",
+      "role": "Segretaria",
+      "title_it": "Bentham (Segretaria)",
+      "title_en": "Bentham (Secretary)",
+      "quote_it": "Il futuro di Silvernia dipende da molte... 'variabili controllate'. Forse tu sei una di queste, detective.",
+      "quote_en": "Silvernia's future hinges on many... 'controlled variables'. Perhaps you are one of them, Detective.",
+      "bio_it": "\"Il futuro di Silvernia dipende da molte... 'variabili controllate'. Forse tu sei una di queste, detective.\" --\n\nProfessionista gentile e dai modi raffinati, detiene un grande potere dietro le quinte, muovendo i fili nell'ombra. Si desta di soprassalto, risvegliata dal ronzio del quarzo e dal movimento delle lancette. I sogni della sua infanzia sono ora la forza motrice che la spinge a salire sempre più in alto, instancabile come il ticchettio di un orologio. Eppure, i sogni privi di radici appassiscono insieme alla carne, e il logorio dell'ambizione non risparmia nessuno. E coloro che restano saldi, avanzando incessantemente verso il futuro, non sono mai, nel profondo, davvero innocenti.",
+      "bio_en": "\"Silvernia's future hinges on many... 'controlled variables'. Perhaps you are one of them, Detective.\" --\n\nA kind and well-mannered professional, she holds great power behind the scenes as she pulls the strings. She jolts awake, the whirring of quartz and watch hands rousing her from slumber. Her childhood dreams are now a driving force that propels her to ascend ever higher, as tireless as the ticking hands of a clock. But dreams without root wither before the flesh, and the rot of ambition spares none. And those who remain strong, marching ever on into the future, are never truly innocent at heart.",
+      "has_hidden": true,
+      "hidden_title_it": "Il mistero dell'ufficio.",
+      "hidden_title_en": "The Office Mystery.",
+      "hidden_bio_it": "Dopo essere uscita vittoriosa dalla spietata arena della UMI, Bentham ha finalmente ottenuto un ufficio tutto suo. Solo lì può lasciar cadere, almeno per un po', la maschera che indossa: quella di un membro impeccabile dell'élite aziendale. Cosa sceglierà oggi? Una tazza di caffè macinato al momento? Un po' di musica pop? O magari un meritato riposo? Con il carico di lavoro che deve gestire, non ha né il tempo né le energie per preoccuparsi se la sua postura sia abbastanza «da signora» oppure no. Perciò, se hai finito di fare rapporto, esci pure e lasciala godersi la sua pausa.",
+      "hidden_bio_en": "Having emerged victorious from the ruthless arena of UMI, Bentham finally secured her own private office. Only there could she temporarily drop her mask, that of a flawless corporate elite. What will it be today: a cup of hand-ground coffee? A little pop music? Or perhaps a well-needed nap? With a workload like hers, there's no time nor energy to fret over whether her posture is ladylike enough, or not. So if you've finished reporting, get out and let her take her break",
+      "hidden_story_it": "Dopo essere uscita vittoriosa dalla spietata arena della UMI, Bentham ha finalmente ottenuto un ufficio tutto suo. Solo lì può lasciar cadere, almeno per un po', la maschera che indossa: quella di un membro impeccabile dell'élite aziendale. Cosa sceglierà oggi? Una tazza di caffè macinato al momento? Un po' di musica pop? O magari un meritato riposo? Con il carico di lavoro che deve gestire, non ha né il tempo né le energie per preoccuparsi se la sua postura sia abbastanza «da signora» oppure no. Perciò, se hai finito di fare rapporto, esci pure e lasciala godersi la sua pausa.",
+      "hidden_story_en": "Having emerged victorious from the ruthless arena of UMI, Bentham finally secured her own private office. Only there could she temporarily drop her mask, that of a flawless corporate elite. What will it be today: a cup of hand-ground coffee? A little pop music? Or perhaps a well-needed nap? With a workload like hers, there's no time nor energy to fret over whether her posture is ladylike enough, or not. So if you've finished reporting, get out and let her take her break",
+      "drip_img": "_multimedia/Personaggi/Drip Marketing/Bentham Drip Marketing.jpg",
+      "profile_img": "_multimedia/Personaggi/Profile Art/Bentham Profile Art.jpg",
+      "thumb": "_thumbs/Personaggi/Profile Art/Bentham Profile Art.jpg",
+      "thumb_hidden": "",
+      "thumb_official": "",
+      "hidden_img": "",
+      "hidden_imgs": [],
+      "official_art": "",
+      "trailer_url": "https://www.youtube.com/watch?v=b8KzcX_peqs",
+      "x_url": "",
+      "x_post_url": "",
+      "tags": [
+        "bentham",
+        "secretary",
+        "quartznet",
+        "umi",
+        "arena"
+      ]
+    },
+    {
+      "id": "case_captain_kaboom",
+      "name": "Captain Kaboom",
+      "faction": "UMI",
+      "role": "Tecnico",
+      "title_it": "Captain Kaboom (Tecnico)",
+      "title_en": "Captain Kaboom (Technician)",
+      "quote_it": "Dicono che i Kaboom portino cattive notizie, ma non è vero. Siamo bravi ragazzi, ci assicuriamo che tutto resti ben illuminato!",
+      "quote_en": "People say Kabooms bring bad news, but that's not true. We're good kids, keeping things lit bright!",
+      "bio_it": "Di congegni e melodie\n\n\nIl Team Kaboom è come un alveare di api operaie, che ronzano instancabili attorno agli Spinotrodes di Silvernia. Non rifiutano mai un po' di latte fresco o qualche moneta per le loro tasche, ma ciò che apprezzano più di ogni altra cosa è la compagnia dei loro cari compagni del Team Kaboom. Essendo bambini senza una casa, si riuniscono spesso, intonando tutti insieme il loro motto: \"Occhio alle scosse, controlla i cavi; tieni tutto in ordine, attiva quando è stabile!\"",
+      "bio_en": "Of Tinkers and Tunes\n\n\nThe Kaboom Team are akin to a hive of industrious bees, buzzing tirelessly around Silvernia's Spinotrodes. They never turn down fresh milk and a coin or two for their purses, but most of all, it is the companionship of their beloved Kaboom Team fellows that they treasure. Children without a home, they often gather together, singing their motto as one: \"Mind for shocks, check the cables; keep things clean, activate once stable!\"",
+      "has_hidden": true,
+      "hidden_title_it": "Il mistero di chi vorrebbe essere un bambino",
+      "hidden_title_en": "The Would-Be Adult Mystery",
+      "hidden_bio_it": "Capitan Kaboom è feroce come una tigre e veloce come un passero; è così leggera da poter scalare qualsiasi altezza e abbastanza coraggiosa da tuffarsi in un fiume per trarre in salvo un piccolo Kaboom che sta annegando. Ogni membro del Team Kaboom lo sa bene. Eppure, di tanto in tanto, il Capitano si chiede come sarebbe vivere un’infanzia come quella di tutti gli altri bambini: dondolarsi al parco, scivolare giù dalla torre a forma di giraffa, infilarsi in un tubo di scarico per giocare a nascondino... Basterebbe anche solo una serata. Ma, non appena termina quel raro momento di riposo, lei torna subito a essere la capace e affidabile Capitan Kaboom.",
+      "hidden_bio_en": "Captain Kaboom is fierce as a tiger and swift as a sparrow, light enough to scale any height, and brave enough to dive into a river and pull a drowning little Kaboom to safety. Every member of the Kaboom Team knows it. Every so often, though, the Captain wonders what it might feel like to have a childhood like any other kid's: swinging in the park, sliding down the giraffe tower, squeezing into a drainpipe for a game of hide-and-seek... Just one evening would do. When the rare moment of rest is over, she snaps straight back into being the capable, dependable Captain Kaboom.",
+      "hidden_story_it": "Capitan Kaboom è feroce come una tigre e veloce come un passero; è così leggera da poter scalare qualsiasi altezza e abbastanza coraggiosa da tuffarsi in un fiume per trarre in salvo un piccolo Kaboom che sta annegando. Ogni membro del Team Kaboom lo sa bene. Eppure, di tanto in tanto, il Capitano si chiede come sarebbe vivere un’infanzia come quella di tutti gli altri bambini: dondolarsi al parco, scivolare giù dalla torre a forma di giraffa, infilarsi in un tubo di scarico per giocare a nascondino... Basterebbe anche solo una serata. Ma, non appena termina quel raro momento di riposo, lei torna subito a essere la capace e affidabile Capitan Kaboom.",
+      "hidden_story_en": "Captain Kaboom is fierce as a tiger and swift as a sparrow, light enough to scale any height, and brave enough to dive into a river and pull a drowning little Kaboom to safety. Every member of the Kaboom Team knows it. Every so often, though, the Captain wonders what it might feel like to have a childhood like any other kid's: swinging in the park, sliding down the giraffe tower, squeezing into a drainpipe for a game of hide-and-seek... Just one evening would do. When the rare moment of rest is over, she snaps straight back into being the capable, dependable Captain Kaboom.",
+      "drip_img": "_multimedia/Personaggi/Drip Marketing/Captain Kaboom Drip Marketing.jpg",
+      "profile_img": "_multimedia/Personaggi/Profile Art/Captain Kaboom Profile Art.jpg",
+      "thumb": "_thumbs/Personaggi/Profile Art/Captain Kaboom Profile Art.jpg",
+      "thumb_hidden": "",
+      "thumb_official": "",
+      "hidden_img": "",
+      "hidden_imgs": [],
+      "official_art": "",
+      "trailer_url": "https://www.youtube.com/watch?v=aPdFyArmMUE",
+      "x_url": "https://x.com/SilverPalace_EN/status/2118546413600862716",
+      "x_post_url": "https://x.com/SilverPalace_EN/status/2118546413600862716",
+      "tags": [
+        "captainkaboom",
+        "spinotrodes",
+        "technician",
+        "bee",
+        "teamkaboom",
+        "umi"
+      ]
+    },
+    {
+      "id": "case_cinderella",
+      "name": "Cinderella",
+      "faction": "Fableborn",
+      "role": "La Formica Vendicativa",
+      "title_it": "Cinderella (La Formica Vendicativa)",
+      "title_en": "The Vengeful Ant",
+      "quote_it": "Cenerentola",
+      "quote_en": "Cinderella",
+      "bio_it": "Verità e menzogne, gentilezza e inganno... non mi lascerò più ingannare.\n\nUna donna piena di segreti e assetata di vendetta. Sensibile, parsimoniosa e dotata di un acuto spirito di osservazione, è stata a lungo tormentata dall'insicurezza riguardo alle proprie origini.\n\nIn passato si era alleata con il Detective, unita a lui da obiettivi comuni, ma ha poi preso la propria strada quando i loro intenti hanno smesso di coincidere. Ora, sta bruciando le ultime tracce della sua vita in vista dello scontro finale. Un magma, a lungo compresso sotto il peso degli anni, che cova in silenzio fino a esplodere: un'eruzione nata dalla resistenza, un corpo forgiato come pietra incrollabile. È nota, dunque, come: \"Cenerentola\".",
+      "bio_en": "Truth and lies, kindness and deceit... I will be fooled by them no longer\n\nA woman of secrets with a thirst for vengeance. Sensitive, thrifty, and keenly observant, she has long been weighed down by insecurities of her roots. She once allied with the Detective due to their common goals, but went her own way when they no longer aligned. Now, she is burning away the last vestiges of her life for a final showdown. Magma long suppressed beneath the weight of years, smouldering in silence until it breaks—an eruption born of endurance, a body forged like unyielding stone. Thus known as: \"Cinderella\".",
+      "has_hidden": false,
+      "hidden_title_it": "",
+      "hidden_title_en": "",
+      "hidden_bio_it": "",
+      "hidden_bio_en": "",
+      "hidden_story_it": "",
+      "hidden_story_en": "",
+      "drip_img": "_multimedia/Personaggi/Drip Marketing/Cinderella Drip Marketing.jpg",
+      "profile_img": "_multimedia/Personaggi/Profile Art/Cinderella Profile Art.jpg",
+      "thumb": "_thumbs/Personaggi/Profile Art/Cinderella Profile Art.jpg",
+      "thumb_hidden": "",
+      "thumb_official": "",
+      "hidden_img": "",
+      "hidden_imgs": [],
+      "official_art": "",
+      "trailer_url": "",
+      "x_url": "",
+      "x_post_url": "",
+      "tags": [
+        "fableborn",
+        "cinderella"
+      ]
+    },
+    {
+      "id": "case_cordelia",
+      "name": "Cordelia",
+      "faction": "Oz School of Metallurgy",
+      "role": "Tempi difficili",
+      "title_it": "Cordelia (Tempi difficili)",
+      "title_en": "Hard Times",
+      "quote_it": "La scuola non è altro che un covo di leccapiedi ottusi, mentre il resto della città brulica di adulti orribili e puzzolenti! Argh! Che posto noioso!",
+      "quote_en": "School's nothing but brick-brained teacher's pets, while the rest of the city's crawling with horrible, stinky adults! Argh! This place is so booooring!",
+      "bio_it": "«La scuola non è altro che un covo di leccapiedi ottusi, mentre il resto della città brulica di adulti orribili e puzzolenti! Argh! Che posto noioso!» --\n\nUn’alunna problematica, una ragazza timida, una rosa selvatica, spine comprese. Abiti sgargianti, risposte taglienti, vestita di tutto punto — non per compiacere gli altri, ma solo se stessa. I dogmi non sostituiscono la verità, e non spetta certo solo agli adulti stabilire cosa sia giusto o sbagliato. Così, raduna i suoi amici e, insieme, scavalcano le recinzioni delle convenzioni.",
+      "bio_en": "\"School's nothing but brick-brained teacher's pets, while the rest of the city's crawling with horrible, stinky adults! Argh! This place is so booooring!\" --\n\nA troublesome pupil, a timid girl, an untamed rose, thorns and all. Garish clothes, sharp-tongued retorts, dressed to the nines for no one's approval but her own. Dogma is no substitute for truth, and right and wrong are not for grown-ups alone to decide. And thus she gathers her friends, and together they vault over the fences of convention.",
+      "has_hidden": false,
+      "hidden_title_it": "",
+      "hidden_title_en": "",
+      "hidden_bio_it": "",
+      "hidden_bio_en": "",
+      "hidden_story_it": "",
+      "hidden_story_en": "",
+      "drip_img": "_multimedia/Personaggi/Drip Marketing/Cordelia Drip Marketing.jpg",
+      "profile_img": "_multimedia/Personaggi/Profile Art/Cordelia Profile Art.jpg",
+      "thumb": "_thumbs/Personaggi/Profile Art/Cordelia Profile Art.jpg",
+      "thumb_hidden": "",
+      "thumb_official": "",
+      "hidden_img": "",
+      "hidden_imgs": [],
+      "official_art": "",
+      "trailer_url": "",
+      "x_url": "",
+      "x_post_url": "",
+      "tags": [
+        "cordelia",
+        "delinquent",
+        "ozschoolofmetallurgy"
+      ]
+    },
+    {
+      "id": "case_cynthia_ii",
+      "name": "Cynthia II",
+      "faction": "House Luna",
+      "role": "Il Bocciolo d'Oro",
+      "title_it": "Cynthia II (Il Bocciolo d'Oro)",
+      "title_en": "The Goldbud",
+      "quote_it": "Posso chiederti a quanto ammonta il tuo salario, detective? Mi piacerebbe molto pagarlo io, se solo tu volessi restare con me a giocare!",
+      "quote_en": "May I ask your wages, Detective? I'd quite like to pay them for you, if you'd just stay with me and play!",
+      "bio_it": "«Posso chiederti a quanto ammonta il tuo salario, detective? Mi piacerebbe molto pagarlo io, se solo tu volessi restare con me a giocare!»\n\nIl Bocciolo d'Oro, la radiosa luna nascente di House Luna.\nUna giovane aristocratica innocente, dotata di quella capacità di percezione che, per la nobiltà, è un tratto naturale.\n\nOdia i topi, ma adora i gatti. Detesta le lezioni di danza classica, eppure ama sfoggiare le proprie abilità nel balletto.\nPiange facilmente, pur sforzandosi sempre di trattenere le lacrime. Sebbene nutra una grande ammirazione per sua cugina, la Regina, lei stessa è, a sua volta, oggetto dell'ammirazione di qualcun altro.",
+      "bio_en": "\"May I ask your wages, Detective? I'd quite like to pay them for you, if you'd just stay with me and play!\" --\n\nThe Goldbud, and the shining new moon of House Luna. An innocent young aristocrat with a perceptiveness that comes naturally for nobility. Hates mice but loves cats. Hates ballet lessons but loves showing off ballet skills. Cries easily, but is always trying to hold back her tears. Though a great admirer of her cousin, the Queen, she is also somebody's focus of admiration.",
+      "has_hidden": true,
+      "hidden_title_it": "Il mistero del sogno a occhi aperti",
+      "hidden_title_en": "Hidden Pages | The Daydream Mystery",
+      "hidden_bio_it": "Cynthia fece un sogno che riguardava sua cugina. Il Duca le disse che si trattava di un magnifico sogno di potere. La Contessa le disse che era un incantevole sogno legato ai vincoli di parentela. Un servitore stava accanto a sua cugina, stringendole il braccio. Un mantello la avvolgeva, attorcigliandosi attorno al suo collo.\n\nNel sogno, Cynthia radunò una legione di giocattoli e invocò cavalieri — incapaci anche solo di concepire il tradimento — affinché salvassero sua cugina... Poi si svegliò. Si scoprì che sua cugina era, in realtà, la porta d'accesso per tornare alla realtà.",
+      "hidden_bio_en": "Cynthia had a dream about her cousin. The Duke told her it was a beautiful dream of power. The Countess told her it was a lovely dream of kinship. A servant stood beside her cousin, gripping her arm. A cape draped over her, coiling around her neck. In the dream, Cynthia rallied the toy legion and called upon knights who would never think of betrayal to save her cousin... She then awoke. It turned out her cousin was the very gateway back to reality.",
+      "hidden_story_it": "Cynthia fece un sogno che riguardava sua cugina. Il Duca le disse che si trattava di un magnifico sogno di potere. La Contessa le disse che era un incantevole sogno legato ai vincoli di parentela. Un servitore stava accanto a sua cugina, stringendole il braccio. Un mantello la avvolgeva, attorcigliandosi attorno al suo collo.\n\nNel sogno, Cynthia radunò una legione di giocattoli e invocò cavalieri — incapaci anche solo di concepire il tradimento — affinché salvassero sua cugina... Poi si svegliò. Si scoprì che sua cugina era, in realtà, la porta d'accesso per tornare alla realtà.",
+      "hidden_story_en": "Cynthia had a dream about her cousin. The Duke told her it was a beautiful dream of power. The Countess told her it was a lovely dream of kinship. A servant stood beside her cousin, gripping her arm. A cape draped over her, coiling around her neck. In the dream, Cynthia rallied the toy legion and called upon knights who would never think of betrayal to save her cousin... She then awoke. It turned out her cousin was the very gateway back to reality.",
+      "drip_img": "_multimedia/Personaggi/Drip Marketing/Cynthia Drip Marketing.jpg",
+      "profile_img": "_multimedia/Personaggi/Profile Art/Cynthia Profile Art.jpg",
+      "thumb": "_thumbs/Personaggi/Profile Art/Cynthia Profile Art.jpg",
+      "thumb_hidden": "_thumbs/Personaggi/Hidden Pages/Cynthia Hidden Pages.jpg",
+      "thumb_official": "_thumbs/Personaggi/Official Art/Cynthia Sky Art.jpg",
+      "hidden_img": "_multimedia/Personaggi/Hidden Pages/Cynthia Hidden Pages.jpg",
+      "hidden_imgs": [
+        "_multimedia/Personaggi/Hidden Pages/Cynthia Hidden Pages.jpg"
+      ],
+      "official_art": "_multimedia/Personaggi/Official Art/Cynthia Sky Art.jpg",
+      "trailer_url": "https://www.youtube.com/watch?v=ooik-NFEYRY",
+      "x_url": "",
+      "x_post_url": "",
+      "tags": [
+        "goldbud",
+        "cynthia",
+        "houseluna",
+        "queen",
+        "royaltyandaristocracy"
+      ]
+    },
+    {
+      "id": "case_detective",
+      "name": "Detective",
+      "faction": "S.T.A.T.S.",
+      "role": "Gli Artigli del Corvo",
+      "title_it": "Detective (Gli Artigli del Corvo)",
+      "title_en": "Detective",
+      "quote_it": "La società è un sistema caotico. Ciò che tiene uniti frammenti apparentemente slegati tra loro può essere la logica, ma potrebbe trattarsi anche di illusioni o cospirazioni.",
+      "quote_en": "Society is a system of chaos. What links seemingly unrelated fragments together may be logic, but it could also be illusions or conspiracies.",
+      "bio_it": "Sorella maggiore del celebre duo di investigatori della S.T.A.T.S., un tempo la detective più eminente della città. È scomparsa tre anni fa in un incidente aereo, legato all'assassinio della Regina.",
+      "bio_en": "The Raven's Claws\n\n-- \"Society is a system of chaos. What links seemingly unrelated fragments together may be logic, but it could also be illusions or conspiracies.\" -- The elder sister of the famed detective duo at S.T.A.T.S., once the city's most distinguished detective. She disappeared three years ago in an airship crash linked to the Queen's assassination.",
+      "has_hidden": true,
+      "hidden_title_it": "Il mistero del sosia",
+      "hidden_title_en": "The Doppelganger Mystery",
+      "hidden_bio_it": "I fratelli detective formano una squadra perfetta. Basta uno sguardo o un gesto perché si scambino informazioni: marinare la scuola, lanciarsi in avventure, giocare a fare gli investigatori.\n\nUn tempo credevano che il legame di fiducia che li univa potesse durare per sempre, finché non è arrivato il giorno in cui lo specchio è diventato l'unico modo per vedere il volto dell'altro. Sui due lati del vetro, il riflesso e la sua fonte diventano, l'uno per l'altro, assistente, investigatore, causa ed effetto.",
+      "hidden_bio_en": "The Detective siblings make a perfect team. A glance or a gesture is enough for them to exchange information—skipping class, going on adventures, playing detective games together. They once believed that their blood-bound trust could last forever, until the day came when the mirror became the only way to see the other's face. On either side of the glass, the reflection and its source each become the other's assistant, detective, cause, and effect.",
+      "hidden_story_it": "I fratelli detective formano una squadra perfetta. Basta uno sguardo o un gesto perché si scambino informazioni: marinare la scuola, lanciarsi in avventure, giocare a fare gli investigatori.\n\nUn tempo credevano che il legame di fiducia che li univa potesse durare per sempre, finché non è arrivato il giorno in cui lo specchio è diventato l'unico modo per vedere il volto dell'altro. Sui due lati del vetro, il riflesso e la sua fonte diventano, l'uno per l'altro, assistente, investigatore, causa ed effetto.",
+      "hidden_story_en": "The Detective siblings make a perfect team. A glance or a gesture is enough for them to exchange information—skipping class, going on adventures, playing detective games together. They once believed that their blood-bound trust could last forever, until the day came when the mirror became the only way to see the other's face. On either side of the glass, the reflection and its source each become the other's assistant, detective, cause, and effect.",
+      "drip_img": "_multimedia/Personaggi/Drip Marketing/Detective F Drip Marketing.jpg",
+      "profile_img": "_multimedia/Personaggi/Profile Art/Detective F Profile Art.jpg",
+      "thumb": "_thumbs/Personaggi/Profile Art/Detective F Profile Art.jpg",
+      "thumb_hidden": "_thumbs/Personaggi/Hidden Pages/Detective Hidden page 2.jpg",
+      "thumb_official": "",
+      "hidden_img": "_multimedia/Personaggi/Hidden Pages/Detective Hidden page 2.jpg",
+      "hidden_imgs": [
+        "_multimedia/Personaggi/Hidden Pages/Detective Hidden page 2.jpg",
+        "_multimedia/Personaggi/Hidden Pages/Detective Hidden Pages.jpg"
+      ],
+      "official_art": "",
+      "trailer_url": "https://www.youtube.com/watch?v=X613mQHuQaA",
+      "x_url": "https://x.com/SilverPalace_EN/status/2115775664725049627",
+      "x_post_url": "https://x.com/SilverPalace_EN/status/2115775664725049627",
+      "tags": [
+        "detective",
+        "stats",
+        "queen",
+        "queenassassination",
+        "doppelganger"
+      ]
+    },
+    {
+      "id": "case_feys",
+      "name": "Feys",
+      "faction": "MISS",
+      "role": "Host",
+      "title_it": "Feys (Host) (Albergatrice)",
+      "title_en": "Feys (Host)",
+      "quote_it": "Riposarsi a dovere magari non ti farà fare il salto di qualità, ma di certo è un gran piacere! Ecco, questo sì che è un modo di pensare che non ti porterà fuori strada!",
+      "quote_en": "Plenty of rest might not take you the extra mile, but it sure feels good to get! Now, that's the sort of thinking that won't steer you wrong!",
+      "bio_it": "«Riposarsi a dovere magari non ti farà fare il salto di qualità, ma di certo è un gran piacere! Ecco, questo sì che è un modo di pensare che non ti porterà fuori strada!» --\n\nL’addetta di grado più basso del MISS; l’antitesi assoluta della domestica perfetta. Riviste di gossip, una valigia scintillante e uno straordinario talento nel riuscire a sopravvivere, giorno dopo giorno, sotto il sole. L’assenza di grandi ambizioni non implica una mancanza di entusiasmo, e c’è una certa astuzia nel saper scegliere quando è meglio non sapere troppo. Dopotutto, il valore di una persona non si misura in base alla sua obbedienza.",
+      "bio_en": "\"Plenty of rest might not take you the extra mile, but it sure feels good to get! Now, that's the sort of thinking that won't steer you wrong!\" --\n\nThe Maid Institute, Society, and Services' lowest-ranked host; the very antithesis of a perfect maid. Gossip magazines, a glittering suitcase, and a knack for surviving one day at a time beneath the sun. A lack of grand ambitions does not mean a lack of enthusiasm, and there is a certain cleverness in knowing when not to know too much. For a person's worth is not measured by their obedience.",
+      "has_hidden": false,
+      "hidden_title_it": "",
+      "hidden_title_en": "",
+      "hidden_bio_it": "",
+      "hidden_bio_en": "",
+      "hidden_story_it": "",
+      "hidden_story_en": "",
+      "drip_img": "_multimedia/Personaggi/Drip Marketing/Feys Drip Marketing.jpg",
+      "profile_img": "_multimedia/Personaggi/Profile Art/Feys Profile Art.jpg",
+      "thumb": "_thumbs/Personaggi/Profile Art/Feys Profile Art.jpg",
+      "thumb_hidden": "",
+      "thumb_official": "",
+      "hidden_img": "",
+      "hidden_imgs": [],
+      "official_art": "",
+      "trailer_url": "",
+      "x_url": "",
+      "x_post_url": "",
+      "tags": [
+        "feys",
+        "host",
+        "miss"
+      ]
+    },
+    {
+      "id": "case_firtho",
+      "name": "Firtho",
+      "faction": "S.T.A.T.S.",
+      "role": "Medico",
+      "title_it": "Firtho (Medico)",
+      "title_en": "Firtho (Doctor)",
+      "quote_it": "Distribuire farmaci, eseguire interventi chirurgici, analisi chimiche, medicina legale... sono l'unica persona in questa città in grado di soddisfare ogni vostra esigenza, non è vero?",
+      "quote_en": "Dispensing drugs, performing surgeries, chemical analysis, forensics... I'm the only person in this city who meets all your needs, no?",
+      "bio_it": "Un medico, perito e amico di cui ci si può fidare. Vive a stretto contatto con la morte, giorno dopo giorno, eseguendo dissezioni e autopsie, facendosi testimone delle ultime rivelazioni di chi non c'è più. Non prova pietà, non cerca gratitudine, né si cura degli addii. La vita non è che una marea passeggera lungo il fiume dei defunti.",
+      "bio_en": "The Medical Lancet\n\n\nA trustworthy doctor, examiner, and friend. She lives alongside death day after day, performing dissections and autopsies, bearing witness to the final testimonies of the deceased. Cares not for pity, debts of gratitude, nor farewells. Life is but a fleeting tide upon the river of the departed.",
+      "has_hidden": true,
+      "hidden_title_it": "Il mistero del battito cardiaco",
+      "hidden_title_en": "The Heart Rate Mystery",
+      "hidden_bio_it": "Rapido. Lento. Un battito mancato, o uno che martella con sempre maggiore intensità.\nUn battito accelerato era segno di pericolo; uno troppo lento, presagio di morte.\n\nLa ragazza, da sempre perseguitata dalla Morte in persona, aveva imparato fin dall'infanzia a scandire la propria esistenza al ritmo del suo battito cardiaco.\nEppure, dopo il ritorno di una certa persona, il suo cuore sembrava accelerare ogni volta che le era accanto. Ma perché? Dopotutto, il suo cuore non era nemmeno reale.",
+      "hidden_bio_en": "Rapid. Slow. Skipping a beat, or pounding ever harder. A fast heartbeat signaled danger; too slow, and it meant death. The girl, long haunted by the Grim Reaper, had learned to live by the rhythm of her pulse since childhood. Yet after a certain someone returned, her heart seemed to quicken somehow in their presence. But why? After all, her heart wasn't even real.",
+      "hidden_story_it": "Rapido. Lento. Un battito mancato, o uno che martella con sempre maggiore intensità.\nUn battito accelerato era segno di pericolo; uno troppo lento, presagio di morte.\n\nLa ragazza, da sempre perseguitata dalla Morte in persona, aveva imparato fin dall'infanzia a scandire la propria esistenza al ritmo del suo battito cardiaco.\nEppure, dopo il ritorno di una certa persona, il suo cuore sembrava accelerare ogni volta che le era accanto. Ma perché? Dopotutto, il suo cuore non era nemmeno reale.",
+      "hidden_story_en": "Rapid. Slow. Skipping a beat, or pounding ever harder. A fast heartbeat signaled danger; too slow, and it meant death. The girl, long haunted by the Grim Reaper, had learned to live by the rhythm of her pulse since childhood. Yet after a certain someone returned, her heart seemed to quicken somehow in their presence. But why? After all, her heart wasn't even real.",
+      "drip_img": "_multimedia/Personaggi/Drip Marketing/Firtho Drip Marketing.jpg",
+      "profile_img": "_multimedia/Personaggi/Profile Art/Firtho Profile Art.jpg",
+      "thumb": "_thumbs/Personaggi/Profile Art/Firtho Profile Art.jpg",
+      "thumb_hidden": "",
+      "thumb_official": "",
+      "hidden_img": "",
+      "hidden_imgs": [],
+      "official_art": "",
+      "trailer_url": "https://www.youtube.com/watch?v=8jLgmoY1Z_A",
+      "x_url": "https://x.com/SilverPalace_EN/status/2118184030931747274",
+      "x_post_url": "https://x.com/SilverPalace_EN/status/2118184030931747274",
+      "tags": [
+        "firtho",
+        "doctor",
+        "thecornerclinic",
+        "stats"
+      ]
+    },
+    {
+      "id": "case_gratia",
+      "name": "Gratia",
+      "faction": "Casa Reale & Nobiltà",
+      "role": "Cavaliere",
+      "title_it": "Gratia (Cavaliere)",
+      "title_en": "Gratia (Knight)",
+      "quote_it": "Oh, grande detective! Ti aspetto da un'eternità! Che ne dici di fare un giro in città? Possiamo pattugliare le strade e acciuffare qualche malfattore, insieme!",
+      "quote_en": "O great Detective! I've been waiting ages for you! Fancy a walk around town? We can patrol and catch some evildoers together!",
+      "bio_it": "La protetta di Sua Maestà\n\n-- \"Oh, grande detective! Ti aspetto da un'eternità! Che ne dici di fare un giro in città? Possiamo pattugliare le strade e acciuffare qualche malfattore, insieme!\"\n\n-- Un cavaliere di una lealtà incrollabile e una seguace coraggiosa (seppur un po' sciocca). Impugna spada e scudo in nome dell'onore cavalleresco e della grazia della Regina. Molti oscuri segreti covano sotto il trono. Preghiamo affinché gli illuminati scendano tra noi per condurci alla salvezza.",
+      "bio_en": "Her Majesty's Protégé\n\n-- \"O great Detective! I've been waiting ages for you! Fancy a walk around town? We can patrol and catch some evildoers together!\" -- A fiercely loyal knight and a brave (if foolish) follower. She raises her sword and shield in the name of knightly honour and the Queen's grace. Many dark secrets fester beneath the throne. Pray that the enlightened shall descend to deliver us unto salvation.",
+      "has_hidden": true,
+      "hidden_title_it": "Il mistero della cavalleria",
+      "hidden_title_en": "The Chivalry Mystery",
+      "hidden_bio_it": "La cavalleria, celebrata nei poemi epici, è ormai sbiadita; la reputazione dei cavalieri, d’altro canto, non si è ancora ripresa dopo l’incidente del dirigibile.\nProteggere i deboli: è forse un torto verso qualcuno? Servire la nobiltà: che ne è, allora, del popolo? La cavaliera dalle orecchie di coniglio affronta i pericoli che le si parano davanti, gestisce le crisi alla sua portata e non compie mai nulla che vada contro la propria coscienza.\n\nUn cuore puro... si rivela essere, a sorpresa, una forma di forza. La giovane donna che detiene il potere ha sentenziato: che sia lei a farsi portavoce degli ideali cavallereschi, finché non torneremo a credere, ancora una volta, nelle virtù dell’onestà, della gentilezza e del coraggio.",
+      "hidden_bio_en": "The chivalry sung of in epics has grown faint, and the Knights' reputation has yet to recover since the airship incident. To protect the weak—does that do injustice to anyone? To serve the nobility—what then of the people? The knight with rabbit ears handles the dangers within her sight, confronts the crises within her reach, and does nothing that goes against her conscience. A guileless heart... turns out to be a strength as well. The young woman in a position of power said: let her become the representative of chivalric ideals, until we once again believe in the virtues of honesty, kindness, and courage.",
+      "hidden_story_it": "La cavalleria, celebrata nei poemi epici, è ormai sbiadita; la reputazione dei cavalieri, d’altro canto, non si è ancora ripresa dopo l’incidente del dirigibile.\nProteggere i deboli: è forse un torto verso qualcuno? Servire la nobiltà: che ne è, allora, del popolo? La cavaliera dalle orecchie di coniglio affronta i pericoli che le si parano davanti, gestisce le crisi alla sua portata e non compie mai nulla che vada contro la propria coscienza.\n\nUn cuore puro... si rivela essere, a sorpresa, una forma di forza. La giovane donna che detiene il potere ha sentenziato: che sia lei a farsi portavoce degli ideali cavallereschi, finché non torneremo a credere, ancora una volta, nelle virtù dell’onestà, della gentilezza e del coraggio.",
+      "hidden_story_en": "The chivalry sung of in epics has grown faint, and the Knights' reputation has yet to recover since the airship incident. To protect the weak—does that do injustice to anyone? To serve the nobility—what then of the people? The knight with rabbit ears handles the dangers within her sight, confronts the crises within her reach, and does nothing that goes against her conscience. A guileless heart... turns out to be a strength as well. The young woman in a position of power said: let her become the representative of chivalric ideals, until we once again believe in the virtues of honesty, kindness, and courage.",
+      "drip_img": "_multimedia/Personaggi/Drip Marketing/Gratia Drip Marketing.jpg",
+      "profile_img": "_multimedia/Personaggi/Profile Art/Gratia Profile Art.jpg",
+      "thumb": "_thumbs/Personaggi/Profile Art/Gratia Profile Art.jpg",
+      "thumb_hidden": "",
+      "thumb_official": "_thumbs/Personaggi/Official Art/Gratia Moonlight Post.jpg",
+      "hidden_img": "",
+      "hidden_imgs": [],
+      "official_art": "_multimedia/Personaggi/Official Art/Gratia Moonlight Post.jpg",
+      "trailer_url": "https://www.youtube.com/watch?v=aR_OE6R1_gA",
+      "x_url": "https://x.com/SilverPalace_EN/status/2116017248725086680",
+      "x_post_url": "https://x.com/SilverPalace_EN/status/2116017248725086680",
+      "tags": [
+        "gratia",
+        "queen",
+        "royaltyandaristocracy",
+        "airshipincident"
+      ]
+    },
+    {
+      "id": "case_grimm",
+      "name": "Grimm",
+      "faction": "S.T.A.T.S.",
+      "role": "Giornalista",
+      "title_it": "Grimm (Giornalista)",
+      "title_en": "Grimm (Journalist)",
+      "quote_it": "Una verità priva di prove è assai fragile. Lo scontro diretto non fa per me; combatto le mie battaglie altrove.",
+      "quote_en": "Undocumented truth is really flimsy. Direct confrontation is not my thing. I fight my battles elsewhere.",
+      "bio_it": "Giovane giornalista nato negli strati più umili della società, è un uomo ambizioso, dotato di una mente tanto acuta quanto la sua lingua. Cronista della realtà contemporanea, non esita mai a correre rischi quando si presenta l'occasione giusta. Che si tratti di denunciare scandali o di dare voce a chi purtroppo non c'è più, egli è fermamente convinto che la verità possieda un potere assoluto e che, come tale, debba essere ascoltata.",
+      "bio_en": "A young journalist born into the lower levels of society, he is an ambitious fellow with a mind just as sharp as his tongue. A chronicler of modern society, never hesitating to risk danger when opportunity knocks. Whether denouncing scandals or giving a voice to the sadly departed— He believes that the truth is all-powerful, and it must be heard.",
+      "has_hidden": true,
+      "hidden_title_it": "Il mistero del flash",
+      "hidden_title_en": "The Flashbulb Mystery",
+      "hidden_bio_it": "Fotografa le prove.\nFotografa la scena del crimine. Fotografa le figure al centro della storia e le ombre sensazionali che proiettano. Le solite strade, l’ordinario e l’inaspettato, e tutti noi qui riuniti. E, naturalmente, fotografa la tua stessa espressione. Appare più felice di quanto avresti mai immaginato. Documenta tutto ciò che è reale. Usa le fotografie per opporti all’inesorabile scorrere del tempo. Quando il passato sarà svanito, portato via dal vento, il lampo del flash rimarrà: un faro di ricordi che brilla attraverso la distanza.",
+      "hidden_bio_en": "Photograph the evidence.\nPhotograph the crime scene. Photograph the figures at the centre of the story, and the sensational shadows they cast. The same old streets, the ordinary and the unexpected, and all of us who are gathered here together. And, of course, photograph your own expression. It looks happier than you ever imagined. Document all that is real. Use photographs to stand against the relentless tide of time. When the past has drifted away on the wind, the camera's flash will remain—a lighthouse of memories, shining across the distance.",
+      "hidden_story_it": "Fotografa le prove.\nFotografa la scena del crimine. Fotografa le figure al centro della storia e le ombre sensazionali che proiettano. Le solite strade, l’ordinario e l’inaspettato, e tutti noi qui riuniti. E, naturalmente, fotografa la tua stessa espressione. Appare più felice di quanto avresti mai immaginato. Documenta tutto ciò che è reale. Usa le fotografie per opporti all’inesorabile scorrere del tempo. Quando il passato sarà svanito, portato via dal vento, il lampo del flash rimarrà: un faro di ricordi che brilla attraverso la distanza.",
+      "hidden_story_en": "Photograph the evidence.\nPhotograph the crime scene. Photograph the figures at the centre of the story, and the sensational shadows they cast. The same old streets, the ordinary and the unexpected, and all of us who are gathered here together. And, of course, photograph your own expression. It looks happier than you ever imagined. Document all that is real. Use photographs to stand against the relentless tide of time. When the past has drifted away on the wind, the camera's flash will remain—a lighthouse of memories, shining across the distance.",
+      "drip_img": "_multimedia/Personaggi/Drip Marketing/Grimm Drip Marketing.jpg",
+      "profile_img": "_multimedia/Personaggi/Profile Art/Grimm Profile Art.jpg",
+      "thumb": "_thumbs/Personaggi/Profile Art/Grimm Profile Art.jpg",
+      "thumb_hidden": "",
+      "thumb_official": "",
+      "hidden_img": "",
+      "hidden_imgs": [],
+      "official_art": "",
+      "trailer_url": "https://www.youtube.com/watch?v=d9UavBwEqYw",
+      "x_url": "",
+      "x_post_url": "",
+      "tags": [
+        "grimm",
+        "journalist",
+        "stats"
+      ]
+    },
+    {
+      "id": "case_gucia",
+      "name": "Gucia",
+      "faction": "Ivory Tower",
+      "role": "Apprendista",
+      "title_it": "Gucia (Apprendista)",
+      "title_en": "Gucia (Apprentice)",
+      "quote_it": "Ho visto me stessa in quelle creature, sospese in una penombra tra la vita e la non-vita.",
+      "quote_en": "I saw myself in those creatures, existing in a shade between life and un-life.",
+      "bio_it": "\"Ho visto me stessa in quelle creature, sospese in una penombra tra la vita e la non-vita.\"\n\nUna cercatrice di conoscenza, una collezionista di segreti, una studiosa oltremodo appassionata. Si è sempre tenuta in disparte: una ragazza riservata e timida, dall'aria studiosa. Solo quando la conversazione vira verso eventi o esseri misteriosi e soprannaturali — verso ciò di cui si parla soltanto a bassa voce — lei interviene, con gli occhi che le brillano. Perché è proprio nell'ignoto insondabile che Gucia scorge un riflesso di se stessa.",
+      "bio_en": "\"I saw myself in those creatures, existing in a shade between life and un-life.\" --\n\nA seeker of knowledge, a gatherer of secrets, and a most eager researcher. She had always distanced herself from others, a quiet and shy girl with a studious air. Only when conversation veered toward mysterious and supernatural happenings and beings, toward that which is spoken in hushed whispers, would she pipe up with eyes a-sparkling. For it is within the unfathomable unknown that she sees a reflection of herself.",
+      "has_hidden": true,
+      "hidden_title_it": "Il mistero della Ivory Tower",
+      "hidden_title_en": "The Ivory Tower Mystery",
+      "hidden_bio_it": "Gucia non si era mai interessata alle dinamiche di potere o alle sottili battaglie che si consumano negli ambienti di lavoro, né era mai riuscita a padroneggiare l'arte della retorica tipica del mondo degli affari. No, gli interessi di Gucia risiedevano altrove: nella vita non umana.\nUna forma di vita che non aveva bisogno né di denaro né di amici. Decise di raccogliere ulteriori informazioni, di documentare altri fenomeni di questo tipo, finché un giorno non Cfosse riuscita a comprendere la sofferenza umana attraverso ciò che umano non era.",
+      "hidden_bio_en": "Gucia had never cared for office politics or the subtle battles of the workplace, nor could she master the silver tongues of businesspeople. No, Gucia's interests lay elsewhere: in non-human life. Life that needed neither money nor friends. She decided to collect more information, document more such phenomena, until the day she could come to understand human suffering through what was not human.",
+      "hidden_story_it": "Gucia non si era mai interessata alle dinamiche di potere o alle sottili battaglie che si consumano negli ambienti di lavoro, né era mai riuscita a padroneggiare l'arte della retorica tipica del mondo degli affari. No, gli interessi di Gucia risiedevano altrove: nella vita non umana.\nUna forma di vita che non aveva bisogno né di denaro né di amici. Decise di raccogliere ulteriori informazioni, di documentare altri fenomeni di questo tipo, finché un giorno non Cfosse riuscita a comprendere la sofferenza umana attraverso ciò che umano non era.",
+      "hidden_story_en": "Gucia had never cared for office politics or the subtle battles of the workplace, nor could she master the silver tongues of businesspeople. No, Gucia's interests lay elsewhere: in non-human life. Life that needed neither money nor friends. She decided to collect more information, document more such phenomena, until the day she could come to understand human suffering through what was not human.",
+      "drip_img": "_multimedia/Personaggi/Drip Marketing/Gucia Drip Marketing.jpg",
+      "profile_img": "_multimedia/Personaggi/Profile Art/Gucia Profile Art.jpg",
+      "thumb": "_thumbs/Personaggi/Profile Art/Gucia Profile Art.jpg",
+      "thumb_hidden": "",
+      "thumb_official": "",
+      "hidden_img": "",
+      "hidden_imgs": [],
+      "official_art": "",
+      "trailer_url": "https://www.youtube.com/watch?v=poJFBBF8rnY&pp=0gcJCcgHAYcqIYzv",
+      "x_url": "https://x.com/SilverPalace_EN/status/2118908805274857564",
+      "x_post_url": "https://x.com/SilverPalace_EN/status/2118908805274857564",
+      "tags": [
+        "gucia",
+        "ivorytower",
+        "apprentice",
+        "huntersguild"
+      ]
+    },
+    {
+      "id": "case_lorin",
+      "name": "Lorin",
+      "faction": "River Constabulary",
+      "role": "Ispettore Capo",
+      "title_it": "Lorin (Ispettore Capo)",
+      "title_en": "Lorin (Chief Inspector)",
+      "quote_it": "Teniamo a bada questi monelli, così potremo goderci le vacanze in santa pace.",
+      "quote_en": "Let's keep those brats in check, and then we'll get to have our vacation in peace.",
+      "bio_it": "Un ispettore capo degno della vostra fiducia: un’anima buona, sempre in movimento Ldall’alba al tramonto. In gioventù si fece un nome per la potenza dei suoi pugni, ma ha poi appeso i guantoni al chiodo per impugnare una penna e dedicarsi a una pila di fascicoli che lo tengono impegnato per tutta la notte. Oggi, fiero nella sua divisa, si schiera contro la violenza; perché la giustizia e l'equità non dipendono certo dalla forza di un pugno.",
+      "bio_en": "A chief inspector worthy of your trust—a good soul who's always on his feet from dawn till dusk. Rose to some fame in his youth for the strength of his punches, but hung up his gloves for a pen and a stack of case files that'll keep him busy all night. Today, he takes a stance against violence as he stands proudly in uniform. For justice and fairness depend on more than how hard you can throw a punch.",
+      "has_hidden": true,
+      "hidden_title_it": "Il mistero del formalismo",
+      "hidden_title_en": "The Formalism Mystery",
+      "hidden_bio_it": "Rapporti investigativi, verbali di interrogatorio, appunti sui casi. Un lavoro logorante e senza fine, al confronto del quale sradicare la criminalità dalle strade sembra quasi una passeggiata. Rendiconti finanziari, resoconti mensili, valutazioni per i bonus: un ciclo incessante, sostenuto da regole inflessibili e procedure puramente formali. Ma chi diavolo ha inventato tutto questo? È un enigma fatto di burocrazia che metterebbe in difficoltà persino l'ispettore più navigato.",
+      "hidden_bio_en": "Investigation reports, interrogation logs, case notes. An endless drudgery that makes stamping out crime in the streets look easy by comparison. Financial statements, monthly reports, bonus evaluations produced in a ceaseless cycle, upheld by steadfast rules and superficial processes. Honestly, who on earth came up with it all? It's a riddle of red tape that could stump even the most seasoned of inspectors.",
+      "hidden_story_it": "Rapporti investigativi, verbali di interrogatorio, appunti sui casi. Un lavoro logorante e senza fine, al confronto del quale sradicare la criminalità dalle strade sembra quasi una passeggiata. Rendiconti finanziari, resoconti mensili, valutazioni per i bonus: un ciclo incessante, sostenuto da regole inflessibili e procedure puramente formali. Ma chi diavolo ha inventato tutto questo? È un enigma fatto di burocrazia che metterebbe in difficoltà persino l'ispettore più navigato.",
+      "hidden_story_en": "Investigation reports, interrogation logs, case notes. An endless drudgery that makes stamping out crime in the streets look easy by comparison. Financial statements, monthly reports, bonus evaluations produced in a ceaseless cycle, upheld by steadfast rules and superficial processes. Honestly, who on earth came up with it all? It's a riddle of red tape that could stump even the most seasoned of inspectors.",
+      "drip_img": "_multimedia/Personaggi/Drip Marketing/Lorin Drip Marketing.jpg",
+      "profile_img": "_multimedia/Personaggi/Profile Art/Lorin Profile Art.jpg",
+      "thumb": "_thumbs/Personaggi/Profile Art/Lorin Profile Art.jpg",
+      "thumb_hidden": "",
+      "thumb_official": "",
+      "hidden_img": "",
+      "hidden_imgs": [],
+      "official_art": "",
+      "trailer_url": "https://www.youtube.com/watch?v=qk5pR5im4cU",
+      "x_url": "https://x.com/SilverPalace_EN/status/2117821641837498553",
+      "x_post_url": "https://x.com/SilverPalace_EN/status/2117821641837498553",
+      "tags": [
+        "riverconstabulary",
+        "lorin",
+        "chiefinspector"
+      ]
+    },
+    {
+      "id": "case_red_rose",
+      "name": "Red Rose",
+      "faction": "Casa Reale & Nobiltà",
+      "role": "Ballerina",
+      "title_it": "Red Rose (Ballerina)",
+      "title_en": "Red Rose (Dancer)",
+      "quote_it": "Cala il sipario; ed eccomi giunta a te. Dopo una lunga separazione, quanto sarà breve il nostro incontro?",
+      "quote_en": "The curtain falls; thus have I come to thee. Long parted, how brief shall our meeting be?",
+      "bio_it": "La Rosa come macchina da guerra\n\n-- \"Cala il sipario; ed eccomi giunta a te. Dopo una lunga separazione, quanto sarà breve il nostro incontro?\"\n\n-- Padrona della Midsummer Night's Ballroom (Sala da Ballo di Mezza Estate), è una ballerina che non si ferma mai. Cacciatrice e assassina. Una rosa cremisi che fiorisce in un terreno intriso di sangue; il suo splendore brilla attraverso un involucro irto di spine.\n\nEppure, un pallido chiarore lunare e nebbie venefiche la avvolgono, lasciando cicatrici nella sua stessa anima. Nonostante il nome che richiama il rosso, il destino le ha riservato una sorte oscura e crudele. Solo nell'amore o nella morte le sarà concesso il perdono.",
+      "bio_en": "The Rose as an Engine of War\n\n-- \"The curtain falls; thus have I come to thee. Long parted, how brief shall our meeting be?\" -- Master of the Midsummer Night's Ballroom, she is a dancer who never stops. A hunter, and an assassin. A crimson rose that flourishes in blood-soaked soil, her brilliance shining through her thorny exterior. Yet wan moonlight and noxious mists pervade, enshrouding her, and scarring her very soul. Though red by name, the hand given to her by fate is dark and cruel. Only in love or in death shall she be granted forgiveness.",
+      "has_hidden": false,
+      "hidden_title_it": "",
+      "hidden_title_en": "",
+      "hidden_bio_it": "",
+      "hidden_bio_en": "",
+      "hidden_story_it": "",
+      "hidden_story_en": "",
+      "drip_img": "_multimedia/Personaggi/Profile Art/Red Rose Profile Art.jpg",
+      "profile_img": "_multimedia/Personaggi/Profile Art/Red Rose Profile Art.jpg",
+      "thumb": "_thumbs/Personaggi/Profile Art/Red Rose Profile Art.jpg",
+      "thumb_hidden": "",
+      "thumb_official": "",
+      "hidden_img": "",
+      "hidden_imgs": [],
+      "official_art": "",
+      "trailer_url": "",
+      "x_url": "",
+      "x_post_url": "",
+      "tags": [
+        "redrose",
+        "royaltyandaristocracy",
+        "midsummernightsballroom"
+      ]
+    },
+    {
+      "id": "case_rex",
+      "name": "Rex",
+      "faction": "River Constabulary",
+      "role": "Sovrintendente",
+      "title_it": "Rex (Sovrintendente)",
+      "title_en": "Rex (Superintendent)",
+      "quote_it": "Chi fa rispettare la legge non deve mostrare alcuna clemenza, se vuole preservarne l'autorità.",
+      "quote_en": "Enforcers of the law must show no leniency to maintain its authority.",
+      "bio_it": "Un giovane sovrintendente, pronto a intervenire con prontezza nei momenti di crisi, che nutre una fede nell'ordine ai limiti del fanatismo. Giusto e sbagliato. Bianco e nero. La legge non ammette compromessi. Per farla rispettare, bisogna bandire ogni forma di pietà: ai suoi occhi, infatti, il male non conosce sfumature di grigio.",
+      "bio_en": "A young superintendent who is quick to step up in times of crisis, with a belief in order that borders on the fanatical. Right and wrong. Black and white. The law knows no compromise. To enforce the law, one must cast out all notions of mercy— For in his eyes, evil has no shades of grey.",
+      "has_hidden": true,
+      "hidden_title_it": "Il mistero dell'ordinamento",
+      "hidden_title_en": "The Ordinance Mystery",
+      "hidden_bio_it": "Il primo obiettivo: estirpare la corruzione tra le fila delle forze dell'ordine. Le regole scritte sui manuali si deformano sempre al contatto con la realtà, e persino l'istinto più acuto non riesce sempre a distinguere un bugiardo da una persona onesta.\n\nGli agenti inattivi sono semplicemente pigri, o nascondono qualcosa di più sinistro? Cosa hanno portato via con sé coloro che se ne sono andati? Correnti complesse erodono i confini dell'ordine, proprio come la pioggia sfuma i contorni di una città. Eppure, la sua determinazione resta incrollabile. All'interno dello spazio ancora sotto il suo controllo, preserverà quell'ordine che non deve essere infranto.",
+      "hidden_bio_en": "The first order: root out the corrupt within the force. The rules written in textbooks always warp when they meet the real world, and even the sharpest instincts cannot always distinguish a liar from an honest man. Are idle constables merely lazy, or hiding something more sinister? What did those who left take with them? Complex currents erode the edges of order, like rain blurring the outline of a city. Yet his resolve remains unshaken. Within the space still under his control, he will preserve the order that must not be broken.",
+      "hidden_story_it": "Il primo obiettivo: estirpare la corruzione tra le fila delle forze dell'ordine. Le regole scritte sui manuali si deformano sempre al contatto con la realtà, e persino l'istinto più acuto non riesce sempre a distinguere un bugiardo da una persona onesta.\n\nGli agenti inattivi sono semplicemente pigri, o nascondono qualcosa di più sinistro? Cosa hanno portato via con sé coloro che se ne sono andati? Correnti complesse erodono i confini dell'ordine, proprio come la pioggia sfuma i contorni di una città. Eppure, la sua determinazione resta incrollabile. All'interno dello spazio ancora sotto il suo controllo, preserverà quell'ordine che non deve essere infranto.",
+      "hidden_story_en": "The first order: root out the corrupt within the force. The rules written in textbooks always warp when they meet the real world, and even the sharpest instincts cannot always distinguish a liar from an honest man. Are idle constables merely lazy, or hiding something more sinister? What did those who left take with them? Complex currents erode the edges of order, like rain blurring the outline of a city. Yet his resolve remains unshaken. Within the space still under his control, he will preserve the order that must not be broken.",
+      "drip_img": "_multimedia/Personaggi/Drip Marketing/Rex Drip Marketing.jpg",
+      "profile_img": "_multimedia/Personaggi/Profile Art/Rex Profile Art.jpg",
+      "thumb": "_thumbs/Personaggi/Profile Art/Rex Profile Art.jpg",
+      "thumb_hidden": "",
+      "thumb_official": "",
+      "hidden_img": "",
+      "hidden_imgs": [],
+      "official_art": "",
+      "trailer_url": "https://www.youtube.com/watch?v=w_ozRoQ4tDQ",
+      "x_url": "",
+      "x_post_url": "",
+      "tags": [
+        "rex",
+        "superintendent",
+        "riverconstabulary",
+        "corruzione"
+      ]
+    },
+    {
+      "id": "case_skink",
+      "name": "Skink",
+      "faction": "Crag Edgers",
+      "role": "La Lingua Melliflua",
+      "title_it": "Skink (La Lingua Melliflua)",
+      "title_en": "The Honeyed Tongue",
+      "quote_it": "Il mio nome è Skink, consulente dei Crag Edger. Sono specializzato nella mediazione di dispute interpersonali e... in altre faccende, decisamente meno nobili. Non vedo l'ora di lavorare con voi.",
+      "quote_en": "My name is Skink, consultant to the Crag Edgers. I specialise in mediating interpersonal disputes and... other, less savoury matters. I look forward to working with you.",
+      "bio_it": "\"Il mio nome è Skink, consulente dei Crag Edger. Sono specializzato nella mediazione di dispute interpersonali e... in altre faccende, decisamente meno nobili. Non vedo l'ora di lavorare con voi.\" --\n\nQuesto rettile, proveniente da una terra lontana, è approdato a Silvernia dopo essere sopravvissuto a un brutale massacro. Per sua fortuna, è riuscito a tenere le sue scaglie lucenti al riparo dalla luce solare, sfruttando le lunghe ombre di Middensea.\n\nCol passare del tempo, la benevolenza che un tempo gli scorreva nelle vene si è spenta. Ora vive tra creature a sangue caldo, servendosi di lame avvelenate e astuti stratagemmi per guadagnarsi da vivere.",
+      "bio_en": "\"My name is Skink, consultant to the Crag Edgers. I specialise in mediating interpersonal disputes and... other, less savoury matters. I look forward to working with you.\" --\n\nThis reptile from a distant land washed up in Silvernia after having survived a game of slaughter. He has mercifully managed to keep his gleaming scales out of the sunlight thanks to the long shadows in Middensea.\n\nOver time, the kindness that once ran in his blood cooled. Now, he lives among warm-blooded creatures, plying poisoned blades and cunning tricks to earn his keep.",
+      "has_hidden": false,
+      "hidden_title_it": "",
+      "hidden_title_en": "",
+      "hidden_bio_it": "",
+      "hidden_bio_en": "",
+      "hidden_story_it": "",
+      "hidden_story_en": "",
+      "drip_img": "_multimedia/Personaggi/Drip Marketing/Sking Drip Marketing.jpg",
+      "profile_img": "_multimedia/Personaggi/Profile Art/Skink Profile Art.jpg",
+      "thumb": "_thumbs/Personaggi/Profile Art/Skink Profile Art.jpg",
+      "thumb_hidden": "",
+      "thumb_official": "",
+      "hidden_img": "",
+      "hidden_imgs": [],
+      "official_art": "",
+      "trailer_url": "",
+      "x_url": "",
+      "x_post_url": "",
+      "tags": [
+        "skink",
+        "cragedgers",
+        "middensea",
+        "strategist"
+      ]
+    },
+    {
+      "id": "case_susan",
+      "name": "Susan",
+      "faction": "UMI",
+      "role": "Messaggera",
+      "title_it": "Susan (Messaggera)",
+      "title_en": "Susan (Messenger)",
+      "quote_it": "Le lettere... trasmettono sentimenti. Se posso aiutare a... portare un po' di felicità... allora anch'io... ne provo.",
+      "quote_en": "Letters c—carry feelings. If I c—can help d—deliver happiness... that makes me happy, t—too.",
+      "bio_it": "«Le lettere... trasmettono sentimenti. Se posso aiutare a... portare un po' di felicità... allora anch'io... ne provo.» --\n\nUna messaggera silenziosa, un uccello meccanico che reca ordini. Fedele ai desideri altrui, capace di ricordare ogni strada e ogni vicolo, segue le direttive alla lettera; sia i suoi movimenti che il suo modo di parlare appaiono, per natura, alquanto meccanici. Eppure, le sue stesse parole non hanno più una meta, smarrite in anni di silenzio. Fluttua come un uccello sperduto, in balia dei venti. Senza rendersi conto che, spesso, la fortuna si trova a un breve volo di distanza dalla sventura in cui ci ritroviamo invischiati...",
+      "bio_en": "\"Letters c—carry feelings. If I c—can help d—deliver happiness... that makes me happy, t—too.\" --\n\nA silent messenger, a clockwork bird bearing commands. Faithful to the wishes of others, remembering every road and alleyway, she follows orders to the letter, both her movements and speech somewhat mechanical in nature. Yet her own words have nowhere left to go, lost in years of silence. She floats like a lost bird upon the winds. Unaware that fortune is often only a short flight away from the misfortune we find ourselves mired within...",
+      "has_hidden": false,
+      "hidden_title_it": "",
+      "hidden_title_en": "",
+      "hidden_bio_it": "",
+      "hidden_bio_en": "",
+      "hidden_story_it": "",
+      "hidden_story_en": "",
+      "drip_img": "_multimedia/Personaggi/Drip Marketing/Susan Drip Marketing.jpg",
+      "profile_img": "_multimedia/Personaggi/Profile Art/Susan Profile Art.jpg",
+      "thumb": "_thumbs/Personaggi/Profile Art/Susan Profile Art.jpg",
+      "thumb_hidden": "",
+      "thumb_official": "",
+      "hidden_img": "",
+      "hidden_imgs": [],
+      "official_art": "",
+      "trailer_url": "",
+      "x_url": "",
+      "x_post_url": "",
+      "tags": [
+        "susan",
+        "messenger",
+        "umi"
+      ]
+    },
+    {
+      "id": "case_tinsley",
+      "name": "Tinsley",
+      "faction": "Oz School of Metallurgy",
+      "role": "Studentessa modello",
+      "title_it": "Tinsley (Studentessa modello)",
+      "title_en": "Tinsley (Star Student)",
+      "quote_it": "Un progetto perfetto è solo una base di partenza. Ho ancora molta strada da fare prima di potermi definire una vera grande inventrice.",
+      "quote_en": "A perfect design is merely a foundation. I've a long way to go before I can call myself a truly great inventor.",
+      "bio_it": "Grandi aspettative\n\n-- \"Un progetto perfetto è solo una base di partenza. Ho ancora molta strada da fare prima di potermi definire una vera grande inventrice.\"\n\n-- Un genio, una ragazza adorabile, un'allieva modello; un'inventrice dal cuore vuoto. Mentre l'industria estrattiva continua a brontolare incessantemente, lei studia gli ingranaggi, li mette in moto, finendo per diventare, a sua volta, nient'altro che un altro ingranaggio nel meccanismo. I pionieri avanzano, e il grande boato del mondo si avvicina, giungendo da lontano. I progetti si srotolano, gli ingranaggi girano, e lei deve trovare un desiderio che possa dirsi veramente suo.",
+      "bio_en": "Great Expectations\n\n-- \"A perfect design is merely a foundation. I've a long way to go before I can call myself a truly great inventor.\"\n\n-- A genius, a darling, a model pupil; an inventor with an empty heart. As the mining industry rumbles on without end, she studies the gears, sets them turning, and is herself no more than another cog in the machine. The pioneers forge ahead, and the world's great rumbling draws nearer from afar. The blueprints unfurl, the gears turn, and she must seek out a desire she can call her own.",
+      "has_hidden": false,
+      "hidden_title_it": "",
+      "hidden_title_en": "",
+      "hidden_bio_it": "",
+      "hidden_bio_en": "",
+      "hidden_story_it": "",
+      "hidden_story_en": "",
+      "drip_img": "_multimedia/Personaggi/Drip Marketing/Tinsley Drip Marketing.webp",
+      "profile_img": "_multimedia/Personaggi/Profile Art/Tinsley Profile Art.webp",
+      "thumb": "_thumbs/Personaggi/Profile Art/Tinsley Profile Art.jpg",
+      "thumb_hidden": "",
+      "thumb_official": "",
+      "hidden_img": "",
+      "hidden_imgs": [],
+      "official_art": "",
+      "trailer_url": "",
+      "x_url": "",
+      "x_post_url": "",
+      "tags": [
+        "ozschoolofmetallurgy",
+        "tinsley",
+        "starstudent"
+      ]
+    }
+  ],
+  "dispatches": [
+    {
+      "id": "disp_1",
+      "title": "Cinthyia Sky",
+      "type": "Extra Lore Story",
+      "date": "2026-11-17",
+      "desc_en": "Fleeing the bores of her private lessons, Cynthia escaped the cushy confines of her gilded cage. She skipped toward the swings that soar high into azure skies, where knights and plush companions wander as they please. For today, each and every house is home to clouds galore. McBarley mascots patrol the skies above, bearing endless sweets for all to enjoy. Well, don't just stand there and gawp, Detective! Even you are allowed to have a little fun today!",
+      "desc_it": "Stanca della noia delle sue lezioni private, Cynthia è fuggita dagli agi della sua gabbia dorata. È corsa verso le altalene, che si slanciano alte verso un cielo azzurro, dove cavalieri e compagni di peluche vagano in piena libertà. Per oggi, ogni singola casa ospita una miriade di nuvole. Le mascotte dei McBarley pattugliano il cielo, portando con sé dolciumi a non finire per la gioia di tutti. Ehi, non restare lì a bocca aperta, detective! Anche a te è concesso un po’ di divertimento, oggi!",
+      "cover_img": "_multimedia/Personaggi/Official Art/Cynthia Sky Art.jpg",
+      "thumb": "_thumbs/Personaggi/Official Art/Cynthia Sky Art.jpg",
+      "link": "",
+      "tags": [
+        "cynthia",
+        "mcbarley"
+      ]
+    },
+    {
+      "id": "disp_10",
+      "title": "Japan EXPO 2026",
+      "type": "Live Event Internazionale",
+      "date": "2026-11-17",
+      "desc_en": "",
+      "desc_it": "",
+      "cover_img": "_multimedia/Art Per Eventi/Japan EXPO 2026.jpg",
+      "thumb": "_thumbs/Art Per Eventi/Japan EXPO 2026.jpg",
+      "link": "",
+      "tags": []
+    },
+    {
+      "id": "disp_11",
+      "title": "Thailand Gameshow 2026",
+      "type": "Live Event Internazionale",
+      "date": "2026-11-17",
+      "desc_en": "",
+      "desc_it": "",
+      "cover_img": "_multimedia/Art Per Eventi/Thailand Gameshow 2026.jpg",
+      "thumb": "_thumbs/Art Per Eventi/Thailand Gameshow 2026.jpg",
+      "link": "",
+      "tags": [
+        "detective"
+      ]
+    },
+    {
+      "id": "disp_12",
+      "title": "Sticker Collection",
+      "type": "Extra Multimediali",
+      "date": "2026-11-17",
+      "desc_en": "Sticker Pack Vol. 2\n\nSticker Pack Vol 1",
+      "desc_it": "Sticker Pack Vol. 2\n\nSticker Pack Vol 1",
+      "cover_img": "",
+      "thumb": "",
+      "link": "https://x.com/SilverPalace_EN/status/2100057090899558681",
+      "tags": []
+    },
+    {
+      "id": "disp_13",
+      "title": "April Fools 2026",
+      "type": "Evento Festività",
+      "date": "2026-11-17",
+      "desc_en": "",
+      "desc_it": "",
+      "cover_img": "_multimedia/Art Per Festività/April Fool Alf.jpg",
+      "thumb": "_thumbs/Art Per Festività/April Fool Alf.jpg",
+      "link": "",
+      "tags": [
+        "alf"
+      ]
+    },
+    {
+      "id": "disp_14",
+      "title": "Halloween 2026",
+      "type": "Evento Festività",
+      "date": "2026-11-17",
+      "desc_en": "A Night When Magic Lingers Her skirt swirls into a ring of magic, her heartbeat murmuring an incantation. \"Detective, do you think my new dress suits me?\" Spurning the illusory ball, the witch for the night takes matters into her own hands, finding a new purpose for a pumpkin. \"This one's me.\" A little round face. \"And the biggest one is the Detective.\" The most extraordinary eyes. Her pointed hat sits at a jaunty angle, and her knack for mischief quietly takes root. \"Even if you hand over your sweets, don't think you can get rid of me that easily.\"",
+      "desc_it": "Una notte in cui aleggia la magia. La sua gonna vortica formando un cerchio incantato, mentre il battito del suo cuore mormora un incantesimo. \"Detective, pensi che questo nuovo vestito mi stia bene?\" Ignorando il ballo illusorio, la strega per una notte prende in mano la situazione, trovando un nuovo scopo per una zucca. \"Questa sono io.\" Un visino tondo. \"E quella più grande è il Detective.\" Occhi straordinari. Il cappello a punta è inclinato con aria sbarazzina, e la sua propensione per i dispetti inizia a farsi strada. \"Anche se mi dai i tuoi dolciumi, non credere di poterti liberare di me così facilmente.\"",
+      "cover_img": "_multimedia/Art Per Festività/Halloween 2026.jpg",
+      "thumb": "_thumbs/Art Per Festività/Halloween 2026.jpg",
+      "link": "",
+      "tags": [
+        "halloween"
+      ]
+    },
+    {
+      "id": "disp_15",
+      "title": "Dichotomy Beta Test Gameplay Showcase - The Raven and the Rose",
+      "type": "Trailer Ufficiale",
+      "date": "2026-11-17",
+      "desc_en": "The curtain rises on a pageant of human nature laid bare. Some mask their sins upon the dance floor, while others reconstruct truth from ruin and bone. An unseen author has inscribed fate's first stroke. When the final act dissolves into silence, the crowd disperses, twilight descends, and the ravens fly homeward once more. Tell me, Detective, what answer do you hope to find?",
+      "desc_it": "Si alza il sipario su uno spettacolo in cui la natura umana viene messa a nudo.\nC’è chi cela i propri peccati sulla pista da ballo, e chi invece ricostruisce la verità partendo da rovine e ossa.\n\nUn autore invisibile ha tracciato il primo segno del destino. Quando l’atto finale svanisce nel silenzio, la folla si disperde, cala il crepuscolo e i corvi tornano, ancora una volta, verso casa. Dimmi, detective: quale risposta speri di trovare?",
+      "cover_img": "",
+      "thumb": "",
+      "link": "https://www.youtube.com/watch?v=ofTnT5Bk1_Y",
+      "tags": [
+        "redrose",
+        "detective",
+        "eternalsummer"
+      ]
+    },
+    {
+      "id": "disp_16",
+      "title": "Dichotomy Beta Test Trailer - Black Knights' Tango",
+      "type": "Trailer Ufficiale",
+      "date": "2026-11-17",
+      "desc_en": "When gravity turns, so too does the tide of offence and defence. Human relations are like Silverium, ever flowing, ever changing... Yesterday's foe may well be today's friend. And, naturally, today's friend may become tomorrow's foe.",
+      "desc_it": "Quando la gravità muta, muta anche la dinamica tra attacco e difesa.\nLe relazioni umane sono come il Silverium: in costante flusso, in continuo mutamento...\nIl nemico di ieri potrebbe benissimo essere l'amico di oggi.\nE, naturalmente, l'amico di oggi potrebbe diventare il nemico di domani.",
+      "cover_img": "",
+      "thumb": "",
+      "link": "https://www.youtube.com/watch?v=5kn2PqGuhY4",
+      "tags": [
+        "silverium",
+        "detective",
+        "redrose",
+        "bentham",
+        "reactor",
+        "stats"
+      ]
+    },
+    {
+      "id": "disp_17",
+      "title": "gamescom 2026 Special Trailer - The Price of Truth",
+      "type": "Trailer Ufficiale",
+      "date": "2026-11-17",
+      "desc_en": "Emotion is but greed given a name, an obsession we cannot escape. Wealth, fame, or perhaps a relentless pursuit of truth and the regrets that haunt us... Are you ready to place your soul upon the scales, and pay the price for the answer buried within?",
+      "desc_it": "L'emozione non è altro che avidità a cui è stato dato un nome, un'ossessione da cui non possiamo sfuggire. Ricchezza, fama, o magari l'incessante ricerca della verità, insieme ai rimpianti che ci perseguitano... Sei pronto a porre la tua anima sulla bilancia e a pagare il prezzo per la risposta che vi giace sepolta?",
+      "cover_img": "",
+      "thumb": "",
+      "link": "https://www.youtube.com/watch?v=hDHFxsh02aE",
+      "tags": []
+    },
+    {
+      "id": "disp_18",
+      "title": "Monotype Beta Test Trailer",
+      "type": "Trailer Ufficiale",
+      "date": "2026-11-17",
+      "desc_en": "Ashen words upon the wall, in misfortune's wake lies revelation. \"Tis some visitor tapping at your chamber door.\" Only this and nothing more.",
+      "desc_it": "Parole color cenere sulla parete; sulla scia della sventura giunge una rivelazione.\n«È un visitatore che bussa alla porta della tua stanza.»\nSolo questo, e nulla più.",
+      "cover_img": "",
+      "thumb": "",
+      "link": "https://www.youtube.com/watch?v=H_mgS0oQQM0",
+      "tags": []
+    },
+    {
+      "id": "disp_19",
+      "title": "The Golden Age of Detectives",
+      "type": "Trailer Ufficiale",
+      "date": "2026-11-17",
+      "desc_en": "In the third year of Queen Feliana’s reign, the detective returns. Silvernia straddles the crossroads of splendor and decay, where reality blurs with fables. Through diplomacy, deduction, instinct, and steel—trace the origin of that fatal shot. Your choice will carve not just your destiny... but the fate of many.",
+      "desc_it": "Nel terzo anno del regno della regina Feliana, il detective fa ritorno. Silvernia si trova al crocevia tra splendore e decadenza, un luogo in cui la realtà si confonde con la favola. Affidandoti alla diplomazia, alla deduzione, all'istinto e all'acciaio, risali all'origine di quel colpo fatale. Le tue scelte non determineranno soltanto il tuo destino... ma anche quello di molti altri.",
+      "cover_img": "",
+      "thumb": "",
+      "link": "https://www.youtube.com/watch?v=ELC4r7fbKEQ",
+      "tags": [
+        "feliana",
+        "queen",
+        "detective",
+        "fables",
+        "fate",
+        "author"
+      ]
+    },
+    {
+      "id": "disp_2",
+      "title": "Gratia Moonlight",
+      "type": "Extra Lore Story",
+      "date": "2026-11-17",
+      "desc_en": "How did that carrot cake end up in the sky? Looks like I will have to pluck it down so everyone can taste its fluffy sweetness in their dreams. The moon dons the golden cape gifted by the sun and opens its pockets wide. Its gathered light spills forth, illuminating the secrets of the night. But even a loyal knight can have a little soft spot. Detective, I'll leave the tastiest sliver of moonlight just for you.",
+      "desc_it": "Come ha fatto quella torta di carote a finire nel cielo?\nMi sa che dovrò tirarla giù, così tutti potranno assaporarne la soffice dolcezza nei propri sogni.\n\nLa luna indossa il mantello dorato donatole dal sole e spalanca le sue tasche.\nLa luce che vi ha raccolto trabocca, illuminando i segreti della notte.\n\nMa anche un cavaliere leale può avere un piccolo punto debole.\nDetective, terrò da parte proprio per te la fetta di chiaro di luna più gustosa.",
+      "cover_img": "_multimedia/Personaggi/Official Art/Gratia Moonlight Post.jpg",
+      "thumb": "_thumbs/Personaggi/Official Art/Gratia Moonlight Post.jpg",
+      "link": "",
+      "tags": [
+        "gratia"
+      ]
+    },
+    {
+      "id": "disp_20",
+      "title": "Cynthia Trailer Link",
+      "type": "Character Trailer",
+      "date": "2026-11-17",
+      "desc_en": "A doll's house fashioned from a hundred measures of gold; its young scion has yet to understand that power takes the form of a tightening noose. A hundred keys grant passage to infinite spectacle and privilege. With her head held high and her hands on her hips, she leads a steadfast company of loyal knights. A game within a mirror, a dream within a cage. The Goldbud journeys forth unto the moonlit court.",
+      "desc_it": "Una casa delle bambole forgiata con cento misure d’oro; la sua giovane erede deve ancora comprendere che il potere assume le sembianze di un cappio che si stringe. Cento chiavi aprono il varco verso uno spettacolo e un privilegio infiniti. A testa alta e con le mani sui fianchi, ella guida una schiera incrollabile di cavalieri fedeli. Un gioco dentro uno specchio, un sogno dentro una gabbia. Il Germoglio d’Oro muove verso la corte baciata dal chiarore lunare.",
+      "cover_img": "",
+      "thumb": "",
+      "link": "https://www.youtube.com/watch?v=ZcDBkBs7J6g",
+      "tags": [
+        "cynthia"
+      ]
+    },
+    {
+      "id": "disp_21",
+      "title": "Gratia Trailer Descrizione e Link",
+      "type": "Character Trailer",
+      "date": "2026-11-17",
+      "desc_en": "What manner of knight deserves to be praised? The bunny knight's ears drooped, as she racked her brains for an answer. Guided by a sage, she ventured forth tentatively, searching step by step. Until... a piercing shriek rang out above the city, and a storm descended without warning. With no time to ponder, she spurred her steed skywards and charged forth, sword in hand. Once again, through her actions and by following her heart, Gratia had found her answer.",
+      "desc_it": "Che sorta di cavaliere merita di essere lodato? Le orecchie della cavaliere-coniglio si abbassarono, mentre si scervellava alla ricerca di una risposta. Guidata da un saggio, si avventurò con cautela, procedendo passo dopo passo. Finché... un grido lacerante risuonò sopra la città e, senza alcun preavviso, si scatenò una tempesta. Senza tempo per riflettere, spronò il suo destriero verso il cielo e si lanciò in avanti, spada in pugno. Ancora una volta, attraverso le sue azioni e seguendo il proprio cuore, Gratia aveva trovato la risposta.",
+      "cover_img": "",
+      "thumb": "",
+      "link": "https://www.youtube.com/watch?v=HdbINn5ciIs",
+      "tags": [
+        "gratia"
+      ]
+    },
+    {
+      "id": "disp_3",
+      "title": "20 Milioni Pre Reg ART",
+      "type": "Annuncio Ufficiale",
+      "date": "2026-11-17",
+      "desc_en": "",
+      "desc_it": "",
+      "cover_img": "_multimedia/Art Per Eventi/20 Milioni Pre REG.jpg",
+      "thumb": "_thumbs/Art Per Eventi/20 Milioni Pre REG.jpg",
+      "link": "",
+      "tags": [
+        "cynthia"
+      ]
+    },
+    {
+      "id": "disp_4",
+      "title": "4 Milioni PRE REG",
+      "type": "Annuncio Ufficiale",
+      "date": "2026-11-17",
+      "desc_en": "",
+      "desc_it": "",
+      "cover_img": "_multimedia/Art Per Eventi/4 Milioni PRE REG.jpg",
+      "thumb": "_thumbs/Art Per Eventi/4 Milioni PRE REG.jpg",
+      "link": "",
+      "tags": []
+    },
+    {
+      "id": "disp_5",
+      "title": "Beta Test End",
+      "type": "Annuncio Ufficiale",
+      "date": "2026-11-17",
+      "desc_en": "",
+      "desc_it": "",
+      "cover_img": "_multimedia/Art Per Eventi/Beta Test End.jpg",
+      "thumb": "_thumbs/Art Per Eventi/Beta Test End.jpg",
+      "link": "",
+      "tags": [
+        "redrose"
+      ]
+    },
+    {
+      "id": "disp_6",
+      "title": "Beta Test Recruitment",
+      "type": "Annuncio Ufficiale",
+      "date": "2026-11-17",
+      "desc_en": "",
+      "desc_it": "",
+      "cover_img": "_multimedia/Art Per Eventi/Beta Test Artwork.jpg",
+      "thumb": "_thumbs/Art Per Eventi/Beta Test Artwork.jpg",
+      "link": "",
+      "tags": [
+        "detective"
+      ]
+    },
+    {
+      "id": "disp_7",
+      "title": "Global Pre Registration",
+      "type": "Annuncio Ufficiale",
+      "date": "2026-11-17",
+      "desc_en": "",
+      "desc_it": "",
+      "cover_img": "_multimedia/Art Per Eventi/Global Pre Reg Art.jpg",
+      "thumb": "_thumbs/Art Per Eventi/Global Pre Reg Art.jpg",
+      "link": "",
+      "tags": []
+    },
+    {
+      "id": "disp_8",
+      "title": "Anime EXPO 2026",
+      "type": "Live Event Internazionale",
+      "date": "2026-11-17",
+      "desc_en": "",
+      "desc_it": "",
+      "cover_img": "_multimedia/Art Per Eventi/Anime EXPO 2026.jpg",
+      "thumb": "_thumbs/Art Per Eventi/Anime EXPO 2026.jpg",
+      "link": "",
+      "tags": []
+    },
+    {
+      "id": "disp_9",
+      "title": "Gamescom 2026",
+      "type": "Live Event Internazionale",
+      "date": "2026-11-17",
+      "desc_en": "",
+      "desc_it": "",
+      "cover_img": "_multimedia/Art Per Eventi/Gamescom 2026.jpg",
+      "thumb": "_thumbs/Art Per Eventi/Gamescom 2026.jpg",
+      "link": "",
+      "tags": []
+    }
+  ],
+  "factions": [
+    {
+      "name": "MISS",
+      "alias": "Maid Institute Society and Services",
+      "desc_it": "Maid Institute Society and Services",
+      "desc_en": "Maid Institute Society and Services",
+      "banner": "",
+      "thumb": "",
+      "tags": [
+        "miss"
+      ]
+    },
+    {
+      "name": "River Constabulary",
+      "alias": "Polizia Fluviale di Silvernia",
+      "desc_it": "Un filo della storia | River Constabulary (Polizia Fluviale)\n\nUn corpo di pubblica sicurezza istituito dalla Marina, per volere della Corona e finanziato dall' United Mining Industry (UMI) I suoi agenti operano all'interno di un vecchio edificio — abbandonato dopo il trasferimento della Marina in sedi più moderne — e si impegnano a fondo per mantenere l'ordine a Silvernia. Nonostante i loro sforzi, sono privi di reale autorità e vengono costantemente ostacolati dagli interessi dei ricchi e dei potenti; ciò porta persino la gente comune a dubitare delle loro capacità. Il fascio di una torcia non illumina mai molto lontano: una verità che gli agenti di pattuglia notturna conoscono fin troppo bene.",
+      "desc_en": "A Thread of the Story | River Constabulary\n\nA law enforcement agency established by the Navy, at the behest of the Crown, and funded by the United Mining Industry. Its constables operate out of an old office building—vacated when the Navy moved to newer premises—working hard to keep the peace in Silvernia. Despite their efforts, they lack authority and are hampered at every turn by the interests of the rich and powerful, leaving even the common folk to doubt their capabilities. The beam of a flashlight barely reaches far, a truth that night patrol constables know all too well.",
+      "banner": "_multimedia/Art Per Fazioni/River Constabulary Art.jpg",
+      "thumb": "_thumbs/Art Per Fazioni/River Constabulary Art.jpg",
+      "tags": [
+        "riverconstabulary"
+      ]
+    },
+    {
+      "name": "S.T.A.T.S.",
+      "alias": "Surveillance, Tracking and Troubleshooting Services",
+      "desc_it": "L'ufficio S.T.A.T.S. in Morgue Street è il luogo in cui risiede il Detective. Dopo un grave incidente, la sede è rimasta sigillata per tre anni, ma ora ha riaperto i battenti. I collaboratori del Detective vi fanno spesso visita: si riuniscono, lavorano in sinergia e custodiscono gelosamente i segreti che portano dentro di sé – una verità soffocata da cospirazioni, un corpo segnato fin dalla nascita, una cicatrice da tenere nascosta, identità ancora sfumate e indefinite... Indagare sui casi significa svelare le anime celate. Ciò che emerge attraverso le parole non è che la punta dell'iceberg.",
+      "desc_en": "A Thread of the Story | S.T.A.T.S.\n\nThe S.T.A.T.S. office on Morgue Street is where the Detective lives. It was sealed off for three years after a major incident, but the establishment has been reopened for business. The Detective's partners often pay a visit to this place. They gather, collaborate, and carefully guard the secrets they carry within: a truth smothered by conspiracies, a body marked since birth, a scar not to be disclosed, and selves still blurred and undefined... To investigate cases is to unveil the hidden souls. What surfaces in words is but the tip of the iceberg.",
+      "banner": "_multimedia/Art Per Fazioni/Stats Faction Art.jpg",
+      "thumb": "_thumbs/Art Per Fazioni/Stats Faction Art.jpg",
+      "tags": [
+        "stats"
+      ]
+    },
+    {
+      "name": "UMI",
+      "alias": "United Mining Industry",
+      "desc_it": "United Mining Industry",
+      "desc_en": "United Mining Industry",
+      "banner": "",
+      "thumb": "",
+      "tags": [
+        "umi"
+      ]
+    },
+    {
+      "name": "Casa Reale & Nobiltà",
+      "alias": "La Corona di Silvernia",
+      "desc_it": "Casa reale e aristocrazia di Silvernia.",
+      "desc_en": "Royal house and aristocracy of Silvernia.",
+      "banner": "",
+      "thumb": "",
+      "tags": [
+        "queen",
+        "royaltyandaristocracy"
+      ],
+      "derived": true
+    },
+    {
+      "name": "House Luna",
+      "alias": "La Casata Reale di Silvernia",
+      "desc_it": "Casata nobiliare e dinastia reale di Silvernia.",
+      "desc_en": "Royal house of Silvernia.",
+      "banner": "",
+      "thumb": "",
+      "tags": [
+        "houseluna"
+      ],
+      "derived": true
+    },
+    {
+      "name": "Crag Edgers",
+      "alias": "Fazione Portuale di Middensea",
+      "desc_it": "Organizzazione portuale del distretto di Middensea.",
+      "desc_en": "Harbor organization of the Middensea district.",
+      "banner": "",
+      "thumb": "",
+      "tags": [
+        "cragedgers",
+        "middensea"
+      ],
+      "derived": true
+    },
+    {
+      "name": "Fableborn",
+      "alias": "Popolo delle Favole",
+      "desc_it": "Fazione citata negli atti dei personaggi Fableborn.",
+      "desc_en": "Faction referenced in Fableborn character records.",
+      "banner": "",
+      "thumb": "",
+      "tags": [
+        "fableborn"
+      ],
+      "derived": true
+    },
+    {
+      "name": "Ivory Tower",
+      "alias": "La Torre d’Avorio",
+      "desc_it": "Accademia e circolo di studiosi di Silvernia.",
+      "desc_en": "Academy and scholars circle of Silvernia.",
+      "banner": "",
+      "thumb": "",
+      "tags": [
+        "ivorytower"
+      ],
+      "derived": true
+    },
+    {
+      "name": "Oz School of Metallurgy",
+      "alias": "Accademia di Metallurgia",
+      "desc_it": "Accademia di metallurgia citata negli atti di Tinsley e Cordelia.",
+      "desc_en": "Academy of Metallurgy referenced in Tinsley and Cordelia records.",
+      "banner": "",
+      "thumb": "",
+      "tags": [
+        "ozschoolofmetallurgy"
+      ],
+      "derived": true
+    }
+  ],
+  "lexicon": [
+    {
+      "term": "Dogma",
+      "category": "Terminologia & Concetti",
+      "def_it": "Nel suo senso più ampio, si tratta di una qualsiasi convinzione sostenuta in modo definitivo e senza alcuna possibilità di revisione. Può presentarsi sotto forma di un sistema ufficiale di principi o dottrine:\n\ndi una religione, come l'ebraismo, il cristianesimo (cattolicesimo romano, protestantesimo) o l'islam;\ndelle posizioni di un filosofo o di una scuola filosofica, come lo stoicismo o il marxismo;\ndei postulati o degli assiomi politici propri di sistemi di pensiero politico, quali il fascismo, il socialismo, il progressismo, il liberalismo o il conservatorismo",
+      "def_en": "in its broadest sense, is any belief held definitively and without the possibility of reform. It may be in the form of an official system of principles or doctrines:\n\nof a religion, such as Judaism, Christianity (Roman Catholicism, Protestantism) or Islam\nof the positions of a philosopher or of a philosophical school, such as Stoicism or Marxism\nof the postulates or political axioms of political belief-systems such as fascism, socialism, progressivism, liberalism, or conservatism",
+      "date": "2026-11-19",
+      "source_file": "Dizionario/Dogma.md"
+    },
+    {
+      "term": "Eloquenza",
+      "category": "Terminologia & Concetti",
+      "def_it": "L'eloquenza è l'arte e la capacità di parlare o scrivere in modo chiaro, efficace, elegante e persuasivo, così da convincere l'interlocutore o emozionare chi ascolta.",
+      "def_en": "Eloquence is the art and ability to speak or write in a clear, effective, elegant, and persuasive manner, so as to convince the person you are addressing or to stir the emotions of those who are listening.",
+      "date": "2026-11-19",
+      "source_file": "Dizionario/Eloquenza.md"
+    },
+    {
+      "term": "Metallurgy",
+      "category": "Terminologia & Concetti",
+      "def_it": "Metallurgia\ndisciplina tecnico-scientifica che studia i metalli, il loro comportamento chimico-fisico, i processi di estrazione dai minerali e le tecniche di lavorazione e trasformazione per l'uso industriale",
+      "def_en": "Science and engineering discipline that studies the physical and chemical behavior of metallic elements, intermetallic compounds, and alloys, as well as the processes used to extract, refine, shape, and treat them.",
+      "date": "2026-11-19",
+      "source_file": "Dizionario/Metallurgy.md"
+    },
+    {
+      "term": "High Peers & Spinotrode",
+      "category": "Mappe & Ambientazione",
+      "def_it": "High Peers. Il gioiello più prezioso di Silvernia: un luogo splendente, tranquillo e prospero. A dominare il distretto si ergono le Spinotrode — particolari reattori dalla sommità conica che trasformano il Silverium in energia elettrica. Esse costituiscono la spina dorsale dell'infrastruttura elettrica della città e sono le artefici delle sue meraviglie moderne. È qui che gli abitanti si dedicano a festeggiamenti e piaceri lussuosi, chiudendo deliberatamente un occhio sulla presenza di non umani che si celano tra loro. High Peers non è priva di ombre, ma il giorno in cui le sue torri dorate crolleranno non è ancora giunto... per ora.",
+      "def_en": "Footnotes // High Peers & Spinotrode\n\nHigh Peers. The gleaming, tranquil, and prosperous crowning jewel of Silvernia. Dominating the district stand the Spinotrodes—a type of cone-tipped reactor that convert Silverium into electricity. They are the spinal column of the city's electrical infrastructure and the architects of its modern marvels. This is the place where residents host celebrations and indulge in luxuries while turning a blind eye to the non-humans disguised among them. High Peers is not without its shadows, but the day when the gilded towers fall hasn't arrived... yet.",
+      "image": "_multimedia/Art Per Mappe/High Peers e Spinotrodes.jpg",
+      "thumb": "_thumbs/Art Per Mappe/High Peers e Spinotrodes.jpg",
+      "source_file": "Mappe/Footnotes/High Peers & Spinotrode.md"
+    },
+    {
+      "term": "The Incynerator Abyss",
+      "category": "Mappe & Ambientazione",
+      "def_it": "L'abisso dell'inceneritore\nLe strutture sotterranee dell'inceneritore, situato in periferia, sono collegate alla rete fognaria dell'impianto di fusione. Anni di abbandono hanno ridotto ogni cosa sull'orlo del crollo. Fanghi metallici scorrono in cicli infiniti di raffreddamento e riaccensione. Da qualche parte, lontano da sguardi indiscreti, un fiume silenzioso erompe con furia bruciante, rispecchiando la verità che viene a galla. \"Questa è la notte... in cui tutto finisce.\"",
+      "def_en": "Footnotes // The Incinerator's Abyss\n\nThe underground structures of the suburban Incinerator are connected to the sewage network of the smelting works. Years of neglect have left everything on the verge of collapse. Metal sludge flows in endless cycles of cooling and reigniting. Somewhere unseen, the silent river erupts with scalding fury, mirroring the unfolding truth. \"This is the night... where everything ends.\"",
+      "image": "_multimedia/Art Per Mappe/Incinerator Abyss.jpg",
+      "thumb": "_thumbs/Art Per Mappe/Incinerator Abyss.jpg",
+      "source_file": "Mappe/Footnotes/The Incynerator Abyss.md"
+    },
+    {
+      "term": "Middensea",
+      "category": "Distretti & Aree Notabili",
+      "def_it": "Distretto censito negli atti ufficiali del database.",
+      "def_en": "District registered in official database records.",
+      "source_file": "Mappe/Distretti ed Aree Menzionate/Middensea.md"
+    },
+    {
+      "term": "Midsummer Night's Ballroom",
+      "category": "Distretti & Aree Notabili",
+      "def_it": "Distretto censito negli atti ufficiali del database.",
+      "def_en": "District registered in official database records.",
+      "source_file": "Mappe/Distretti ed Aree Menzionate/Midsummer Night's Ballroom.md"
+    }
+  ],
+  "multimedia": [
+    {
+      "id": "mm_1",
+      "title": "20 Milioni Pre REG",
+      "category": "eventi",
+      "category_label_it": "Art Eventi",
+      "category_label_en": "Event Art",
+      "type": "image",
+      "src": "_multimedia/Art Per Eventi/20 Milioni Pre REG.jpg",
+      "thumb": "_thumbs/Art Per Eventi/20 Milioni Pre REG.jpg",
+      "format": "JPG",
+      "tags": [
+        "eventi",
+        "milioni",
+        "pre",
+        "reg"
+      ]
+    },
+    {
+      "id": "mm_2",
+      "title": "4 Milioni PRE REG",
+      "category": "eventi",
+      "category_label_it": "Art Eventi",
+      "category_label_en": "Event Art",
+      "type": "image",
+      "src": "_multimedia/Art Per Eventi/4 Milioni PRE REG.jpg",
+      "thumb": "_thumbs/Art Per Eventi/4 Milioni PRE REG.jpg",
+      "format": "JPG",
+      "tags": [
+        "eventi",
+        "milioni",
+        "pre",
+        "reg"
+      ]
+    },
+    {
+      "id": "mm_3",
+      "title": "Anime EXPO 2026",
+      "category": "eventi",
+      "category_label_it": "Art Eventi",
+      "category_label_en": "Event Art",
+      "type": "image",
+      "src": "_multimedia/Art Per Eventi/Anime EXPO 2026.jpg",
+      "thumb": "_thumbs/Art Per Eventi/Anime EXPO 2026.jpg",
+      "format": "JPG",
+      "tags": [
+        "eventi",
+        "anime",
+        "expo",
+        "2026"
+      ]
+    },
+    {
+      "id": "mm_4",
+      "title": "Beta Test Artwork Clean",
+      "category": "eventi",
+      "category_label_it": "Art Eventi",
+      "category_label_en": "Event Art",
+      "type": "image",
+      "src": "_multimedia/Art Per Eventi/Beta Test Artwork Clean.jpg",
+      "thumb": "_thumbs/Art Per Eventi/Beta Test Artwork Clean.jpg",
+      "format": "JPG",
+      "tags": [
+        "eventi",
+        "beta",
+        "test",
+        "artwork",
+        "clean"
+      ]
+    },
+    {
+      "id": "mm_5",
+      "title": "Beta Test Artwork",
+      "category": "eventi",
+      "category_label_it": "Art Eventi",
+      "category_label_en": "Event Art",
+      "type": "image",
+      "src": "_multimedia/Art Per Eventi/Beta Test Artwork.jpg",
+      "thumb": "_thumbs/Art Per Eventi/Beta Test Artwork.jpg",
+      "format": "JPG",
+      "tags": [
+        "eventi",
+        "beta",
+        "test",
+        "artwork"
+      ]
+    },
+    {
+      "id": "mm_6",
+      "title": "Beta Test End",
+      "category": "eventi",
+      "category_label_it": "Art Eventi",
+      "category_label_en": "Event Art",
+      "type": "image",
+      "src": "_multimedia/Art Per Eventi/Beta Test End.jpg",
+      "thumb": "_thumbs/Art Per Eventi/Beta Test End.jpg",
+      "format": "JPG",
+      "tags": [
+        "eventi",
+        "beta",
+        "test",
+        "end"
+      ]
+    },
+    {
+      "id": "mm_7",
+      "title": "Gamescom 2026",
+      "category": "eventi",
+      "category_label_it": "Art Eventi",
+      "category_label_en": "Event Art",
+      "type": "image",
+      "src": "_multimedia/Art Per Eventi/Gamescom 2026.jpg",
+      "thumb": "_thumbs/Art Per Eventi/Gamescom 2026.jpg",
+      "format": "JPG",
+      "tags": [
+        "eventi",
+        "gamescom",
+        "2026"
+      ]
+    },
+    {
+      "id": "mm_8",
+      "title": "Global Pre Reg Art",
+      "category": "eventi",
+      "category_label_it": "Art Eventi",
+      "category_label_en": "Event Art",
+      "type": "image",
+      "src": "_multimedia/Art Per Eventi/Global Pre Reg Art.jpg",
+      "thumb": "_thumbs/Art Per Eventi/Global Pre Reg Art.jpg",
+      "format": "JPG",
+      "tags": [
+        "eventi",
+        "global",
+        "pre",
+        "reg",
+        "art"
+      ]
+    },
+    {
+      "id": "mm_9",
+      "title": "Japan EXPO 2026",
+      "category": "eventi",
+      "category_label_it": "Art Eventi",
+      "category_label_en": "Event Art",
+      "type": "image",
+      "src": "_multimedia/Art Per Eventi/Japan EXPO 2026.jpg",
+      "thumb": "_thumbs/Art Per Eventi/Japan EXPO 2026.jpg",
+      "format": "JPG",
+      "tags": [
+        "eventi",
+        "japan",
+        "expo",
+        "2026"
+      ]
+    },
+    {
+      "id": "mm_10",
+      "title": "Thailand Gameshow 2026",
+      "category": "eventi",
+      "category_label_it": "Art Eventi",
+      "category_label_en": "Event Art",
+      "type": "image",
+      "src": "_multimedia/Art Per Eventi/Thailand Gameshow 2026.jpg",
+      "thumb": "_thumbs/Art Per Eventi/Thailand Gameshow 2026.jpg",
+      "format": "JPG",
+      "tags": [
+        "eventi",
+        "thailand",
+        "gameshow",
+        "2026"
+      ]
+    },
+    {
+      "id": "mm_11",
+      "title": "April Fool Alf",
+      "category": "festivita",
+      "category_label_it": "Festività",
+      "category_label_en": "Holiday Art",
+      "type": "image",
+      "src": "_multimedia/Art Per Festività/April Fool Alf.jpg",
+      "thumb": "_thumbs/Art Per Festività/April Fool Alf.jpg",
+      "format": "JPG",
+      "tags": [
+        "festivita",
+        "april",
+        "fool",
+        "alf"
+      ]
+    },
+    {
+      "id": "mm_12",
+      "title": "Halloween 2026",
+      "category": "festivita",
+      "category_label_it": "Festività",
+      "category_label_en": "Holiday Art",
+      "type": "image",
+      "src": "_multimedia/Art Per Festività/Halloween 2026.jpg",
+      "thumb": "_thumbs/Art Per Festività/Halloween 2026.jpg",
+      "format": "JPG",
+      "tags": [
+        "festivita",
+        "halloween",
+        "2026"
+      ]
+    },
+    {
+      "id": "mm_13",
+      "title": "River Constabulary Art",
+      "category": "fazioni_mappe",
+      "category_label_it": "Fazioni & Mappe",
+      "category_label_en": "Factions & Maps",
+      "type": "image",
+      "src": "_multimedia/Art Per Fazioni/River Constabulary Art.jpg",
+      "thumb": "_thumbs/Art Per Fazioni/River Constabulary Art.jpg",
+      "format": "JPG",
+      "tags": [
+        "fazioni_mappe",
+        "river",
+        "constabulary",
+        "art"
+      ]
+    },
+    {
+      "id": "mm_14",
+      "title": "Stats Faction Art",
+      "category": "fazioni_mappe",
+      "category_label_it": "Fazioni & Mappe",
+      "category_label_en": "Factions & Maps",
+      "type": "image",
+      "src": "_multimedia/Art Per Fazioni/Stats Faction Art.jpg",
+      "thumb": "_thumbs/Art Per Fazioni/Stats Faction Art.jpg",
+      "format": "JPG",
+      "tags": [
+        "fazioni_mappe",
+        "stats",
+        "faction",
+        "art"
+      ]
+    },
+    {
+      "id": "mm_15",
+      "title": "High Peers e Spinotrodes",
+      "category": "fazioni_mappe",
+      "category_label_it": "Fazioni & Mappe",
+      "category_label_en": "Factions & Maps",
+      "type": "image",
+      "src": "_multimedia/Art Per Mappe/High Peers e Spinotrodes.jpg",
+      "thumb": "_thumbs/Art Per Mappe/High Peers e Spinotrodes.jpg",
+      "format": "JPG",
+      "tags": [
+        "fazioni_mappe",
+        "high",
+        "peers",
+        "spinotrodes"
+      ]
+    },
+    {
+      "id": "mm_16",
+      "title": "Incinerator Abyss",
+      "category": "fazioni_mappe",
+      "category_label_it": "Fazioni & Mappe",
+      "category_label_en": "Factions & Maps",
+      "type": "image",
+      "src": "_multimedia/Art Per Mappe/Incinerator Abyss.jpg",
+      "thumb": "_thumbs/Art Per Mappe/Incinerator Abyss.jpg",
+      "format": "JPG",
+      "tags": [
+        "fazioni_mappe",
+        "incinerator",
+        "abyss"
+      ]
+    },
+    {
+      "id": "mm_17",
+      "title": "Alf Drip Marketing",
+      "category": "personaggi_drip",
+      "category_label_it": "Drip Marketing",
+      "category_label_en": "Drip Marketing",
+      "type": "image",
+      "src": "_multimedia/Personaggi/Drip Marketing/Alf Drip Marketing.jpg",
+      "thumb": "_thumbs/Personaggi/Drip Marketing/Alf Drip Marketing.jpg",
+      "format": "JPG",
+      "tags": [
+        "personaggi_drip",
+        "alf",
+        "drip",
+        "marketing"
+      ]
+    },
+    {
+      "id": "mm_18",
+      "title": "Argos Drip Marketing",
+      "category": "personaggi_drip",
+      "category_label_it": "Drip Marketing",
+      "category_label_en": "Drip Marketing",
+      "type": "image",
+      "src": "_multimedia/Personaggi/Drip Marketing/Argos Drip Marketing.jpg",
+      "thumb": "_thumbs/Personaggi/Drip Marketing/Argos Drip Marketing.jpg",
+      "format": "JPG",
+      "tags": [
+        "personaggi_drip",
+        "argos",
+        "drip",
+        "marketing"
+      ]
+    },
+    {
+      "id": "mm_19",
+      "title": "Bentham Drip Marketing",
+      "category": "personaggi_drip",
+      "category_label_it": "Drip Marketing",
+      "category_label_en": "Drip Marketing",
+      "type": "image",
+      "src": "_multimedia/Personaggi/Drip Marketing/Bentham Drip Marketing.jpg",
+      "thumb": "_thumbs/Personaggi/Drip Marketing/Bentham Drip Marketing.jpg",
+      "format": "JPG",
+      "tags": [
+        "personaggi_drip",
+        "bentham",
+        "drip",
+        "marketing"
+      ]
+    },
+    {
+      "id": "mm_20",
+      "title": "Captain Kaboom Drip Marketing",
+      "category": "personaggi_drip",
+      "category_label_it": "Drip Marketing",
+      "category_label_en": "Drip Marketing",
+      "type": "image",
+      "src": "_multimedia/Personaggi/Drip Marketing/Captain Kaboom Drip Marketing.jpg",
+      "thumb": "_thumbs/Personaggi/Drip Marketing/Captain Kaboom Drip Marketing.jpg",
+      "format": "JPG",
+      "tags": [
+        "personaggi_drip",
+        "captain",
+        "kaboom",
+        "drip",
+        "marketing"
+      ]
+    },
+    {
+      "id": "mm_21",
+      "title": "Cinderella Drip Marketing",
+      "category": "personaggi_drip",
+      "category_label_it": "Drip Marketing",
+      "category_label_en": "Drip Marketing",
+      "type": "image",
+      "src": "_multimedia/Personaggi/Drip Marketing/Cinderella Drip Marketing.jpg",
+      "thumb": "_thumbs/Personaggi/Drip Marketing/Cinderella Drip Marketing.jpg",
+      "format": "JPG",
+      "tags": [
+        "personaggi_drip",
+        "cinderella",
+        "drip",
+        "marketing"
+      ]
+    },
+    {
+      "id": "mm_22",
+      "title": "Cordelia Drip Marketing",
+      "category": "personaggi_drip",
+      "category_label_it": "Drip Marketing",
+      "category_label_en": "Drip Marketing",
+      "type": "image",
+      "src": "_multimedia/Personaggi/Drip Marketing/Cordelia Drip Marketing.jpg",
+      "thumb": "_thumbs/Personaggi/Drip Marketing/Cordelia Drip Marketing.jpg",
+      "format": "JPG",
+      "tags": [
+        "personaggi_drip",
+        "cordelia",
+        "drip",
+        "marketing"
+      ]
+    },
+    {
+      "id": "mm_23",
+      "title": "Cynthia Drip Marketing",
+      "category": "personaggi_drip",
+      "category_label_it": "Drip Marketing",
+      "category_label_en": "Drip Marketing",
+      "type": "image",
+      "src": "_multimedia/Personaggi/Drip Marketing/Cynthia Drip Marketing.jpg",
+      "thumb": "_thumbs/Personaggi/Drip Marketing/Cynthia Drip Marketing.jpg",
+      "format": "JPG",
+      "tags": [
+        "personaggi_drip",
+        "cynthia",
+        "drip",
+        "marketing"
+      ]
+    },
+    {
+      "id": "mm_24",
+      "title": "Detective F Drip Marketing",
+      "category": "personaggi_drip",
+      "category_label_it": "Drip Marketing",
+      "category_label_en": "Drip Marketing",
+      "type": "image",
+      "src": "_multimedia/Personaggi/Drip Marketing/Detective F Drip Marketing.jpg",
+      "thumb": "_thumbs/Personaggi/Drip Marketing/Detective F Drip Marketing.jpg",
+      "format": "JPG",
+      "tags": [
+        "personaggi_drip",
+        "detective",
+        "drip",
+        "marketing"
+      ]
+    },
+    {
+      "id": "mm_25",
+      "title": "Detective M Drip Marketing",
+      "category": "personaggi_drip",
+      "category_label_it": "Drip Marketing",
+      "category_label_en": "Drip Marketing",
+      "type": "image",
+      "src": "_multimedia/Personaggi/Drip Marketing/Detective M Drip Marketing.jpg",
+      "thumb": "_thumbs/Personaggi/Drip Marketing/Detective M Drip Marketing.jpg",
+      "format": "JPG",
+      "tags": [
+        "personaggi_drip",
+        "detective",
+        "drip",
+        "marketing"
+      ]
+    },
+    {
+      "id": "mm_26",
+      "title": "Detective Primo Drip Marketing",
+      "category": "personaggi_drip",
+      "category_label_it": "Drip Marketing",
+      "category_label_en": "Drip Marketing",
+      "type": "image",
+      "src": "_multimedia/Personaggi/Drip Marketing/Detective Primo Drip Marketing.jpg",
+      "thumb": "_thumbs/Personaggi/Drip Marketing/Detective Primo Drip Marketing.jpg",
+      "format": "JPG",
+      "tags": [
+        "personaggi_drip",
+        "detective",
+        "primo",
+        "drip",
+        "marketing"
+      ]
+    },
+    {
+      "id": "mm_27",
+      "title": "Feys Drip Marketing",
+      "category": "personaggi_drip",
+      "category_label_it": "Drip Marketing",
+      "category_label_en": "Drip Marketing",
+      "type": "image",
+      "src": "_multimedia/Personaggi/Drip Marketing/Feys Drip Marketing.jpg",
+      "thumb": "_thumbs/Personaggi/Drip Marketing/Feys Drip Marketing.jpg",
+      "format": "JPG",
+      "tags": [
+        "personaggi_drip",
+        "feys",
+        "drip",
+        "marketing"
+      ]
+    },
+    {
+      "id": "mm_28",
+      "title": "Firtho Drip Marketing",
+      "category": "personaggi_drip",
+      "category_label_it": "Drip Marketing",
+      "category_label_en": "Drip Marketing",
+      "type": "image",
+      "src": "_multimedia/Personaggi/Drip Marketing/Firtho Drip Marketing.jpg",
+      "thumb": "_thumbs/Personaggi/Drip Marketing/Firtho Drip Marketing.jpg",
+      "format": "JPG",
+      "tags": [
+        "personaggi_drip",
+        "firtho",
+        "drip",
+        "marketing"
+      ]
+    },
+    {
+      "id": "mm_29",
+      "title": "Gratia Drip Marketing",
+      "category": "personaggi_drip",
+      "category_label_it": "Drip Marketing",
+      "category_label_en": "Drip Marketing",
+      "type": "image",
+      "src": "_multimedia/Personaggi/Drip Marketing/Gratia Drip Marketing.jpg",
+      "thumb": "_thumbs/Personaggi/Drip Marketing/Gratia Drip Marketing.jpg",
+      "format": "JPG",
+      "tags": [
+        "personaggi_drip",
+        "gratia",
+        "drip",
+        "marketing"
+      ]
+    },
+    {
+      "id": "mm_30",
+      "title": "Grimm Drip Marketing",
+      "category": "personaggi_drip",
+      "category_label_it": "Drip Marketing",
+      "category_label_en": "Drip Marketing",
+      "type": "image",
+      "src": "_multimedia/Personaggi/Drip Marketing/Grimm Drip Marketing.jpg",
+      "thumb": "_thumbs/Personaggi/Drip Marketing/Grimm Drip Marketing.jpg",
+      "format": "JPG",
+      "tags": [
+        "personaggi_drip",
+        "grimm",
+        "drip",
+        "marketing"
+      ]
+    },
+    {
+      "id": "mm_31",
+      "title": "Gucia Drip Marketing",
+      "category": "personaggi_drip",
+      "category_label_it": "Drip Marketing",
+      "category_label_en": "Drip Marketing",
+      "type": "image",
+      "src": "_multimedia/Personaggi/Drip Marketing/Gucia Drip Marketing.jpg",
+      "thumb": "_thumbs/Personaggi/Drip Marketing/Gucia Drip Marketing.jpg",
+      "format": "JPG",
+      "tags": [
+        "personaggi_drip",
+        "gucia",
+        "drip",
+        "marketing"
+      ]
+    },
+    {
+      "id": "mm_32",
+      "title": "Lorin Drip Marketing",
+      "category": "personaggi_drip",
+      "category_label_it": "Drip Marketing",
+      "category_label_en": "Drip Marketing",
+      "type": "image",
+      "src": "_multimedia/Personaggi/Drip Marketing/Lorin Drip Marketing.jpg",
+      "thumb": "_thumbs/Personaggi/Drip Marketing/Lorin Drip Marketing.jpg",
+      "format": "JPG",
+      "tags": [
+        "personaggi_drip",
+        "lorin",
+        "drip",
+        "marketing"
+      ]
+    },
+    {
+      "id": "mm_33",
+      "title": "Rex Drip Marketing",
+      "category": "personaggi_drip",
+      "category_label_it": "Drip Marketing",
+      "category_label_en": "Drip Marketing",
+      "type": "image",
+      "src": "_multimedia/Personaggi/Drip Marketing/Rex Drip Marketing.jpg",
+      "thumb": "_thumbs/Personaggi/Drip Marketing/Rex Drip Marketing.jpg",
+      "format": "JPG",
+      "tags": [
+        "personaggi_drip",
+        "rex",
+        "drip",
+        "marketing"
+      ]
+    },
+    {
+      "id": "mm_34",
+      "title": "Sking Drip Marketing",
+      "category": "personaggi_drip",
+      "category_label_it": "Drip Marketing",
+      "category_label_en": "Drip Marketing",
+      "type": "image",
+      "src": "_multimedia/Personaggi/Drip Marketing/Sking Drip Marketing.jpg",
+      "thumb": "_thumbs/Personaggi/Drip Marketing/Sking Drip Marketing.jpg",
+      "format": "JPG",
+      "tags": [
+        "personaggi_drip",
+        "sking",
+        "drip",
+        "marketing"
+      ]
+    },
+    {
+      "id": "mm_35",
+      "title": "Susan Drip Marketing",
+      "category": "personaggi_drip",
+      "category_label_it": "Drip Marketing",
+      "category_label_en": "Drip Marketing",
+      "type": "image",
+      "src": "_multimedia/Personaggi/Drip Marketing/Susan Drip Marketing.jpg",
+      "thumb": "_thumbs/Personaggi/Drip Marketing/Susan Drip Marketing.jpg",
+      "format": "JPG",
+      "tags": [
+        "personaggi_drip",
+        "susan",
+        "drip",
+        "marketing"
+      ]
+    },
+    {
+      "id": "mm_36",
+      "title": "Tinsley Drip Marketing",
+      "category": "personaggi_drip",
+      "category_label_it": "Drip Marketing",
+      "category_label_en": "Drip Marketing",
+      "type": "image",
+      "src": "_multimedia/Personaggi/Drip Marketing/Tinsley Drip Marketing.webp",
+      "thumb": "_thumbs/Personaggi/Drip Marketing/Tinsley Drip Marketing.jpg",
+      "format": "WEBP",
+      "tags": [
+        "personaggi_drip",
+        "tinsley",
+        "drip",
+        "marketing"
+      ]
+    },
+    {
+      "id": "mm_37",
+      "title": "Alf Profile Art",
+      "category": "personaggi_profile",
+      "category_label_it": "Profile Art (Tarocchi)",
+      "category_label_en": "Profile Art (Tarot)",
+      "type": "image",
+      "src": "_multimedia/Personaggi/Profile Art/Alf Profile Art.jpg",
+      "thumb": "_thumbs/Personaggi/Profile Art/Alf Profile Art.jpg",
+      "format": "JPG",
+      "tags": [
+        "personaggi_profile",
+        "alf",
+        "profile",
+        "art"
+      ]
+    },
+    {
+      "id": "mm_38",
+      "title": "Argos Profile Art",
+      "category": "personaggi_profile",
+      "category_label_it": "Profile Art (Tarocchi)",
+      "category_label_en": "Profile Art (Tarot)",
+      "type": "image",
+      "src": "_multimedia/Personaggi/Profile Art/Argos Profile Art.jpg",
+      "thumb": "_thumbs/Personaggi/Profile Art/Argos Profile Art.jpg",
+      "format": "JPG",
+      "tags": [
+        "personaggi_profile",
+        "argos",
+        "profile",
+        "art"
+      ]
+    },
+    {
+      "id": "mm_39",
+      "title": "Bentham Profile Art",
+      "category": "personaggi_profile",
+      "category_label_it": "Profile Art (Tarocchi)",
+      "category_label_en": "Profile Art (Tarot)",
+      "type": "image",
+      "src": "_multimedia/Personaggi/Profile Art/Bentham Profile Art.jpg",
+      "thumb": "_thumbs/Personaggi/Profile Art/Bentham Profile Art.jpg",
+      "format": "JPG",
+      "tags": [
+        "personaggi_profile",
+        "bentham",
+        "profile",
+        "art"
+      ]
+    },
+    {
+      "id": "mm_40",
+      "title": "Captain Kaboom Profile Art",
+      "category": "personaggi_profile",
+      "category_label_it": "Profile Art (Tarocchi)",
+      "category_label_en": "Profile Art (Tarot)",
+      "type": "image",
+      "src": "_multimedia/Personaggi/Profile Art/Captain Kaboom Profile Art.jpg",
+      "thumb": "_thumbs/Personaggi/Profile Art/Captain Kaboom Profile Art.jpg",
+      "format": "JPG",
+      "tags": [
+        "personaggi_profile",
+        "captain",
+        "kaboom",
+        "profile",
+        "art"
+      ]
+    },
+    {
+      "id": "mm_41",
+      "title": "Cinderella Profile Art",
+      "category": "personaggi_profile",
+      "category_label_it": "Profile Art (Tarocchi)",
+      "category_label_en": "Profile Art (Tarot)",
+      "type": "image",
+      "src": "_multimedia/Personaggi/Profile Art/Cinderella Profile Art.jpg",
+      "thumb": "_thumbs/Personaggi/Profile Art/Cinderella Profile Art.jpg",
+      "format": "JPG",
+      "tags": [
+        "personaggi_profile",
+        "cinderella",
+        "profile",
+        "art"
+      ]
+    },
+    {
+      "id": "mm_42",
+      "title": "Cordelia Profile Art",
+      "category": "personaggi_profile",
+      "category_label_it": "Profile Art (Tarocchi)",
+      "category_label_en": "Profile Art (Tarot)",
+      "type": "image",
+      "src": "_multimedia/Personaggi/Profile Art/Cordelia Profile Art.jpg",
+      "thumb": "_thumbs/Personaggi/Profile Art/Cordelia Profile Art.jpg",
+      "format": "JPG",
+      "tags": [
+        "personaggi_profile",
+        "cordelia",
+        "profile",
+        "art"
+      ]
+    },
+    {
+      "id": "mm_43",
+      "title": "Cynthia Profile Art",
+      "category": "personaggi_profile",
+      "category_label_it": "Profile Art (Tarocchi)",
+      "category_label_en": "Profile Art (Tarot)",
+      "type": "image",
+      "src": "_multimedia/Personaggi/Profile Art/Cynthia Profile Art.jpg",
+      "thumb": "_thumbs/Personaggi/Profile Art/Cynthia Profile Art.jpg",
+      "format": "JPG",
+      "tags": [
+        "personaggi_profile",
+        "cynthia",
+        "profile",
+        "art"
+      ]
+    },
+    {
+      "id": "mm_44",
+      "title": "Detective F Profile Art",
+      "category": "personaggi_profile",
+      "category_label_it": "Profile Art (Tarocchi)",
+      "category_label_en": "Profile Art (Tarot)",
+      "type": "image",
+      "src": "_multimedia/Personaggi/Profile Art/Detective F Profile Art.jpg",
+      "thumb": "_thumbs/Personaggi/Profile Art/Detective F Profile Art.jpg",
+      "format": "JPG",
+      "tags": [
+        "personaggi_profile",
+        "detective",
+        "profile",
+        "art"
+      ]
+    },
+    {
+      "id": "mm_45",
+      "title": "Detective M Profile Art",
+      "category": "personaggi_profile",
+      "category_label_it": "Profile Art (Tarocchi)",
+      "category_label_en": "Profile Art (Tarot)",
+      "type": "image",
+      "src": "_multimedia/Personaggi/Profile Art/Detective M Profile Art.jpg",
+      "thumb": "_thumbs/Personaggi/Profile Art/Detective M Profile Art.jpg",
+      "format": "JPG",
+      "tags": [
+        "personaggi_profile",
+        "detective",
+        "profile",
+        "art"
+      ]
+    },
+    {
+      "id": "mm_46",
+      "title": "Feys Profile Art",
+      "category": "personaggi_profile",
+      "category_label_it": "Profile Art (Tarocchi)",
+      "category_label_en": "Profile Art (Tarot)",
+      "type": "image",
+      "src": "_multimedia/Personaggi/Profile Art/Feys Profile Art.jpg",
+      "thumb": "_thumbs/Personaggi/Profile Art/Feys Profile Art.jpg",
+      "format": "JPG",
+      "tags": [
+        "personaggi_profile",
+        "feys",
+        "profile",
+        "art"
+      ]
+    },
+    {
+      "id": "mm_47",
+      "title": "Firtho Profile Art",
+      "category": "personaggi_profile",
+      "category_label_it": "Profile Art (Tarocchi)",
+      "category_label_en": "Profile Art (Tarot)",
+      "type": "image",
+      "src": "_multimedia/Personaggi/Profile Art/Firtho Profile Art.jpg",
+      "thumb": "_thumbs/Personaggi/Profile Art/Firtho Profile Art.jpg",
+      "format": "JPG",
+      "tags": [
+        "personaggi_profile",
+        "firtho",
+        "profile",
+        "art"
+      ]
+    },
+    {
+      "id": "mm_48",
+      "title": "Gratia Profile Art",
+      "category": "personaggi_profile",
+      "category_label_it": "Profile Art (Tarocchi)",
+      "category_label_en": "Profile Art (Tarot)",
+      "type": "image",
+      "src": "_multimedia/Personaggi/Profile Art/Gratia Profile Art.jpg",
+      "thumb": "_thumbs/Personaggi/Profile Art/Gratia Profile Art.jpg",
+      "format": "JPG",
+      "tags": [
+        "personaggi_profile",
+        "gratia",
+        "profile",
+        "art"
+      ]
+    },
+    {
+      "id": "mm_49",
+      "title": "Grimm Profile Art",
+      "category": "personaggi_profile",
+      "category_label_it": "Profile Art (Tarocchi)",
+      "category_label_en": "Profile Art (Tarot)",
+      "type": "image",
+      "src": "_multimedia/Personaggi/Profile Art/Grimm Profile Art.jpg",
+      "thumb": "_thumbs/Personaggi/Profile Art/Grimm Profile Art.jpg",
+      "format": "JPG",
+      "tags": [
+        "personaggi_profile",
+        "grimm",
+        "profile",
+        "art"
+      ]
+    },
+    {
+      "id": "mm_50",
+      "title": "Gucia Profile Art",
+      "category": "personaggi_profile",
+      "category_label_it": "Profile Art (Tarocchi)",
+      "category_label_en": "Profile Art (Tarot)",
+      "type": "image",
+      "src": "_multimedia/Personaggi/Profile Art/Gucia Profile Art.jpg",
+      "thumb": "_thumbs/Personaggi/Profile Art/Gucia Profile Art.jpg",
+      "format": "JPG",
+      "tags": [
+        "personaggi_profile",
+        "gucia",
+        "profile",
+        "art"
+      ]
+    },
+    {
+      "id": "mm_51",
+      "title": "Lorin Profile Art",
+      "category": "personaggi_profile",
+      "category_label_it": "Profile Art (Tarocchi)",
+      "category_label_en": "Profile Art (Tarot)",
+      "type": "image",
+      "src": "_multimedia/Personaggi/Profile Art/Lorin Profile Art.jpg",
+      "thumb": "_thumbs/Personaggi/Profile Art/Lorin Profile Art.jpg",
+      "format": "JPG",
+      "tags": [
+        "personaggi_profile",
+        "lorin",
+        "profile",
+        "art"
+      ]
+    },
+    {
+      "id": "mm_52",
+      "title": "Red Rose Profile Art",
+      "category": "personaggi_profile",
+      "category_label_it": "Profile Art (Tarocchi)",
+      "category_label_en": "Profile Art (Tarot)",
+      "type": "image",
+      "src": "_multimedia/Personaggi/Profile Art/Red Rose Profile Art.jpg",
+      "thumb": "_thumbs/Personaggi/Profile Art/Red Rose Profile Art.jpg",
+      "format": "JPG",
+      "tags": [
+        "personaggi_profile",
+        "red",
+        "rose",
+        "profile",
+        "art"
+      ]
+    },
+    {
+      "id": "mm_53",
+      "title": "Rex Profile Art",
+      "category": "personaggi_profile",
+      "category_label_it": "Profile Art (Tarocchi)",
+      "category_label_en": "Profile Art (Tarot)",
+      "type": "image",
+      "src": "_multimedia/Personaggi/Profile Art/Rex Profile Art.jpg",
+      "thumb": "_thumbs/Personaggi/Profile Art/Rex Profile Art.jpg",
+      "format": "JPG",
+      "tags": [
+        "personaggi_profile",
+        "rex",
+        "profile",
+        "art"
+      ]
+    },
+    {
+      "id": "mm_54",
+      "title": "Skink Profile Art",
+      "category": "personaggi_profile",
+      "category_label_it": "Profile Art (Tarocchi)",
+      "category_label_en": "Profile Art (Tarot)",
+      "type": "image",
+      "src": "_multimedia/Personaggi/Profile Art/Skink Profile Art.jpg",
+      "thumb": "_thumbs/Personaggi/Profile Art/Skink Profile Art.jpg",
+      "format": "JPG",
+      "tags": [
+        "personaggi_profile",
+        "skink",
+        "profile",
+        "art"
+      ]
+    },
+    {
+      "id": "mm_55",
+      "title": "Susan Profile Art",
+      "category": "personaggi_profile",
+      "category_label_it": "Profile Art (Tarocchi)",
+      "category_label_en": "Profile Art (Tarot)",
+      "type": "image",
+      "src": "_multimedia/Personaggi/Profile Art/Susan Profile Art.jpg",
+      "thumb": "_thumbs/Personaggi/Profile Art/Susan Profile Art.jpg",
+      "format": "JPG",
+      "tags": [
+        "personaggi_profile",
+        "susan",
+        "profile",
+        "art"
+      ]
+    },
+    {
+      "id": "mm_56",
+      "title": "Tinsley Profile Art",
+      "category": "personaggi_profile",
+      "category_label_it": "Profile Art (Tarocchi)",
+      "category_label_en": "Profile Art (Tarot)",
+      "type": "image",
+      "src": "_multimedia/Personaggi/Profile Art/Tinsley Profile Art.webp",
+      "thumb": "_thumbs/Personaggi/Profile Art/Tinsley Profile Art.jpg",
+      "format": "WEBP",
+      "tags": [
+        "personaggi_profile",
+        "tinsley",
+        "profile",
+        "art"
+      ]
+    },
+    {
+      "id": "mm_57",
+      "title": "Alf Hidden pages",
+      "category": "personaggi_hidden",
+      "category_label_it": "Pagine Segrete",
+      "category_label_en": "Hidden Pages Art",
+      "type": "image",
+      "src": "_multimedia/Personaggi/Hidden Pages/Alf Hidden pages.jpg",
+      "thumb": "_thumbs/Personaggi/Hidden Pages/Alf Hidden pages.jpg",
+      "format": "JPG",
+      "tags": [
+        "personaggi_hidden",
+        "alf",
+        "hidden",
+        "pages"
+      ]
+    },
+    {
+      "id": "mm_58",
+      "title": "Cynthia Hidden Pages",
+      "category": "personaggi_hidden",
+      "category_label_it": "Pagine Segrete",
+      "category_label_en": "Hidden Pages Art",
+      "type": "image",
+      "src": "_multimedia/Personaggi/Hidden Pages/Cynthia Hidden Pages.jpg",
+      "thumb": "_thumbs/Personaggi/Hidden Pages/Cynthia Hidden Pages.jpg",
+      "format": "JPG",
+      "tags": [
+        "personaggi_hidden",
+        "cynthia",
+        "hidden",
+        "pages"
+      ]
+    },
+    {
+      "id": "mm_59",
+      "title": "Detective Hidden page 2",
+      "category": "personaggi_hidden",
+      "category_label_it": "Pagine Segrete",
+      "category_label_en": "Hidden Pages Art",
+      "type": "image",
+      "src": "_multimedia/Personaggi/Hidden Pages/Detective Hidden page 2.jpg",
+      "thumb": "_thumbs/Personaggi/Hidden Pages/Detective Hidden page 2.jpg",
+      "format": "JPG",
+      "tags": [
+        "personaggi_hidden",
+        "detective",
+        "hidden",
+        "page"
+      ]
+    },
+    {
+      "id": "mm_60",
+      "title": "Detective Hidden Pages",
+      "category": "personaggi_hidden",
+      "category_label_it": "Pagine Segrete",
+      "category_label_en": "Hidden Pages Art",
+      "type": "image",
+      "src": "_multimedia/Personaggi/Hidden Pages/Detective Hidden Pages.jpg",
+      "thumb": "_thumbs/Personaggi/Hidden Pages/Detective Hidden Pages.jpg",
+      "format": "JPG",
+      "tags": [
+        "personaggi_hidden",
+        "detective",
+        "hidden",
+        "pages"
+      ]
+    },
+    {
+      "id": "mm_61",
+      "title": "Cynthia Sky Art",
+      "category": "personaggi_official",
+      "category_label_it": "Official Art Personaggi",
+      "category_label_en": "Official Character Art",
+      "type": "image",
+      "src": "_multimedia/Personaggi/Official Art/Cynthia Sky Art.jpg",
+      "thumb": "_thumbs/Personaggi/Official Art/Cynthia Sky Art.jpg",
+      "format": "JPG",
+      "tags": [
+        "personaggi_official",
+        "cynthia",
+        "sky",
+        "art"
+      ]
+    },
+    {
+      "id": "mm_62",
+      "title": "Gratia Moonlight Post",
+      "category": "personaggi_official",
+      "category_label_it": "Official Art Personaggi",
+      "category_label_en": "Official Character Art",
+      "type": "image",
+      "src": "_multimedia/Personaggi/Official Art/Gratia Moonlight Post.jpg",
+      "thumb": "_thumbs/Personaggi/Official Art/Gratia Moonlight Post.jpg",
+      "format": "JPG",
+      "tags": [
+        "personaggi_official",
+        "gratia",
+        "moonlight",
+        "post"
+      ]
+    },
+    {
+      "id": "mm_63",
+      "title": "benthamcard",
+      "category": "webevent",
+      "category_label_it": "Web Event (Mystery Unveiled)",
+      "category_label_en": "Web Event (Mystery Unveiled)",
+      "type": "image",
+      "src": "_multimedia/Web Event/Mystery Unveiled/benthamcard.webp",
+      "thumb": "_thumbs/Web Event/Mystery Unveiled/benthamcard.jpg",
+      "format": "WEBP",
+      "tags": [
+        "webevent",
+        "benthamcard"
+      ]
+    },
+    {
+      "id": "mm_64",
+      "title": "cinderellacard",
+      "category": "webevent",
+      "category_label_it": "Web Event (Mystery Unveiled)",
+      "category_label_en": "Web Event (Mystery Unveiled)",
+      "type": "image",
+      "src": "_multimedia/Web Event/Mystery Unveiled/cinderellacard.webp",
+      "thumb": "_thumbs/Web Event/Mystery Unveiled/cinderellacard.jpg",
+      "format": "WEBP",
+      "tags": [
+        "webevent",
+        "cinderellacard"
+      ]
+    },
+    {
+      "id": "mm_65",
+      "title": "firthocard",
+      "category": "webevent",
+      "category_label_it": "Web Event (Mystery Unveiled)",
+      "category_label_en": "Web Event (Mystery Unveiled)",
+      "type": "image",
+      "src": "_multimedia/Web Event/Mystery Unveiled/firthocard.webp",
+      "thumb": "_thumbs/Web Event/Mystery Unveiled/firthocard.jpg",
+      "format": "WEBP",
+      "tags": [
+        "webevent",
+        "firthocard"
+      ]
+    },
+    {
+      "id": "mm_66",
+      "title": "gratiacard",
+      "category": "webevent",
+      "category_label_it": "Web Event (Mystery Unveiled)",
+      "category_label_en": "Web Event (Mystery Unveiled)",
+      "type": "image",
+      "src": "_multimedia/Web Event/Mystery Unveiled/gratiacard.webp",
+      "thumb": "_thumbs/Web Event/Mystery Unveiled/gratiacard.jpg",
+      "format": "WEBP",
+      "tags": [
+        "webevent",
+        "gratiacard"
+      ]
+    },
+    {
+      "id": "mm_67",
+      "title": "lorincard",
+      "category": "webevent",
+      "category_label_it": "Web Event (Mystery Unveiled)",
+      "category_label_en": "Web Event (Mystery Unveiled)",
+      "type": "image",
+      "src": "_multimedia/Web Event/Mystery Unveiled/lorincard.webp",
+      "thumb": "_thumbs/Web Event/Mystery Unveiled/lorincard.jpg",
+      "format": "WEBP",
+      "tags": [
+        "webevent",
+        "lorincard"
+      ]
+    },
+    {
+      "id": "mm_68",
+      "title": "redcard",
+      "category": "webevent",
+      "category_label_it": "Web Event (Mystery Unveiled)",
+      "category_label_en": "Web Event (Mystery Unveiled)",
+      "type": "image",
+      "src": "_multimedia/Web Event/Mystery Unveiled/redcard.webp",
+      "thumb": "_thumbs/Web Event/Mystery Unveiled/redcard.jpg",
+      "format": "WEBP",
+      "tags": [
+        "webevent",
+        "redcard"
+      ]
+    },
+    {
+      "id": "mm_69",
+      "title": "redrosecard",
+      "category": "webevent",
+      "category_label_it": "Web Event (Mystery Unveiled)",
+      "category_label_en": "Web Event (Mystery Unveiled)",
+      "type": "image",
+      "src": "_multimedia/Web Event/Mystery Unveiled/redrosecard.webp",
+      "thumb": "_thumbs/Web Event/Mystery Unveiled/redrosecard.jpg",
+      "format": "WEBP",
+      "tags": [
+        "webevent",
+        "redrosecard"
+      ]
+    },
+    {
+      "id": "mm_70",
+      "title": "webeventbackground",
+      "category": "webevent",
+      "category_label_it": "Web Event (Mystery Unveiled)",
+      "category_label_en": "Web Event (Mystery Unveiled)",
+      "type": "image",
+      "src": "_multimedia/Web Event/Mystery Unveiled/webeventbackground.jpg",
+      "thumb": "_thumbs/Web Event/Mystery Unveiled/webeventbackground.jpg",
+      "format": "JPG",
+      "tags": [
+        "webevent",
+        "webeventbackground"
+      ]
+    },
+    {
+      "id": "mm_71",
+      "title": "Dichotomy Beta Test Gameplay Showcase - The Raven and the Rose",
+      "category": "trailers",
+      "category_label_it": "Trailer & Video",
+      "category_label_en": "Official Trailers",
+      "type": "video",
+      "youtube_id": "ofTnT5Bk1_Y",
+      "video_url": "https://www.youtube.com/watch?v=ofTnT5Bk1_Y",
+      "src": "https://img.youtube.com/vi/ofTnT5Bk1_Y/maxresdefault.jpg",
+      "thumb": "https://img.youtube.com/vi/ofTnT5Bk1_Y/hqdefault.jpg",
+      "format": "YouTube HD",
+      "tags": [
+        "trailer",
+        "video",
+        "ufficiale"
+      ]
+    },
+    {
+      "id": "mm_72",
+      "title": "Dichotomy Beta Test Trailer - Black Knights' Tango",
+      "category": "trailers",
+      "category_label_it": "Trailer & Video",
+      "category_label_en": "Official Trailers",
+      "type": "video",
+      "youtube_id": "5kn2PqGuhY4",
+      "video_url": "https://www.youtube.com/watch?v=5kn2PqGuhY4",
+      "src": "https://img.youtube.com/vi/5kn2PqGuhY4/maxresdefault.jpg",
+      "thumb": "https://img.youtube.com/vi/5kn2PqGuhY4/hqdefault.jpg",
+      "format": "YouTube HD",
+      "tags": [
+        "trailer",
+        "video",
+        "ufficiale"
+      ]
+    },
+    {
+      "id": "mm_73",
+      "title": "gamescom 2026 Special Trailer - The Price of Truth",
+      "category": "trailers",
+      "category_label_it": "Trailer & Video",
+      "category_label_en": "Official Trailers",
+      "type": "video",
+      "youtube_id": "hDHFxsh02aE",
+      "video_url": "https://www.youtube.com/watch?v=hDHFxsh02aE",
+      "src": "https://img.youtube.com/vi/hDHFxsh02aE/maxresdefault.jpg",
+      "thumb": "https://img.youtube.com/vi/hDHFxsh02aE/hqdefault.jpg",
+      "format": "YouTube HD",
+      "tags": [
+        "trailer",
+        "video",
+        "ufficiale"
+      ]
+    },
+    {
+      "id": "mm_74",
+      "title": "Monotype Beta Test Trailer",
+      "category": "trailers",
+      "category_label_it": "Trailer & Video",
+      "category_label_en": "Official Trailers",
+      "type": "video",
+      "youtube_id": "H_mgS0oQQM0",
+      "video_url": "https://www.youtube.com/watch?v=H_mgS0oQQM0",
+      "src": "https://img.youtube.com/vi/H_mgS0oQQM0/maxresdefault.jpg",
+      "thumb": "https://img.youtube.com/vi/H_mgS0oQQM0/hqdefault.jpg",
+      "format": "YouTube HD",
+      "tags": [
+        "trailer",
+        "video",
+        "ufficiale"
+      ]
+    },
+    {
+      "id": "mm_75",
+      "title": "The Golden Age of Detectives",
+      "category": "trailers",
+      "category_label_it": "Trailer & Video",
+      "category_label_en": "Official Trailers",
+      "type": "video",
+      "youtube_id": "ELC4r7fbKEQ",
+      "video_url": "https://www.youtube.com/watch?v=ELC4r7fbKEQ",
+      "src": "https://img.youtube.com/vi/ELC4r7fbKEQ/maxresdefault.jpg",
+      "thumb": "https://img.youtube.com/vi/ELC4r7fbKEQ/hqdefault.jpg",
+      "format": "YouTube HD",
+      "tags": [
+        "trailer",
+        "video",
+        "ufficiale"
+      ]
+    }
+  ]
+}

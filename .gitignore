@@ -1,3 +1,4 @@
 .agents/
 sync.log
 *.tmp
+.tmp-app.js
