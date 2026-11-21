@@ -245,7 +245,7 @@
       <!-- Drawer Hero Profile -->
       <div class="p-6 border-b border-border bg-gradient-to-b from-surface-raised/90 via-surface to-surface flex flex-col sm:flex-row gap-6 items-start">
         <!-- Portrait -->
-        <div class="w-36 h-52 sm:w-44 sm:h-60 rounded-xl overflow-hidden border border-border/80 flex-shrink-0 bg-canvas relative shadow-xl group cursor-pointer" onclick="openLightbox(activeChar ? (activeChar.profile_img || activeChar.drip_img) : '')">
+        <div class="w-36 aspect-[1/2] sm:w-44 rounded-xl overflow-hidden border border-border/80 flex-shrink-0 bg-canvas relative shadow-xl group cursor-pointer" onclick="openLightbox(activeChar ? (activeChar.profile_img || activeChar.drip_img) : '')">
           <img id="drawer-portrait" src="" alt="Portrait" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
           <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 flex items-center justify-center transition-opacity text-xs text-white gap-1 font-medium">
             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v6m3-3H7"/></svg>
@@ -1895,7 +1895,7 @@
           <div onclick="openCharacterDrawer('${c.id}')" class="group cursor-pointer rounded-xl bg-surface border ${cardBorder} card-hover-glow hover:-translate-y-1 transition-all duration-300 p-2.5 flex flex-col space-y-2.5 shadow-sm">
             
             <!-- Art Frame with Aspect Ratio -->
-            <div class="aspect-[3/4] w-full rounded-lg overflow-hidden bg-canvas relative shadow-inner">
+            <div class="aspect-[1/2] w-full rounded-lg overflow-hidden bg-canvas relative shadow-inner">
               <img src="${c.profile_img || c.drip_img}" alt="${c.name}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" loading="lazy">
               
               <!-- Top Right: Element Chip -->
@@ -1904,9 +1904,6 @@
                   ${elementShort}
                 </div>
               ` : ''}
-
-              <!-- Bottom Gradient Blend -->
-              <div class="absolute inset-x-0 bottom-0 h-12 bg-gradient-to-t from-surface via-surface/40 to-transparent"></div>
             </div>
 
             <!-- Identity Info (High Contrast & Clear Readability) -->
