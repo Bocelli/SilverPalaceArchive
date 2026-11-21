@@ -76,76 +76,67 @@
 </head>
 <body class="min-h-screen flex flex-col antialiased selection:bg-gold/20 selection:text-gold">
 
-  <!-- ================= TOP NAVIGATION (CLEAN STUDIO-GRADE) ================= -->
-  <header class="border-b border-border bg-canvas/90 backdrop-blur-md sticky top-0 z-30">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between gap-4">
+  <!-- ================= TOP NAVIGATION (CENTERED LUXURY NOIR HEADER) ================= -->
+  <header class="border-b border-border bg-canvas/95 backdrop-blur-md sticky top-0 z-30 shadow-md">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 pt-4 pb-3 relative">
       
-      <!-- Brand Logo -->
-      <a href="#home" onclick="setView('characters')" class="flex items-center gap-3 group">
-        <div class="w-9 h-9 rounded-lg bg-surface-raised border border-border flex items-center justify-center text-gold font-serif font-bold text-lg group-hover:border-gold/50 transition-colors shadow-sm">
-          S
-        </div>
-        <div>
-          <span class="font-serif font-bold text-lg tracking-tight text-white group-hover:text-gold transition-colors">Silverium DB</span>
-          <span class="text-[11px] text-muted block -mt-1 font-sans">Silver Palace Database</span>
-        </div>
-      </a>
-
-      <!-- Main Navigation -->
-      <nav class="hidden md:flex items-center gap-1 text-sm font-medium">
-        <button onclick="setView('characters')" id="nav-characters" class="px-3.5 py-1.5 rounded-md text-white bg-surface-raised border border-border transition-colors">
-          Personaggi
-        </button>
-        <button onclick="setView('timeline')" id="nav-timeline" class="px-3.5 py-1.5 rounded-md text-muted hover:text-white transition-colors">
-          Timeline & Notizie
-        </button>
-        <button onclick="setView('factions')" id="nav-factions" class="px-3.5 py-1.5 rounded-md text-muted hover:text-white transition-colors">
-          Fazioni
-        </button>
-        <button onclick="setView('lexicon')" id="nav-lexicon" class="px-3.5 py-1.5 rounded-md text-muted hover:text-white transition-colors">
-          Glossario Lore
-        </button>
-        <button onclick="setView('multimedia')" id="nav-multimedia" class="px-3.5 py-1.5 rounded-md text-muted hover:text-white transition-colors">
-          Multimedia
-        </button>
-      </nav>
-
-      <!-- Right Controls: Language & Creator & Admin -->
-      <div class="flex items-center gap-3 text-xs">
+      <!-- Utility Controls: Top Right (Language & Admin) -->
+      <div class="absolute right-4 sm:right-6 top-4 flex items-center gap-2 sm:gap-3 z-10">
         <!-- Language Switcher -->
-        <div class="flex items-center bg-surface border border-border rounded-lg p-0.5 font-semibold">
+        <div class="flex items-center bg-surface border border-border rounded-lg p-0.5 font-semibold text-xs">
           <button id="lang-it" onclick="setLanguage('it')" class="px-2.5 py-1 rounded-md bg-surface-raised text-white transition-all shadow-sm">IT</button>
           <button id="lang-en" onclick="setLanguage('en')" class="px-2.5 py-1 rounded-md text-muted hover:text-white transition-all">EN</button>
         </div>
 
-        
-
         <!-- Admin Access Button -->
-        <button onclick="openAdminGate()" class="flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-border bg-surface hover:border-gold/60 hover:text-gold text-slate-300 transition-all">
+        <button onclick="openAdminGate()" class="flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-border bg-surface hover:border-gold/60 hover:text-gold text-slate-300 transition-all text-xs" title="Pannello Amministrazione">
           <svg class="w-3.5 h-3.5 text-gold" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/></svg>
           <span class="hidden sm:inline">Admin</span>
         </button>
       </div>
 
-    </div>
+      <!-- Centered Brand Title & Logo (No AI boilerplate) -->
+      <div class="flex flex-col items-center justify-center text-center">
+        <a href="#home" onclick="setView('characters')" class="inline-flex flex-col items-center group cursor-pointer">
+          <!-- Subtle Victorian filigree accent -->
+          <div class="flex items-center gap-2 mb-1 opacity-80 group-hover:opacity-100 transition-opacity">
+            <span class="w-8 h-[1px] bg-gradient-to-r from-transparent via-gold/50 to-gold"></span>
+            <span class="text-gold text-[10px] sm:text-[11px] uppercase tracking-[0.25em] font-sans font-medium" id="header-eyebrow">Archivio Ufficiale</span>
+            <span class="w-8 h-[1px] bg-gradient-to-l from-transparent via-gold/50 to-gold"></span>
+          </div>
+          
+          <!-- Title: Silver Palace Database -->
+          <h1 class="font-serif text-2xl sm:text-3xl lg:text-[32px] font-bold tracking-tight text-white group-hover:text-gold transition-colors flex items-center justify-center gap-2 sm:gap-2.5">
+            <span class="tracking-wide">Silver Palace</span>
+            <span class="text-gold font-serif font-light italic text-xl sm:text-2xl lg:text-[28px]">Database</span>
+          </h1>
+          
+          <!-- Tagline -->
+          <p id="header-tagline" class="text-[11px] sm:text-xs text-muted font-sans tracking-wider uppercase mt-1">
+            Dossier Investigativi, Cronache & Multiverse Lore
+          </p>
+        </a>
+      </div>
 
-    <!-- Mobile Navigation Sub-bar -->
-    <div class="md:hidden border-t border-border bg-surface/95 px-3 py-2 overflow-x-auto no-scrollbar flex items-center gap-1.5 text-xs font-medium" style="-webkit-overflow-scrolling: touch;">
-      <button onclick="setView('characters')" id="nav-m-characters" class="px-3 py-1.5 rounded-md text-white bg-surface-raised border border-border whitespace-nowrap flex-shrink-0 transition-colors">
-        Personaggi
-      </button>
-      <button onclick="setView('timeline')" id="nav-m-timeline" class="px-3 py-1.5 rounded-md text-muted hover:text-white whitespace-nowrap flex-shrink-0 transition-colors">
-        Timeline & Notizie
-      </button>
-      <button onclick="setView('factions')" id="nav-m-factions" class="px-3 py-1.5 rounded-md text-muted hover:text-white whitespace-nowrap flex-shrink-0 transition-colors">
-        Fazioni
-      </button>
-      <button onclick="setView('lexicon')" id="nav-m-lexicon" class="px-3 py-1.5 rounded-md text-muted hover:text-white whitespace-nowrap flex-shrink-0 transition-colors">
-        Glossario Lore
-      </button>
-      <button onclick="setView('multimedia')" id="nav-m-multimedia" class="px-3 py-1.5 rounded-md text-muted hover:text-white whitespace-nowrap flex-shrink-0 transition-colors">
-        Multimedia
-      </button>
+      <!-- Centered Navigation Tabs (Underneath the logo/title) -->
+      <nav class="mt-3.5 pt-2.5 border-t border-border/40 flex items-center justify-center gap-1.5 sm:gap-2 text-xs sm:text-sm font-medium overflow-x-auto no-scrollbar" style="-webkit-overflow-scrolling: touch;">
+        <button onclick="setView('characters')" id="nav-characters" class="px-3.5 py-1.5 rounded-md text-white bg-surface-raised border border-border whitespace-nowrap transition-colors flex-shrink-0">
+          Personaggi
+        </button>
+        <button onclick="setView('timeline')" id="nav-timeline" class="px-3.5 py-1.5 rounded-md text-muted hover:text-white whitespace-nowrap transition-colors flex-shrink-0">
+          Timeline & Notizie
+        </button>
+        <button onclick="setView('factions')" id="nav-factions" class="px-3.5 py-1.5 rounded-md text-muted hover:text-white whitespace-nowrap transition-colors flex-shrink-0">
+          Fazioni
+        </button>
+        <button onclick="setView('lexicon')" id="nav-lexicon" class="px-3.5 py-1.5 rounded-md text-muted hover:text-white whitespace-nowrap transition-colors flex-shrink-0">
+          Glossario Lore
+        </button>
+        <button onclick="setView('multimedia')" id="nav-multimedia" class="px-3.5 py-1.5 rounded-md text-muted hover:text-white whitespace-nowrap transition-colors flex-shrink-0">
+          Multimedia
+        </button>
+      </nav>
+
     </div>
   </header>
 
@@ -249,29 +240,15 @@
     <!-- ================= MULTIMEDIA ARCHIVE VIEW ================= -->
     <section id="view-multimedia" class="hidden space-y-6">
       
-      <!-- Section Header -->
-      <div class="flex flex-col sm:flex-row sm:items-center justify-between pb-4 border-b border-border gap-4">
+      <!-- Section Header with Search Bar and Counter -->
+      <div class="flex flex-col md:flex-row md:items-center justify-between pb-4 border-b border-border gap-4">
         <div>
           <h2 id="mm-header-title" class="font-serif text-2xl font-bold text-white tracking-tight">Archivio Multimediale</h2>
           <p id="mm-header-subtitle" class="text-xs text-muted mt-1">Collezione ufficiale di illustrazioni, carte collezionabili, wallpaper, concept art e trailer di Silver Palace.</p>
         </div>
-        <div class="flex items-center gap-2 flex-shrink-0">
-          <span id="mm-counter-badge" class="px-3 py-1.5 rounded-lg bg-surface-raised border border-border text-xs text-gold font-medium shadow-sm">
-            Asset Archiviati
-          </span>
-        </div>
-      </div>
-
-      <!-- Controls: Category Pills & Live Search -->
-      <div class="space-y-3">
-        <div class="flex flex-col md:flex-row gap-3 items-stretch md:items-center justify-between">
-          <!-- Horizontal Scrollable Category Pills -->
-          <div id="mm-filter-pills" class="flex items-center gap-1.5 overflow-x-auto no-scrollbar py-1 text-xs" style="-webkit-overflow-scrolling: touch;">
-            <!-- Rendered by JS -->
-          </div>
-
+        <div class="flex flex-wrap items-center gap-3 flex-shrink-0">
           <!-- Search Bar -->
-          <div class="relative min-w-[240px] flex-shrink-0">
+          <div class="relative w-full sm:w-64">
             <span class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-slate-500">
               <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
             </span>
@@ -286,6 +263,17 @@
               <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
             </button>
           </div>
+          <!-- Counter Badge -->
+          <span id="mm-counter-badge" class="px-3 py-2 rounded-lg bg-surface-raised border border-border text-xs text-gold font-medium shadow-sm whitespace-nowrap">
+            75 di 75 Asset
+          </span>
+        </div>
+      </div>
+
+      <!-- Controls: Category Filter Pills (Full Width, Wrapped on Desktop & Touch-Scroll on Mobile) -->
+      <div class="w-full">
+        <div id="mm-filter-pills" class="flex sm:flex-wrap items-center gap-2 overflow-x-auto sm:overflow-visible no-scrollbar py-1 text-xs pr-4 sm:pr-0" style="-webkit-overflow-scrolling: touch;">
+          <!-- Rendered by JS -->
         </div>
       </div>
 
@@ -3051,7 +3039,7 @@
     const VAULT_ALERTS = [];
 
     // Auto-sync with SPVault DB Version
-    const SDB_VERSION = "spvault_sync_1795257902466";
+    const SDB_VERSION = "spvault_sync_1795258465536";
     if (localStorage.getItem('sdb_version') !== SDB_VERSION) {
       localStorage.setItem('sdb_cases', JSON.stringify(DEFAULT_CASES));
       localStorage.setItem('sdb_dispatches', JSON.stringify(DEFAULT_DISPATCHES));
@@ -3078,6 +3066,22 @@
       renderFactions();
       renderLexicon();
       if (typeof renderMultimedia === 'function') renderMultimedia();
+
+      const eyebrowEl = document.getElementById('header-eyebrow');
+      const taglineEl = document.getElementById('header-tagline');
+      if (eyebrowEl) eyebrowEl.innerText = lang === 'it' ? 'Archivio Ufficiale' : 'Official Archive';
+      if (taglineEl) taglineEl.innerText = lang === 'it' 
+        ? 'Dossier Investigativi, Cronache & Multiverse Lore' 
+        : 'Investigative Dossiers, Chronicles & Multiverse Lore';
+
+      const navChars = document.getElementById('nav-characters');
+      const navTime = document.getElementById('nav-timeline');
+      const navFac = document.getElementById('nav-factions');
+      const navLex = document.getElementById('nav-lexicon');
+      if (navChars) navChars.innerText = lang === 'it' ? 'Personaggi' : 'Characters';
+      if (navTime) navTime.innerText = lang === 'it' ? 'Timeline & Notizie' : 'Timeline & News';
+      if (navFac) navFac.innerText = lang === 'it' ? 'Fazioni' : 'Factions';
+      if (navLex) navLex.innerText = lang === 'it' ? 'Glossario Lore' : 'Lore Lexicon';
 
       // Keyboard navigation (ESC to close modals and drawers)
       document.addEventListener('keydown', (e) => {
@@ -3911,7 +3915,7 @@
         return `
           <button 
             onclick="setMultimediaCategory('${cat.id}')" 
-            class="px-3 py-1.5 rounded-lg border text-xs whitespace-nowrap flex-shrink-0 transition-all ${isActive ? activeClass : inactiveClass}"
+            class="px-3.5 py-1.5 rounded-lg border text-xs whitespace-nowrap flex-shrink-0 sm:flex-shrink transition-all ${isActive ? activeClass : inactiveClass}"
           >
             <span>${label}</span>
             <span class="ml-1 opacity-70 text-[10px]">(${count})</span>
