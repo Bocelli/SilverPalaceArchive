@@ -3051,7 +3051,7 @@
     const VAULT_ALERTS = [];
 
     // Auto-sync with SPVault DB Version
-    const SDB_VERSION = "spvault_sync_1795256386758";
+    const SDB_VERSION = "spvault_sync_1795257902466";
     if (localStorage.getItem('sdb_version') !== SDB_VERSION) {
       localStorage.setItem('sdb_cases', JSON.stringify(DEFAULT_CASES));
       localStorage.setItem('sdb_dispatches', JSON.stringify(DEFAULT_DISPATCHES));
@@ -3077,12 +3077,13 @@
       renderTimeline();
       renderFactions();
       renderLexicon();
-      
+      if (typeof renderMultimedia === 'function') renderMultimedia();
+
       // Keyboard navigation (ESC to close modals and drawers)
       document.addEventListener('keydown', (e) => {
         if (e.key === 'Escape') {
           closeCharacterDrawer();
-          document.getElementById('lightbox')?.classList.add('hidden');
+          if (typeof closeLightbox === 'function') closeLightbox(); else document.getElementById('lightbox')?.classList.add('hidden');
           closeAdminGate();
         }
       });
@@ -3144,18 +3145,24 @@
 
     // --- VIEW SWITCHING ---
     function setView(view) {
-      const views = ['characters', 'timeline', 'factions', 'lexicon'];
+      const views = ['characters', 'timeline', 'factions', 'lexicon', 'multimedia'];
       views.forEach(v => {
         const el = document.getElementById(`view-${v}`);
         const btn = document.getElementById(`nav-${v}`);
+        const mBtn = document.getElementById(`nav-m-${v}`);
         if (v === view) {
           el?.classList.remove('hidden');
           if (btn) btn.className = "px-3.5 py-1.5 rounded-md text-white bg-surface-raised border border-border transition-colors";
+          if (mBtn) mBtn.className = "px-3 py-1.5 rounded-md text-white bg-surface-raised border border-border whitespace-nowrap flex-shrink-0 transition-colors";
         } else {
           el?.classList.add('hidden');
           if (btn) btn.className = "px-3.5 py-1.5 rounded-md text-muted hover:text-white transition-colors";
+          if (mBtn) mBtn.className = "px-3 py-1.5 rounded-md text-muted hover:text-white whitespace-nowrap flex-shrink-0 transition-colors";
         }
       });
+      if (view === 'multimedia' && typeof renderMultimedia === 'function') {
+        renderMultimedia();
+      }
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
@@ -3659,7 +3666,8 @@
       renderTimeline();
       renderFactions();
       renderLexicon();
-            if (activeChar) {
+      if (typeof renderMultimedia === 'function') renderMultimedia();
+      if (activeChar) {
         document.getElementById('drawer-title').innerText = lang === 'it' ? activeChar.title_it : activeChar.title_en;
         document.getElementById('drawer-quote').innerText = lang === 'it' ? activeChar.quote_it : activeChar.quote_en;
         const hiddenTitleEl = document.getElementById('drawer-hidden-title');
