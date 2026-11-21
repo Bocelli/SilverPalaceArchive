@@ -115,11 +115,7 @@
           <button id="lang-en" onclick="setLanguage('en')" class="px-2.5 py-1 rounded-md text-muted hover:text-white transition-all">EN</button>
         </div>
 
-        <!-- Creator Signature (Discreet) -->
-        <a href="https://www.youtube.com/@CatalystOnline" target="_blank" rel="noopener noreferrer" class="hidden lg:flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-border hover:border-border-active text-muted hover:text-white transition-all">
-          <span class="text-slate-400">Curato da</span>
-          <span class="font-semibold text-white">CatalystOnline</span>
-        </a>
+        
 
         <!-- Admin Access Button -->
         <button onclick="openAdminGate()" class="flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-border bg-surface hover:border-gold/60 hover:text-gold text-slate-300 transition-all">
@@ -235,21 +231,28 @@
       
       <!-- Drawer Top Bar -->
       <div class="flex-shrink-0 px-4 sm:px-6 py-3 border-b border-border bg-canvas/90 backdrop-blur-md flex items-center justify-between sticky top-0 z-20">
-        <div class="flex items-center gap-2.5">
-          <span class="text-xs text-slate-400 font-sans">Archivio / <span id="drawer-breadcrumb-name" class="text-white font-medium">Nome</span></span>
-          <span class="text-slate-600">•</span>
-          <span id="drawer-faction-badge" class="px-2 py-0.5 rounded bg-surface border border-gold/40 text-[11px] font-semibold text-gold uppercase tracking-wide">FACTION</span>
+        <div class="flex items-center gap-2.5 min-w-0">
+          <button onclick="closeCharacterDrawer()" class="p-1.5 -ml-1 sm:hidden rounded-lg text-slate-400 hover:text-gold hover:bg-surface-raised border border-transparent hover:border-border transition-all flex items-center justify-center group flex-shrink-0" title="Torna indietro" aria-label="Torna indietro">
+            <svg class="w-4 h-4 transition-transform group-hover:-translate-x-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"/>
+            </svg>
+          </button>
+          <span class="text-xs text-slate-400 font-sans truncate">Archivio / <span id="drawer-breadcrumb-name" class="text-white font-medium">Nome</span></span>
+          <span class="text-slate-600 flex-shrink-0">•</span>
+          <span id="drawer-faction-badge" class="px-2 py-0.5 rounded bg-surface border border-gold/40 text-[11px] font-semibold text-gold uppercase tracking-wide flex-shrink-0">FACTION</span>
         </div>
-        <button onclick="closeCharacterDrawer()" class="flex items-center gap-1.5 px-2.5 py-1 rounded-md text-xs text-slate-400 hover:text-white hover:bg-surface-raised border border-border/60 transition-colors" title="Chiudi dossier">
-          <span>Chiudi</span>
-          <kbd class="px-1.5 py-0.5 rounded bg-canvas border border-border text-[10px] text-slate-400">Esc</kbd>
+        <button onclick="closeCharacterDrawer()" class="flex items-center gap-2 px-3 py-1.5 rounded-lg text-xs font-medium text-slate-300 hover:text-gold hover:bg-surface-raised border border-border/70 hover:border-gold/50 transition-all group flex-shrink-0 ml-3" title="Torna indietro">
+          <svg class="w-4 h-4 text-slate-400 group-hover:text-gold transition-transform group-hover:-translate-x-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"/>
+          </svg>
+          <span>Indietro</span>
         </button>
       </div>
 
       <!-- Drawer Hero Profile -->
       <div class="flex-shrink-0 p-4 sm:p-6 border-b border-border bg-gradient-to-b from-surface-raised/90 via-surface to-surface flex flex-col sm:flex-row gap-4 sm:gap-6 items-start">
         <!-- Portrait -->
-        <div class="w-36 aspect-[1/2] sm:w-44 rounded-xl overflow-hidden border border-border/80 flex-shrink-0 bg-canvas relative shadow-xl group cursor-pointer" onclick="openLightbox(activeChar ? (activeChar.profile_img || activeChar.drip_img) : '')">
+        <div class="w-36 h-52 sm:w-44 sm:h-60 rounded-xl overflow-hidden border border-border/80 flex-shrink-0 bg-canvas relative shadow-xl group cursor-pointer" onclick="openLightbox(activeChar ? (activeChar.drip_img || activeChar.profile_img) : '')">
           <img id="drawer-portrait" src="" alt="Portrait" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
           <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 flex items-center justify-center transition-opacity text-xs text-white gap-1 font-medium">
             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v6m3-3H7"/></svg>
@@ -312,7 +315,7 @@
             <div class="p-5 rounded-xl bg-surface-raised border border-border/80 space-y-2.5">
               <div class="flex items-center justify-between text-xs text-gold font-semibold border-b border-border pb-2">
                 <span>🇮🇹 Traduzione Italiana</span>
-                <span class="text-[11px] text-slate-400 font-normal">A cura di CatalystOnline</span>
+                <span class="text-[11px] text-slate-400 font-normal">Archivio Traduzioni IT</span>
               </div>
               <p id="drawer-bio-it" class="text-sm text-slate-200 leading-relaxed font-sans whitespace-pre-line">...</p>
             </div>
@@ -708,6 +711,13 @@
 
   <!-- ================= LIGHTBOX MODAL ================= -->
   <div id="lightbox" class="fixed inset-0 z-50 hidden bg-black/95 flex items-center justify-center p-4 cursor-pointer" onclick="this.classList.add('hidden')">
+    <!-- Themed Back / Close button -->
+    <button onclick="document.getElementById('lightbox').classList.add('hidden')" class="absolute top-4 right-4 sm:top-6 sm:right-6 flex items-center gap-2 px-3.5 py-1.5 rounded-lg bg-surface/85 backdrop-blur-md border border-border text-xs font-medium text-slate-200 hover:text-gold hover:border-gold/50 transition-all shadow-lg z-50 group">
+      <svg class="w-4 h-4 text-slate-400 group-hover:text-gold transition-transform group-hover:-translate-x-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"/>
+      </svg>
+      <span>Indietro</span>
+    </button>
     <img id="lightbox-img" src="" class="max-w-full max-h-[90vh] object-contain rounded-lg shadow-2xl">
   </div>
 
@@ -1993,7 +2003,7 @@
       document.getElementById('drawer-name').innerText = c.name;
       document.getElementById('drawer-title').innerText = currentLocale === 'it' ? c.title_it : c.title_en;
       document.getElementById('drawer-quote').innerText = currentLocale === 'it' ? c.quote_it : c.quote_en;
-      document.getElementById('drawer-portrait').src = c.profile_img || c.drip_img;
+      document.getElementById('drawer-portrait').src = c.drip_img || c.profile_img;
       document.getElementById('drawer-faction-badge').innerText = c.faction;
       const drawerFactionEl = document.getElementById('drawer-faction'); if (drawerFactionEl) drawerFactionEl.innerText = c.faction;
       document.getElementById('drawer-role').innerText = c.role;
@@ -2018,11 +2028,11 @@
       // Gallery with zoom prompt (only authentic existing artworks)
       const hImgs = (c.hidden_imgs && c.hidden_imgs.length > 0) ? c.hidden_imgs : (c.hidden_img ? [c.hidden_img] : []);
       const galleryItems = [];
-      if (c.profile_img) {
-        galleryItems.push({ label: 'Profile Art', src: c.profile_img });
-      }
-      if (c.drip_img && c.drip_img !== c.profile_img) {
+      if (c.drip_img) {
         galleryItems.push({ label: 'Drip Marketing Art', src: c.drip_img });
+      }
+      if (c.profile_img && c.profile_img !== c.drip_img) {
+        galleryItems.push({ label: 'Profile Art', src: c.profile_img });
       }
       if (hImgs.length > 0) {
         hImgs.forEach((img, idx) => {
