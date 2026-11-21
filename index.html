@@ -245,7 +245,7 @@
       <!-- Drawer Hero Profile -->
       <div class="p-6 border-b border-border bg-gradient-to-b from-surface-raised/90 via-surface to-surface flex flex-col sm:flex-row gap-6 items-start">
         <!-- Portrait -->
-        <div class="w-36 h-52 sm:w-44 sm:h-60 rounded-xl overflow-hidden border border-border/80 flex-shrink-0 bg-canvas relative shadow-xl group cursor-pointer" onclick="openLightbox(activeChar ? activeChar.drip_img : '')">
+        <div class="w-36 h-52 sm:w-44 sm:h-60 rounded-xl overflow-hidden border border-border/80 flex-shrink-0 bg-canvas relative shadow-xl group cursor-pointer" onclick="openLightbox(activeChar ? (activeChar.profile_img || activeChar.drip_img) : '')">
           <img id="drawer-portrait" src="" alt="Portrait" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
           <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 flex items-center justify-center transition-opacity text-xs text-white gap-1 font-medium">
             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v6m3-3H7"/></svg>
@@ -1992,7 +1992,7 @@
       document.getElementById('drawer-name').innerText = c.name;
       document.getElementById('drawer-title').innerText = currentLocale === 'it' ? c.title_it : c.title_en;
       document.getElementById('drawer-quote').innerText = currentLocale === 'it' ? c.quote_it : c.quote_en;
-      document.getElementById('drawer-portrait').src = c.drip_img;
+      document.getElementById('drawer-portrait').src = c.profile_img || c.drip_img;
       document.getElementById('drawer-faction-badge').innerText = c.faction;
       const drawerFactionEl = document.getElementById('drawer-faction'); if (drawerFactionEl) drawerFactionEl.innerText = c.faction;
       document.getElementById('drawer-role').innerText = c.role;
@@ -2017,11 +2017,11 @@
       // Gallery with zoom prompt (only authentic existing artworks)
       const hImgs = (c.hidden_imgs && c.hidden_imgs.length > 0) ? c.hidden_imgs : (c.hidden_img ? [c.hidden_img] : []);
       const galleryItems = [];
-      if (c.drip_img) {
-        galleryItems.push({ label: 'Drip Marketing Art', src: c.drip_img });
-      }
-      if (c.profile_img && c.profile_img !== c.drip_img) {
+      if (c.profile_img) {
         galleryItems.push({ label: 'Profile Art', src: c.profile_img });
+      }
+      if (c.drip_img && c.drip_img !== c.profile_img) {
+        galleryItems.push({ label: 'Drip Marketing Art', src: c.drip_img });
       }
       if (hImgs.length > 0) {
         hImgs.forEach((img, idx) => {
