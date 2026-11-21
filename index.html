@@ -43,6 +43,10 @@
   </script>
 
   <style>
+    /* Hide scrollbars for touch-scrolling tab bars */
+    .no-scrollbar::-webkit-scrollbar { display: none; }
+    .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
     /* Ultra-clean scrollbar */
     ::-webkit-scrollbar { width: 6px; height: 6px; }
     ::-webkit-scrollbar-track { background: #090B10; }
@@ -230,7 +234,7 @@
     <div id="character-drawer-panel" class="w-full max-w-3xl bg-surface border-l border-border h-full overflow-y-auto flex flex-col shadow-2xl transform translate-x-full" onclick="event.stopPropagation()">
       
       <!-- Drawer Top Bar -->
-      <div class="px-6 py-3.5 border-b border-border bg-canvas/90 backdrop-blur-md flex items-center justify-between sticky top-0 z-20">
+      <div class="px-4 sm:px-6 py-3 border-b border-border bg-canvas/90 backdrop-blur-md flex items-center justify-between sticky top-0 z-20">
         <div class="flex items-center gap-2.5">
           <span class="text-xs text-slate-400 font-sans">Archivio / <span id="drawer-breadcrumb-name" class="text-white font-medium">Nome</span></span>
           <span class="text-slate-600">•</span>
@@ -243,7 +247,7 @@
       </div>
 
       <!-- Drawer Hero Profile -->
-      <div class="p-6 border-b border-border bg-gradient-to-b from-surface-raised/90 via-surface to-surface flex flex-col sm:flex-row gap-6 items-start">
+      <div class="p-4 sm:p-6 border-b border-border bg-gradient-to-b from-surface-raised/90 via-surface to-surface flex flex-col sm:flex-row gap-4 sm:gap-6 items-start">
         <!-- Portrait -->
         <div class="w-36 aspect-[1/2] sm:w-44 rounded-xl overflow-hidden border border-border/80 flex-shrink-0 bg-canvas relative shadow-xl group cursor-pointer" onclick="openLightbox(activeChar ? (activeChar.profile_img || activeChar.drip_img) : '')">
           <img id="drawer-portrait" src="" alt="Portrait" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
@@ -279,27 +283,27 @@
         </div>
       </div>
 
-      <!-- Tab Navigation -->
-      <div class="flex items-center border-b border-border bg-canvas px-6 text-xs font-medium">
-        <button onclick="setDrawerTab('bio')" id="d-tab-bio" class="px-4 py-3 border-b-2 border-gold text-white font-semibold transition-colors">
+            <!-- Tab Navigation (Horizontally scrollable on mobile) -->
+      <div id="drawer-tab-nav" class="flex items-center border-b border-border bg-canvas px-4 sm:px-6 text-xs font-medium overflow-x-auto no-scrollbar scroll-smooth space-x-1" style="-webkit-overflow-scrolling: touch;">
+        <button onclick="setDrawerTab('bio')" id="d-tab-bio" class="px-3.5 py-3 border-b-2 border-gold text-white font-semibold transition-colors whitespace-nowrap flex-shrink-0">
           Panoramica & Lore
         </button>
-        <button onclick="setDrawerTab('hidden')" id="d-tab-hidden" class="px-4 py-3 border-b-2 border-transparent text-muted hover:text-white transition-colors">
+        <button onclick="setDrawerTab('hidden')" id="d-tab-hidden" class="px-3.5 py-3 border-b-2 border-transparent text-muted hover:text-white transition-colors whitespace-nowrap flex-shrink-0">
           Pagine Segrete (Hidden Lore)
         </button>
-        <button onclick="setDrawerTab('gallery')" id="d-tab-gallery" class="px-4 py-3 border-b-2 border-transparent text-muted hover:text-white transition-colors">
+        <button onclick="setDrawerTab('gallery')" id="d-tab-gallery" class="px-3.5 py-3 border-b-2 border-transparent text-muted hover:text-white transition-colors whitespace-nowrap flex-shrink-0">
           Galleria Art
         </button>
-        <button onclick="setDrawerTab('media')" id="d-tab-media" class="px-4 py-3 border-b-2 border-transparent text-muted hover:text-white transition-colors">
+        <button onclick="setDrawerTab('media')" id="d-tab-media" class="px-3.5 py-3 border-b-2 border-transparent text-muted hover:text-white transition-colors whitespace-nowrap flex-shrink-0">
           Trailer Ufficiale
         </button>
-        <button onclick="setDrawerTab('notes')" id="d-tab-notes" class="px-4 py-3 border-b-2 border-transparent text-gold hover:text-white transition-colors">
+        <button onclick="setDrawerTab('notes')" id="d-tab-notes" class="px-3.5 py-3 border-b-2 border-transparent text-gold hover:text-white transition-colors whitespace-nowrap flex-shrink-0">
           Note CatalystOnline
         </button>
       </div>
 
       <!-- Tab Content Area -->
-      <div class="p-6 space-y-6 flex-1">
+      <div class="p-4 sm:p-6 space-y-6 flex-1">
         
         <!-- TAB 1: BIO & BILINGUAL LORE -->
         <div id="drawer-tab-content-bio" class="space-y-4">
@@ -2084,7 +2088,7 @@
         extraLinkEl.innerHTML = `<span class="text-slate-400 text-xs">Archivio Ufficiale Silver Palace — Elementa Games</span>`;
       }
 
-      setDrawerTab('bio');
+      setDrawerTab('bio'); const tabNav = document.getElementById('drawer-tab-nav'); if (tabNav) tabNav.scrollLeft = 0;
 
       const drawer = document.getElementById('character-drawer');
       const panel = document.getElementById('character-drawer-panel');
@@ -2127,10 +2131,13 @@
         const btn = document.getElementById(`d-tab-${t}`);
         const content = document.getElementById(`drawer-tab-content-${t}`);
         if (t === tab) {
-          btn.className = "px-4 py-3 border-b-2 border-gold text-white font-semibold transition-colors";
+          btn.className = "px-3.5 py-3 border-b-2 border-gold text-white font-semibold transition-colors whitespace-nowrap flex-shrink-0";
           content.classList.remove('hidden');
+          try {
+            btn.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+          } catch(e) {}
         } else {
-          btn.className = "px-4 py-3 border-b-2 border-transparent text-muted hover:text-white transition-colors";
+          btn.className = "px-3.5 py-3 border-b-2 border-transparent text-muted hover:text-white transition-colors whitespace-nowrap flex-shrink-0";
           content.classList.add('hidden');
         }
       });
