@@ -692,13 +692,22 @@ fs.readdirSync(repoContent).filter(f => fs.statSync(path.join(repoContent, f)).i
   if (!knownRoots.has(r)) drift('cartella-vault', `Nuova cartella nel vault: ${r}`, `content/${r}`, 'Non è mappata in sync_spvault.js: il contenuto non arriverà nel sito.', '');
 });
 
-const knownSections = new Set(['traduzione', 'traduzioni', 'immagini', 'tags', 'tag', 'post', 'video', 'media', 'fonti', 'link', 'data di creazione']);
+const knownSections = new Set(['traduzione', 'traduzioni', 'immagini', 'immagine', 'tags', 'tag', 'post', 'video', 'media', 'fonti', 'link', 'data di creazione']);
+// "Immagini e Link", "Immagini & Link", "Immagini/Link": ogni parte deve essere nota.
+// L'estrazione asset non dipende dal titolo (va per nome file), qui conta solo il rumore nel drift.
+function isKnownSection(heading) {
+  const parts = heading.toLowerCase().replace(/\s+/g, ' ').trim()
+    .split(/\s+(?:e|and|&|\/)\s+|\s*[\/&]\s*/)
+    .map(p => p.trim())
+    .filter(Boolean);
+  return parts.length > 0 && parts.every(p => knownSections.has(p));
+}
 function scanHeadings(file) {
   const raw = fs.readFileSync(file, 'utf8');
   if (/^---\n/.test(raw)) drift('frontmatter-ignorato', `Frontmatter in ${path.basename(file)}`, rel(file), 'Del frontmatter il parser legge solo `date:` (fallback: data del commit). Gli altri campi vanno aggiunti a DATA-CONTRACT.md prima di usarli in UI.', raw.slice(0, 120));
   const hs = raw.match(/^######\s*(.+)$/gm) || [];
   hs.map(h => h.replace(/^######\s*/, '').trim()).forEach(h => {
-    if (!knownSections.has(h.toLowerCase())) {
+    if (!isKnownSection(h)) {
       drift('sezione-non-mappata', `Sezione "${h}" in ${path.basename(path.dirname(file))}/${path.basename(file)}`, rel(file), 'Questa sezione del vault non ha una UI dedicata: va aggiunta una tab o mappata.', h);
     }
   });

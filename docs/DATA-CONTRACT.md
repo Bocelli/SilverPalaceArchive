@@ -35,8 +35,13 @@ Nome (Ruolo)
 ```
 
 Il parser **scarta**: titolo, sottotitolo `—— … ——`, citazione, ripetizione del nome in coda,
-sezione `###### Immagini`, `###### Tags`, link markdown, `==evidenziazioni==`, `**grassetti**`.
+sezione `###### Immagini` (equivalenti: `###### Immagine`, `###### Immagini e Link`), `###### Tags`, link markdown, `==evidenziazioni==`, `**grassetti**`.
 Le date non sono nel markdown: vengono prese dal commit git del file.
+
+L'estrazione delle immagini **non dipende dal titolo della sezione**: si cercano i pattern di nome file
+(`*Drip Marketing*` → `drip_img`, `*Profile Art*` → `profile_img`) in tutto il documento. Un titolo
+`###### Immagini e Link` non aggiunge né toglie nulla alla scheda, quindi non serve una UI dedicata:
+il drift detector lo accetta come equivalente di `###### Immagini`.
 
 ## Schema `data/archive.json`
 
