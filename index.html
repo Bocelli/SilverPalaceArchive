@@ -234,32 +234,32 @@
     <!-- ================= VIEW 1: CHARACTERS (PROFESSIONAL GACHA ROSTER) ================= -->
     <section id="view-characters" class="space-y-6">
       
-      <!-- Toolbar: Search & Clean Filter Pills -->
-      <div class="flex flex-col lg:flex-row items-stretch lg:items-center justify-between gap-4 pb-2 border-b border-border">
-        
-        <!-- Factions Filter Pills -->
-        <div id="faction-filter-pills" class="flex items-center gap-1.5 overflow-x-auto pb-1 text-xs scrollbar-none font-medium">
-          <!-- Populated dynamically via JS -->
+      <!-- Toolbar: filtro fazione e ricerca, una riga sola -->
+      <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 pb-3 border-b border-border">
+
+        <!-- Filtro fazione: una tendina regge anche trenta fazioni senza allargarsi -->
+        <div class="flex items-center gap-2 sm:flex-shrink-0">
+          <label for="faction-filter" class="hidden sm:block text-xs text-muted whitespace-nowrap" data-i18n="roster.faction">Fazione</label>
+          <select id="faction-filter" onchange="setFactionFilter(this.value)" aria-label="Filtra per fazione"
+                  class="w-full sm:w-60 px-3 py-2 bg-surface border border-border rounded-lg text-xs text-white focus:outline-none focus:border-gold transition-colors"></select>
         </div>
 
-        <!-- Right: Search Controls -->
-        <div class="flex items-center gap-3">
-          <!-- Live Search Bar -->
-          <div class="relative w-full sm:w-72">
-            <input 
-              type="text" 
-              id="char-search" 
-              oninput="filterRosterInput()" 
-              aria-label="Cerca personaggi" data-i18n-ph="view.characters.search" placeholder="Cerca nome, fazione o titolo..." 
-              class="w-full pl-9 pr-8 py-2 bg-surface border border-border rounded-lg text-xs text-white placeholder-slate-400 focus:outline-none focus:border-gold transition-colors font-sans"
-            >
-            <svg class="w-4 h-4 text-slate-400 absolute left-2.5 top-1/2 -translate-y-1/2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
-            <button id="clear-search-btn" onclick="clearSearch()" class="hidden absolute right-2.5 top-1/2 -translate-y-1/2 text-slate-400 hover:text-white" title="Cancella ricerca">
-              <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
-            </button>
-          </div>
+        <!-- Ricerca: prende lo spazio che resta, non si incastra più con i filtri -->
+        <div class="relative w-full sm:w-80 lg:w-96">
+          <input
+            type="search"
+            id="char-search"
+            oninput="filterRosterInput()"
+            aria-label="Cerca nome, fazione, titolo, lore e note"
+            data-i18n-ph="view.characters.search"
+            placeholder="Cerca"
+            class="w-full pl-9 pr-9 py-2 bg-surface border border-border rounded-lg text-sm text-white placeholder-slate-400 focus:outline-none focus:border-gold transition-colors"
+          >
+          <svg class="w-4 h-4 text-muted absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+          <button id="clear-search-btn" onclick="clearSearch()" class="hidden absolute right-2 top-1/2 -translate-y-1/2 p-1 rounded text-muted hover:text-white transition-colors" aria-label="Cancella ricerca" title="Cancella ricerca">
+            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+          </button>
         </div>
-
       </div>
 
       <!-- Conteggio risultati: visibile solo con ricerca o fazione attive -->
@@ -3041,7 +3041,8 @@
         'register.factions': 'fazioni',
         'register.dispatches': 'cronache',
         'register.assets': 'asset',
-        'view.characters.search': 'Cerca nome, fazione, bio o lore...',
+        'view.characters.search': 'Cerca',
+        'roster.faction': 'Fazione',
         'view.multimedia.search': 'Cerca per titolo, evento, tag...',
         'view.timeline.title': 'Timeline Ufficiale & Notizie',
         'view.timeline.subtitle': 'Tutti gli annunci, trailer promozionali e traguardi di Silver Palace in ordine cronologico.',
@@ -3088,7 +3089,8 @@
         'register.factions': 'factions',
         'register.dispatches': 'chronicles',
         'register.assets': 'assets',
-        'view.characters.search': 'Search name, faction, bio or lore...',
+        'view.characters.search': 'Search',
+        'roster.faction': 'Faction',
         'view.multimedia.search': 'Search by title, event, tag...',
         'view.timeline.title': 'Official Timeline & News',
         'view.timeline.subtitle': 'Every announcement, promo trailer and milestone of Silver Palace in chronological order.',
@@ -3179,6 +3181,7 @@
       try { localStorage.setItem('sdb_lang', currentLocale); } catch (_) {}
       applyChrome();
       renderHeaderRegister();
+      populateFactionFilter();
       renderRoster();
       renderTimeline();
       renderFactions();
@@ -3200,7 +3203,7 @@
     document.addEventListener('DOMContentLoaded', () => {
       try { currentLocale = localStorage.getItem('sdb_lang') === 'en' ? 'en' : 'it'; } catch (_) {}
 
-      populateFactionPills();
+      populateFactionFilter();
       renderRoster();
       renderTimeline();
       renderFactions();
@@ -3367,33 +3370,28 @@
           </article>`;
       }).join('');
     }
-    function populateFactionPills() {
-      const container = document.getElementById('faction-filter-pills');
-      const activeClass = "bg-gold/15 text-gold border-gold/50 font-semibold shadow-sm";
-      const inactiveClass = "bg-surface/60 text-slate-300 border-border hover:border-slate-500 hover:text-white hover:bg-surface";
+    function populateFactionFilter() {
+      const sel = document.getElementById('faction-filter');
+      if (!sel) return;
       // Unione: fazioni censite + fazioni presenti solo nei tag dei personaggi.
-      const factionNames = [...new Set([...factions.map(f => f.name), ...cases.map(c => c.faction).filter(Boolean)])];
+      const names = [...new Set([...factions.map(f => f.name), ...cases.map(c => c.faction).filter(Boolean)])];
+      const countOf = (name) => cases.filter(c => name === 'ALL' || c.faction === name).length;
 
-      let html = `
-        <button onclick="setFactionFilter('ALL')" id="fpill-ALL" class="px-3.5 py-1.5 rounded-lg border text-xs whitespace-nowrap transition-all ${currentFaction === 'ALL' ? activeClass : inactiveClass}">
-          Tutti i Personaggi
-        </button>
-      `;
+      const allLabel = currentLocale === 'it' ? 'Tutti i personaggi' : 'All characters';
+      sel.innerHTML = `<option value="ALL">${esc(allLabel)} (${countOf('ALL')})</option>` +
+        names.map(n => `<option value="${esc(n)}">${esc(n)} (${countOf(n)})</option>`).join('');
 
-      factionNames.forEach(name => {
-        const isActive = currentFaction === name;
-        html += `
-          <button onclick=\"setFactionFilter('${esc(name)}')\" id=\"fpill-${esc(name)}" class="px-3.5 py-1.5 rounded-lg border text-xs whitespace-nowrap transition-all ${isActive ? activeClass : inactiveClass}">
-            ${esc(name)}
-          </button>
-        `;
-      });
+      const hasCurrent = currentFaction === 'ALL' || names.includes(currentFaction);
+      if (!hasCurrent) currentFaction = 'ALL';
+      sel.value = currentFaction;
 
-      container.innerHTML = html;
+      // Filtro attivo: la tendina si accende d'oro, così si vede che c'è un filtro
+      sel.classList.toggle('border-gold/60', currentFaction !== 'ALL');
+      sel.classList.toggle('text-gold', currentFaction !== 'ALL');
     }
     function setFactionFilter(fac) {
       currentFaction = fac;
-      populateFactionPills();
+      populateFactionFilter();
       renderRoster();
     }
 
