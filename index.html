@@ -45,7 +45,6 @@
             'border-active': '#45506E',
             gold: '#D4AF37',
             'gold-dim': 'rgba(212, 175, 55, 0.1)',
-            purple4: '#A855F7',
             silver: '#E2E8F0',
             muted: '#8592A6',
           },
@@ -77,15 +76,15 @@
 
     /* Refined Victorian card hover shadow */
     .card-hover-glow:hover {
-      box-shadow: 0 8px 24px -4px rgba(212, 175, 55, 0.18);
+      box-shadow: 0 10px 24px -14px rgba(0, 0, 0, .85);
     }
 
     /* Studio-grade drawer slide-over animation */
     #character-drawer {
-      transition: opacity 300ms cubic-bezier(0.16, 1, 0.3, 1);
+      transition: opacity 220ms cubic-bezier(.22, 1, .36, 1);
     }
     #character-drawer-panel {
-      transition: transform 320ms cubic-bezier(0.16, 1, 0.3, 1);
+      transition: transform 320ms cubic-bezier(.22, 1, .36, 1);
       will-change: transform;
     }
     /* Focus visibile: la tastiera deve sempre sapere dov'è */
@@ -96,16 +95,11 @@
     }
 
     /* Shimmer dietro le immagini finché non sono decodificate */
-    .media-frame {
-      background: linear-gradient(100deg, #11141D 30%, #171B26 50%, #11141D 70%);
-      background-size: 220% 100%;
-      animation: shimmer 1.6s infinite linear;
-    }
+    .media-frame { background: #11141D; }
     .media-frame img { animation: fadein .25s ease-out; }
-    @keyframes shimmer { to { background-position: -120% 0; } }
     @keyframes fadein { from { opacity: 0 } to { opacity: 1 } }
     @media (prefers-reduced-motion: reduce) {
-      .media-frame, .media-frame img { animation: none; }
+      .media-frame img { animation: none; }
       html { scroll-behavior: auto; }
     }
     /* --- CARDS 3D (opt-in: basta togliere .cards-3d dalla griglia) ---
@@ -115,7 +109,7 @@
     #roster-grid.cards-3d article {
       transform-style: preserve-3d;
       transform: rotateX(0deg) rotateY(0deg);
-      transition: transform .35s cubic-bezier(.16, 1, .3, 1), box-shadow .35s ease, border-color .35s ease;
+      transition: transform .2s cubic-bezier(.22, 1, .36, 1), box-shadow .35s ease, border-color .35s ease;
       box-shadow: 0 1px 0 rgba(255, 255, 255, .035) inset, 0 8px 20px -18px rgba(0, 0, 0, .9);
     }
     #roster-grid.cards-3d article:hover,
@@ -128,12 +122,12 @@
     /* i piani: la thumbnail viene avanti, la didascalia resta indietro */
     #roster-grid.cards-3d article .media-frame {
       transform: translateZ(0);
-      transition: transform .35s cubic-bezier(.16, 1, .3, 1);
+      transition: transform .2s cubic-bezier(.22, 1, .36, 1);
     }
     #roster-grid.cards-3d article:hover .media-frame,
     #roster-grid.cards-3d article:focus-visible .media-frame { transform: translateZ(26px); }
     #roster-grid.cards-3d article > div:last-child {
-      transition: transform .35s cubic-bezier(.16, 1, .3, 1);
+      transition: transform .2s cubic-bezier(.22, 1, .36, 1);
     }
     #roster-grid.cards-3d article:hover > div:last-child,
     #roster-grid.cards-3d article:focus-visible > div:last-child { transform: translateZ(14px); }
@@ -178,67 +172,53 @@
 <body class="min-h-screen flex flex-col antialiased selection:bg-gold/20 selection:text-gold">
 
   <!-- ================= TOP NAVIGATION (CENTERED LUXURY NOIR HEADER) ================= -->
-  <header class="border-b border-border bg-canvas/95 backdrop-blur-md sticky top-0 z-30 shadow-md">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 pt-3 pb-2 sm:pt-4 sm:pb-3 relative">
-      
-      <!-- Utility Controls: Top Right (Language & Admin) -->
-      <div class="flex items-center justify-end w-full sm:w-auto sm:absolute sm:right-6 sm:top-4 gap-2 sm:gap-3 z-10 mb-2 sm:mb-0">
-        <!-- Language Switcher -->
-        <div class="flex items-center bg-surface border border-border rounded-lg p-0.5 font-semibold text-xs">
-          <button id="lang-it" onclick="setLanguage('it')" class="px-2.5 py-1 rounded-md bg-surface-raised text-white transition-all shadow-sm">IT</button>
-          <button id="lang-en" onclick="setLanguage('en')" class="px-2.5 py-1 rounded-md text-muted hover:text-white transition-all">EN</button>
+  <header class="border-b border-border bg-canvas sticky top-0 z-30">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 pt-3 pb-2 sm:pt-4 sm:pb-3">
+
+      <!-- Primo schermo: brand e registro a sinistra, utility in fondo a destra -->
+      <div class="flex items-start justify-between gap-3 sm:gap-6">
+        <div class="flex flex-col items-start min-w-0">
+          <a href="#home" onclick="setView('characters')" class="inline-flex flex-col items-start group cursor-pointer">
+            <span class="text-gold text-xs font-medium" id="header-eyebrow" data-i18n="header.eyebrow">Archivio ufficiale</span>
+            <h1 class="font-serif text-2xl sm:text-3xl lg:text-[32px] font-semibold tracking-tight text-white group-hover:text-gold transition-colors flex flex-wrap items-baseline gap-x-2">
+              <span>Silver Palace</span>
+              <span class="text-gold font-serif italic text-xl sm:text-2xl lg:text-[28px]">Database</span>
+            </h1>
+            <p id="header-tagline" class="hidden sm:block text-xs text-muted font-sans mt-1" data-i18n="header.tagline">Dossier investigativi, cronache e lore del multiverso</p>
+          </a>
+
+          <!-- Registro: le cifre vere dell'archivio, in linea sotto il nome -->
+          <div id="header-register" class="grid grid-cols-2 gap-x-4 gap-y-1 mt-2 sm:flex sm:flex-wrap sm:items-baseline sm:gap-x-5" aria-label="Registro dell'archivio"></div>
         </div>
 
-        <!-- Admin Access Button -->
-        <a href="status.html" class="flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-border bg-surface hover:border-gold/60 hover:text-gold text-slate-300 transition-all text-xs" title="Stato archivio e drift del vault">
-          <svg class="w-3.5 h-3.5 text-gold" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
-          <span class="hidden sm:inline" data-i18n="nav.status">Stato</span>
-        </a>
-      </div>
-
-      <!-- Centered Brand Title & Logo (No AI boilerplate) -->
-      <div class="flex flex-col items-center justify-center text-center">
-        <a href="#home" onclick="setView('characters')" class="inline-flex flex-col items-center group cursor-pointer">
-          <!-- Subtle Victorian filigree accent -->
-          <div class="hidden sm:flex items-center gap-2 mb-1 opacity-80 group-hover:opacity-100 transition-opacity">
-            <span class="w-8 h-[1px] bg-gradient-to-r from-transparent via-gold/50 to-gold"></span>
-            <span class="text-gold text-[10px] sm:text-[11px] uppercase tracking-[0.25em] font-sans font-medium" id="header-eyebrow" data-i18n="header.eyebrow">Archivio Ufficiale</span>
-            <span class="w-8 h-[1px] bg-gradient-to-l from-transparent via-gold/50 to-gold"></span>
+        <!-- Lingua e stato: utility del sito, non dati dell'archivio -->
+        <div class="flex items-center gap-1.5 sm:gap-2 flex-shrink-0">
+          <div class="flex items-center bg-surface border border-border rounded-lg p-0.5">
+            <button id="lang-it" onclick="setLanguage('it')" aria-pressed="true" class="px-2 py-0.5 sm:px-2.5 sm:py-1 rounded-md text-xs font-semibold bg-surface-raised text-white transition-colors">IT</button>
+            <button id="lang-en" onclick="setLanguage('en')" aria-pressed="false" class="px-2 py-0.5 sm:px-2.5 sm:py-1 rounded-md text-xs font-semibold text-slate-400 hover:text-white transition-colors">EN</button>
           </div>
-          
-          <!-- Title: Silver Palace Database -->
-          <h1 class="font-serif text-2xl sm:text-3xl lg:text-[32px] font-bold tracking-tight text-white group-hover:text-gold transition-colors flex items-center justify-center gap-2 sm:gap-2.5">
-            <span class="tracking-wide">Silver Palace</span>
-            <span class="text-gold font-serif font-light italic text-xl sm:text-2xl lg:text-[28px]">Database</span>
-          </h1>
-          
-          <!-- Tagline -->
-          <p id="header-tagline" class="hidden sm:block text-[11px] sm:text-xs text-muted font-sans tracking-wider uppercase mt-1" data-i18n="header.tagline">
-            Dossier Investigativi, Cronache & Multiverse Lore
-          </p>
-        </a>
+          <a href="status.html" aria-label="Stato archivio e drift del vault" title="Stato archivio e drift del vault"
+             class="flex items-center gap-1.5 px-1 sm:px-2 py-1 rounded-md text-muted hover:text-gold transition-colors text-xs">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+            <span class="hidden sm:inline" data-i18n="nav.status">Stato</span>
+          </a>
+        </div>
       </div>
 
-      <!-- Centered Navigation Tabs (Underneath the logo/title) -->
-      <nav class="mt-3.5 pt-2.5 border-t border-border/40 flex items-center justify-start sm:justify-center gap-1.5 sm:gap-2 text-xs sm:text-sm font-medium overflow-x-auto no-scrollbar px-1 sm:px-0" style="-webkit-overflow-scrolling: touch;">
-        <button onclick="setView('characters')" id="nav-characters" data-i18n="nav.characters" class="px-3.5 py-1.5 rounded-md text-white bg-surface-raised border border-border whitespace-nowrap transition-colors flex-shrink-0">
+      <!-- Navigazione: riga singola che scorre, mai a capo -->
+      <nav class="mt-4 pt-3 border-t border-border/40 flex items-center justify-start gap-1.5 sm:gap-2 text-xs sm:text-sm font-medium overflow-x-auto no-scrollbar" aria-label="Sezioni dell'archivio" style="-webkit-overflow-scrolling: touch;">
+        <button onclick="setView('characters')" id="nav-characters" data-i18n="nav.characters" class="px-3.5 py-1.5 rounded-md text-white bg-surface-raised border border-border whitespace-nowrap flex-shrink-0 transition-colors">
           Personaggi
-        </button>
-        <button onclick="setView('timeline')" id="nav-timeline" data-i18n="nav.timeline" class="px-3.5 py-1.5 rounded-md text-muted hover:text-white whitespace-nowrap transition-colors flex-shrink-0">
+        </button>        <button onclick="setView('timeline')" id="nav-timeline" data-i18n="nav.timeline" class="px-3.5 py-1.5 rounded-md text-muted hover:text-white border border-transparent whitespace-nowrap flex-shrink-0 transition-colors">
           Timeline & Notizie
-        </button>
-        <button onclick="setView('factions')" id="nav-factions" data-i18n="nav.factions" class="px-3.5 py-1.5 rounded-md text-muted hover:text-white whitespace-nowrap transition-colors flex-shrink-0">
+        </button>        <button onclick="setView('factions')" id="nav-factions" data-i18n="nav.factions" class="px-3.5 py-1.5 rounded-md text-muted hover:text-white border border-transparent whitespace-nowrap flex-shrink-0 transition-colors">
           Fazioni
-        </button>
-        <button onclick="setView('lexicon')" id="nav-lexicon" data-i18n="nav.lexicon" class="px-3.5 py-1.5 rounded-md text-muted hover:text-white whitespace-nowrap transition-colors flex-shrink-0">
+        </button>        <button onclick="setView('lexicon')" id="nav-lexicon" data-i18n="nav.lexicon" class="px-3.5 py-1.5 rounded-md text-muted hover:text-white border border-transparent whitespace-nowrap flex-shrink-0 transition-colors">
           Glossario Lore
-        </button>
-        <button onclick="setView('multimedia')" id="nav-multimedia" data-i18n="nav.multimedia" class="px-3.5 py-1.5 rounded-md text-muted hover:text-white whitespace-nowrap transition-colors flex-shrink-0">
+        </button>        <button onclick="setView('multimedia')" id="nav-multimedia" data-i18n="nav.multimedia" class="px-3.5 py-1.5 rounded-md text-muted hover:text-white border border-transparent whitespace-nowrap flex-shrink-0 transition-colors">
           Multimedia
         </button>
       </nav>
-
-    </div>
   </header>
 
   <!-- ================= MAIN CONTENT ================= -->
@@ -287,15 +267,15 @@
 
     <!-- ================= VIEW 2: TIMELINE & NEWS ================= -->
     <section id="view-timeline" class="hidden space-y-6">
-      <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 pb-4 border-b border-border">
+      <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 pb-4 border-b border-border w-full max-w-3xl mx-auto">
         <div>
-          <h2 class="font-serif text-2xl font-bold text-white" data-i18n="view.timeline.title">Timeline Ufficiale & Notizie</h2>
+          <h2 class="font-serif text-2xl font-semibold text-white" data-i18n="view.timeline.title">Timeline Ufficiale & Notizie</h2>
           <p class="text-xs text-muted mt-1" data-i18n="view.timeline.subtitle">Tutti gli annunci, trailer promozionali e traguardi di Silver Palace in ordine cronologico.</p>
         </div>
         <select id="timeline-type-filter" onchange="renderTimeline()" aria-label="Filtra per tipo" class="px-3 py-1.5 bg-surface border border-border rounded-lg text-xs text-white focus:outline-none focus:border-gold"></select>
       </div>
 
-      <div id="timeline-list" class="space-y-4 max-w-4xl">
+      <div id="timeline-list" class="space-y-4 max-w-3xl mx-auto w-full">
         <!-- Rendered by JS -->
       </div>
     </section>
@@ -304,12 +284,12 @@
     <section id="view-factions" class="hidden space-y-6">
       <div class="flex items-center justify-between pb-4 border-b border-border">
         <div>
-          <h2 class="font-serif text-2xl font-bold text-white" data-i18n="view.factions.title">Le Fazioni di Silvernia</h2>
+          <h2 class="font-serif text-2xl font-semibold text-white" data-i18n="view.factions.title">Le Fazioni di Silvernia</h2>
           <p class="text-xs text-muted mt-1" data-i18n="view.factions.subtitle">Organizzazioni, casate nobiliari e forze dell'ordine del mondo di gioco.</p>
         </div>
       </div>
 
-      <div id="factions-grid" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+      <div id="factions-grid" class="grid grid-cols-1 md:grid-cols-2 gap-4 items-start">
         <!-- Rendered by JS -->
       </div>
     </section>
@@ -318,12 +298,12 @@
     <section id="view-lexicon" class="hidden space-y-6">
       <div class="flex items-center justify-between pb-4 border-b border-border">
         <div>
-          <h2 class="font-serif text-2xl font-bold text-white" data-i18n="view.lexicon.title">Glossario Lore</h2>
+          <h2 class="font-serif text-2xl font-semibold text-white" data-i18n="view.lexicon.title">Glossario Lore</h2>
           <p class="text-xs text-muted mt-1" data-i18n="view.lexicon.subtitle">Termini chiave, tecnologie a vapore e concetti filosofici di Silver Palace.</p>
         </div>
       </div>
 
-      <div id="lexicon-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+      <div id="lexicon-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 items-start">
         <!-- Rendered by JS -->
       </div>
     </section>
@@ -335,7 +315,7 @@
       <!-- Section Header with Search Bar and Counter -->
       <div class="flex flex-col md:flex-row md:items-center justify-between pb-4 border-b border-border gap-4">
         <div>
-          <h2 id="mm-header-title" class="font-serif text-2xl font-bold text-white tracking-tight">Archivio Multimediale</h2>
+          <h2 id="mm-header-title" class="font-serif text-2xl font-semibold text-white tracking-tight">Archivio Multimediale</h2>
           <p id="mm-header-subtitle" class="text-xs text-muted mt-1">Collezione ufficiale di illustrazioni, carte collezionabili, wallpaper, concept art e trailer di Silver Palace.</p>
         </div>
         <div class="flex flex-wrap items-center gap-3 flex-shrink-0">
@@ -383,16 +363,16 @@
       <!-- Drawer Top Bar -->
       <div class="flex-shrink-0 px-4 sm:px-6 py-3 border-b border-border bg-canvas/90 backdrop-blur-md flex items-center justify-between sticky top-0 z-20">
         <div class="flex items-center gap-2.5 min-w-0">
-          <button onclick="closeCharacterDrawer()" class="p-1.5 -ml-1 sm:hidden rounded-lg text-slate-400 hover:text-gold hover:bg-surface-raised border border-transparent hover:border-border transition-all flex items-center justify-center group flex-shrink-0" title="Torna indietro" aria-label="Torna indietro">
+          <button onclick="closeCharacterDrawer()" class="p-1.5 -ml-1 sm:hidden rounded-lg text-slate-400 hover:text-gold hover:bg-surface-raised border border-transparent hover:border-border transition-colors flex items-center justify-center group flex-shrink-0" title="Torna indietro" aria-label="Torna indietro">
             <svg class="w-4 h-4 transition-transform group-hover:-translate-x-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"/>
             </svg>
           </button>
           <span class="text-xs text-slate-400 font-sans truncate"><span data-i18n="drawer.breadcrumb">Archivio</span> / <span id="drawer-breadcrumb-name" class="text-white font-medium">Nome</span></span>
           <span class="text-slate-600 flex-shrink-0">•</span>
-          <span id="drawer-faction-badge" class="px-2 py-0.5 rounded bg-surface border border-gold/40 text-[11px] font-semibold text-gold uppercase tracking-wide flex-shrink-0">FACTION</span>
+          <span id="drawer-faction-badge" class="px-2 py-0.5 rounded bg-surface border border-border text-xs font-medium text-muted flex-shrink-0">FACTION</span>
         </div>
-        <button onclick="closeCharacterDrawer()" class="flex items-center gap-2 px-3 py-1.5 rounded-lg text-xs font-medium text-slate-300 hover:text-gold hover:bg-surface-raised border border-border/70 hover:border-gold/50 transition-all group flex-shrink-0 ml-3" title="Torna indietro">
+        <button onclick="closeCharacterDrawer()" class="flex items-center gap-2 px-3 py-1.5 rounded-lg text-xs font-medium text-slate-300 hover:text-gold hover:bg-surface-raised border border-border/70 hover:border-gold/50 transition-colors group flex-shrink-0 ml-3" title="Torna indietro">
           <svg class="w-4 h-4 text-slate-400 group-hover:text-gold transition-transform group-hover:-translate-x-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"/>
           </svg>
@@ -401,10 +381,10 @@
       </div>
 
       <!-- Drawer Hero Profile -->
-      <div class="flex-shrink-0 p-4 sm:p-6 border-b border-border bg-gradient-to-b from-surface-raised/90 via-surface to-surface flex flex-col sm:flex-row gap-4 sm:gap-6 items-start">
+      <div class="flex-shrink-0 p-4 sm:p-6 border-b border-border bg-surface flex flex-col sm:flex-row gap-4 sm:gap-6 items-start">
         <!-- Portrait -->
         <div class="w-36 h-52 sm:w-44 sm:h-60 rounded-xl overflow-hidden border border-border/80 flex-shrink-0 bg-canvas relative shadow-xl group cursor-pointer" onclick="openLightbox(activeChar ? (activeChar.drip_img || activeChar.profile_img) : '')">
-          <img id="drawer-portrait" src="" alt="Portrait" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+          <img id="drawer-portrait" src="" alt="Portrait" class="w-full h-full object-cover transition-opacity">
           <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 flex items-center justify-center transition-opacity text-xs text-white gap-1 font-medium">
             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v6m3-3H7"/></svg>
             Ingrandisci
@@ -414,7 +394,7 @@
         <!-- Identity -->
         <div class="space-y-3 flex-1 min-w-0">
           <div>
-            <h2 id="drawer-name" class="font-serif text-3xl sm:text-4xl font-bold text-white tracking-tight">Nome</h2>
+            <h2 id="drawer-name" class="font-serif text-3xl sm:text-4xl font-semibold text-white tracking-tight">Nome</h2>
             <p id="drawer-title" class="font-serif italic text-gold text-lg mt-0.5">Titolo Personaggio</p>
           </div>
           
@@ -450,7 +430,7 @@
             <div id="drawer-bio-it-wrap" class="p-5 rounded-xl bg-surface-raised border border-border/80 space-y-2.5">
               <div class="flex items-center justify-between text-xs text-gold font-semibold border-b border-border pb-2">
                 <span data-i18n="drawer.bio.it">🇮🇹 Traduzione Italiana</span>
-                <span class="text-[11px] text-slate-400 font-normal">Archivio Traduzioni IT</span>
+                <span class="text-xs text-slate-400 font-normal">Archivio Traduzioni IT</span>
               </div>
               <p id="drawer-bio-it" class="text-sm text-slate-200 leading-relaxed font-sans whitespace-pre-line">...</p>
             </div>
@@ -459,7 +439,7 @@
             <div id="drawer-bio-en-wrap" class="p-5 rounded-xl bg-surface-raised border border-border/80 space-y-2.5">
               <div class="flex items-center justify-between text-xs text-slate-300 font-semibold border-b border-border pb-2">
                 <span data-i18n="drawer.bio.en">🇬🇧 Testo Ufficiale Inglese</span>
-                <span class="text-[11px] text-slate-400 font-normal">Elementa Games</span>
+                <span class="text-xs text-slate-400 font-normal">Elementa Games</span>
               </div>
               <p id="drawer-bio-en" class="text-sm text-slate-300 leading-relaxed font-sans whitespace-pre-line">...</p>
             </div>
@@ -467,7 +447,7 @@
 
           <div class="flex flex-wrap items-center gap-2 pt-2 text-xs text-slate-400">
             <span class="font-medium" data-i18n="drawer.tags">Tag Lore:</span>
-            <div id="drawer-tags" class="flex flex-wrap gap-1.5"></div>
+            <div id="drawer-tags" class="flex flex-wrap gap-x-2.5 gap-y-1 text-xs text-muted"></div>
           </div>
         </div>
 
@@ -475,24 +455,24 @@
         <div id="d-sec-hidden" data-drawer-section="hidden" role="tabpanel" class="hidden space-y-4">
           <div class="p-4 rounded-xl bg-surface-raised border border-gold/40 space-y-3">
             <div class="flex items-center justify-between border-b border-border pb-2">
-              <span id="drawer-hidden-title" class="font-serif font-bold text-gold text-base sm:text-lg">Dossier Segreto</span>
-              <span class="px-2 py-0.5 rounded bg-canvas border border-border text-[11px] text-muted">Silver Palace Confidential</span>
+              <span id="drawer-hidden-title" class="font-serif font-semibold text-gold text-base sm:text-lg">Dossier Segreto</span>
+              <span class="px-2 py-0.5 rounded bg-canvas border border-border text-xs text-muted">Silver Palace Confidential</span>
             </div>
 
             <div id="drawer-hidden-art-section" class="hidden pb-3 border-b border-border/60">
-              <span class="text-[10px] text-gold font-semibold uppercase tracking-wider block mb-2">Illustrazione Ufficiale Pagine Nascoste</span>
+              <span class="text-xs font-medium text-muted block mb-2">Illustrazione Ufficiale Pagine Nascoste</span>
               <div id="drawer-hidden-art-grid" class="flex flex-wrap gap-3"></div>
             </div>
 
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
               <!-- IT -->
               <div id="drawer-hidden-it" class="p-3.5 rounded-lg bg-canvas/80 border border-border space-y-1.5">
-                <span class="text-[10px] text-gold font-semibold uppercase tracking-wider">Traduzione Italiana (Catalyst)</span>
+                <span class="text-xs font-medium text-slate-400">Traduzione Italiana (Catalyst)</span>
                 <p id="drawer-hidden-story-it" class="text-sm text-slate-200 leading-relaxed font-sans whitespace-pre-line"></p>
               </div>
               <!-- EN -->
               <div id="drawer-hidden-en" class="p-3.5 rounded-lg bg-canvas/40 border border-border space-y-1.5">
-                <span class="text-[10px] text-muted font-semibold uppercase tracking-wider">Testo Originale Elementa (EN)</span>
+                <span class="text-xs font-medium text-muted">Testo Originale Elementa (EN)</span>
                 <p id="drawer-hidden-story-en" class="text-sm text-slate-400 leading-relaxed font-sans whitespace-pre-line"></p>
               </div>
             </div>
@@ -522,7 +502,7 @@
               <!-- Rendered via JS -->
             </div>
 
-            <h4 id="drawer-media-title" class="font-serif text-lg font-bold text-white pt-1">Titolo Video</h4>
+            <h4 id="drawer-media-title" class="font-serif text-lg font-semibold text-white pt-1">Titolo Video</h4>
           </div>
         </div>
 
@@ -530,11 +510,11 @@
         <div id="d-sec-notes" data-drawer-section="notes" role="tabpanel" class="hidden space-y-4">
           <div class="p-5 rounded-lg border border-gold/40 bg-surface-raised space-y-3">
             <div class="flex items-center gap-3">
-              <div class="w-9 h-9 rounded-full bg-gold/10 border border-gold/40 flex items-center justify-center font-serif font-bold text-gold">
+              <div class="w-9 h-9 rounded-full bg-gold/10 border border-gold/40 flex items-center justify-center font-serif font-semibold text-gold">
                 C
               </div>
               <div>
-                <h4 class="font-serif font-bold text-white">L'Opinione di CatalystOnline</h4>
+                <h4 class="font-serif font-semibold text-white">L'Opinione di CatalystOnline</h4>
                 <p class="text-xs text-gold">Analisi, kit e speculazioni di lore</p>
               </div>
             </div>
@@ -560,10 +540,10 @@
     <!-- Top Bar with Back Button & Title -->
     <div class="absolute top-4 inset-x-4 sm:top-6 sm:inset-x-6 flex items-center justify-between z-50 pointer-events-none">
       <div id="lightbox-meta" class="pointer-events-auto bg-surface/85 backdrop-blur-md border border-border rounded-lg px-3.5 py-1.5 max-w-[70%] shadow-lg">
-        <span id="lightbox-category" class="text-[10px] text-gold font-semibold uppercase tracking-wider block"></span>
-        <h4 id="lightbox-title" class="text-xs sm:text-sm font-serif font-bold text-white truncate"></h4>
+        <span id="lightbox-category" class="text-xs font-medium text-gold block"></span>
+        <h4 id="lightbox-title" class="text-xs sm:text-sm font-serif font-semibold text-white truncate"></h4>
       </div>
-      <button onclick="closeLightbox()" class="pointer-events-auto flex items-center gap-2 px-3.5 py-1.5 rounded-lg bg-surface/85 backdrop-blur-md border border-border text-xs font-medium text-slate-200 hover:text-gold hover:border-gold/50 transition-all shadow-lg group">
+      <button onclick="closeLightbox()" class="pointer-events-auto flex items-center gap-2 px-3.5 py-1.5 rounded-lg bg-surface/85 backdrop-blur-md border border-border text-xs font-medium text-slate-200 hover:text-gold hover:border-gold/50 transition-colors shadow-lg group">
         <svg class="w-4 h-4 text-slate-400 group-hover:text-gold transition-transform group-hover:-translate-x-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"/>
         </svg>
@@ -3048,8 +3028,12 @@
         'nav.lexicon': 'Glossario Lore',
         'nav.multimedia': 'Multimedia',
         'nav.status': 'Stato',
-        'header.eyebrow': 'Archivio Ufficiale',
-        'header.tagline': 'Dossier Investigativi, Cronache & Multiverse Lore',
+        'header.eyebrow': 'Archivio ufficiale',
+        'header.tagline': 'Dossier investigativi, cronache e lore del multiverso',
+        'register.cases': 'fascicoli',
+        'register.factions': 'fazioni',
+        'register.dispatches': 'cronache',
+        'register.assets': 'asset',
         'view.characters.search': 'Cerca nome, fazione, bio o lore...',
         'view.multimedia.search': 'Cerca per titolo, evento, tag...',
         'view.timeline.title': 'Timeline Ufficiale & Notizie',
@@ -3091,8 +3075,12 @@
         'nav.lexicon': 'Lore Lexicon',
         'nav.multimedia': 'Multimedia',
         'nav.status': 'Status',
-        'header.eyebrow': 'Official Archive',
-        'header.tagline': 'Investigative Dossiers, Chronicles & Multiverse Lore',
+        'header.eyebrow': 'Official archive',
+        'header.tagline': 'Investigative dossiers, chronicles and multiverse lore',
+        'register.cases': 'files',
+        'register.factions': 'factions',
+        'register.dispatches': 'chronicles',
+        'register.assets': 'assets',
         'view.characters.search': 'Search name, faction, bio or lore...',
         'view.multimedia.search': 'Search by title, event, tag...',
         'view.timeline.title': 'Official Timeline & News',
@@ -3150,10 +3138,9 @@
       const off = 'text-slate-400 hover:text-white';
       const itBtn = document.getElementById('lang-it');
       const enBtn = document.getElementById('lang-en');
-      if (itBtn) itBtn.className = `px-2.5 py-1 rounded-md text-xs font-semibold ${currentLocale === 'it' ? on : off} transition-all`;
-      if (enBtn) enBtn.className = `px-2.5 py-1 rounded-md text-xs font-semibold ${currentLocale === 'en' ? on : off} transition-all`;
-      itBtn && itBtn.setAttribute('aria-pressed', String(currentLocale === 'it'));
-      enBtn && enBtn.setAttribute('aria-pressed', String(currentLocale === 'en'));
+      const langClass = (code) => `px-2 py-0.5 sm:px-2.5 sm:py-1 rounded-md text-xs font-semibold ${currentLocale === code ? on : off} transition-colors`;
+      if (itBtn) { itBtn.className = langClass('it'); itBtn.setAttribute('aria-pressed', String(currentLocale === 'it')); }
+      if (enBtn) { enBtn.className = langClass('en'); enBtn.setAttribute('aria-pressed', String(currentLocale === 'en')); }
       syncDrawerLanguage();
     }
 
@@ -3184,6 +3171,7 @@
       currentLocale = lang === 'en' ? 'en' : 'it';
       try { localStorage.setItem('sdb_lang', currentLocale); } catch (_) {}
       applyChrome();
+      renderHeaderRegister();
       renderRoster();
       renderTimeline();
       renderFactions();
@@ -3212,6 +3200,7 @@
       renderLexicon();
       renderMultimedia();
       applyChrome();
+      renderHeaderRegister();
       route();
 
       document.addEventListener('keydown', (e) => {
@@ -3267,6 +3256,25 @@
       else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
     });
 
+    // --- REGISTRO DEL PRIMO SCHERMO ---
+    // Le cifre dell'archivio, in mono: è il dettaglio firma di questo sito.
+    function renderHeaderRegister() {
+      const el = document.getElementById('header-register');
+      if (!el) return;
+      const assets = (typeof DEFAULT_MULTIMEDIA !== 'undefined') ? DEFAULT_MULTIMEDIA.length : 0;
+      const cells = [
+        [cases.length, 'register.cases'],
+        [factions.length, 'register.factions'],
+        [dispatches.length, 'register.dispatches'],
+        [assets, 'register.assets']
+      ];
+      el.innerHTML = cells.map(([n, key]) => `
+        <div class="flex items-baseline gap-1.5">
+          <span class="font-mono tabular-nums text-sm text-white leading-none">${n}</span>
+          <span class="text-xs text-muted">${esc(t(key))}</span>
+        </div>`).join('');
+    }
+
     // --- VIEW SWITCHING ---
     function setView(view) {
       const views = ['characters', 'timeline', 'factions', 'lexicon', 'multimedia'];
@@ -3279,13 +3287,13 @@
         if (v === view) {
           el?.classList.remove('hidden');
           if (btn) {
-            btn.className = "px-3.5 py-1.5 rounded-md text-white bg-surface-raised border border-border transition-colors";
+            btn.className = "px-3.5 py-1.5 rounded-md text-white bg-surface-raised border border-border whitespace-nowrap flex-shrink-0 transition-colors";
             btn.setAttribute('aria-current', 'page');
           }
         } else {
           el?.classList.add('hidden');
           if (btn) {
-            btn.className = "px-3.5 py-1.5 rounded-md text-muted hover:text-white transition-colors";
+            btn.className = "px-3.5 py-1.5 rounded-md text-muted hover:text-white whitespace-nowrap flex-shrink-0 border border-transparent transition-colors";
             btn.removeAttribute('aria-current');
           }
         }
@@ -3338,14 +3346,14 @@
           <article data-open-char="${esc(c.id)}" role="button" tabindex="0"
             aria-label="${esc(c.name)} — ${esc(title)}"
             onclick="openCharacterDrawer('${esc(c.id)}')"
-            class="group cursor-pointer rounded-xl bg-surface border border-border border-b-2 border-b-gold/50 card-hover-glow hover:border-gold/60 hover:-translate-y-1 transition-all duration-300 p-2.5 flex flex-col space-y-2.5 shadow-sm">
+            class="group cursor-pointer rounded-xl bg-surface border border-border card-hover-glow hover:border-gold/60 hover:-translate-y-1 transition-[transform,box-shadow,border-color] duration-200 p-2.5 flex flex-col space-y-2.5">
             <div class="media-frame aspect-[1/2] w-full rounded-lg overflow-hidden relative shadow-inner">
-              <img src="${esc(src)}" alt="${esc(c.name)}" loading="lazy" decoding="async" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+              <img src="${esc(src)}" alt="${esc(c.name)}" loading="lazy" decoding="async" class="w-full h-full object-cover transition-opacity">
             </div>
             <div class="space-y-1 px-1 pb-0.5">
               <div class="flex items-center justify-between gap-1">
-                <h3 class="font-serif font-bold text-base text-white group-hover:text-gold transition-colors truncate">${esc(c.name)}</h3>
-                <span class="text-[10px] font-semibold uppercase tracking-wider text-slate-400 truncate max-w-[48%] text-right font-sans">${esc(c.faction)}</span>
+                <h3 class="font-serif font-semibold text-base text-white group-hover:text-gold transition-colors truncate">${esc(c.name)}</h3>
+                <span class="text-xs font-medium text-muted truncate max-w-[48%] text-right font-sans">${esc(c.faction)}</span>
               </div>
               <p class="text-xs text-slate-300 font-sans truncate font-medium">${esc(title)}</p>
             </div>
@@ -3376,7 +3384,6 @@
 
       container.innerHTML = html;
     }
-
     function setFactionFilter(fac) {
       currentFaction = fac;
       populateFactionPills();
@@ -3506,9 +3513,7 @@
       resetDrawerVideo(ytId);
 
       // Tags with clear styling
-      document.getElementById('drawer-tags').innerHTML = c.tags.map(t => `
-        <span class="px-2.5 py-1 rounded-md bg-canvas border border-border text-xs text-slate-300 font-sans">#${t}</span>
-      `).join('');
+      document.getElementById('drawer-tags').innerHTML = c.tags.map(t => `<span>#${esc(t)}</span>`).join('');
 
       // Gallery with zoom prompt (only authentic existing artworks)
       const hImgs = (c.hidden_imgs && c.hidden_imgs.length > 0) ? c.hidden_imgs : (c.hidden_img ? [c.hidden_img] : []);
@@ -3527,7 +3532,7 @@
         <div class="space-y-1.5">
           <p class="text-xs text-slate-300 font-medium">${esc(item.label)}</p>
           <div class="aspect-[3/4] rounded-xl overflow-hidden border border-border bg-canvas cursor-pointer group relative shadow-md" onclick="openLightbox('${esc(item.src)}')">
-            <img src="${esc(item.src)}" alt="${esc(item.label)}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" loading="lazy" decoding="async">
+            <img src="${esc(item.src)}" alt="${esc(item.label)}" class="w-full h-full object-cover transition-opacity" loading="lazy" decoding="async">
             <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 flex items-center justify-center transition-opacity text-xs text-white gap-1 font-medium">
               <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v6m3-3H7"/></svg>
               Ingrandisci
@@ -3544,7 +3549,7 @@
           hArtSection.classList.remove('hidden');
           hArtGrid.innerHTML = hImgs.map(img => `
             <div class="w-32 sm:w-40 aspect-[3/4] rounded-lg overflow-hidden border border-border bg-canvas cursor-pointer group relative shadow-md" onclick="openLightbox('${img}')">
-              <img src="${img}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" loading="lazy">
+              <img src="${img}" class="w-full h-full object-cover transition-opacity" loading="lazy">
               <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 flex items-center justify-center transition-opacity text-xs text-white gap-1 font-medium">
                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v6m3-3H7"/></svg>
                 Ingrandisci
@@ -3713,15 +3718,13 @@
       const container = document.getElementById('drawer-video-container');
       container.innerHTML = `
         <div onclick="playDrawerVideo('${ytId}')" class="group w-full h-full relative cursor-pointer">
-          <img src="https://img.youtube.com/vi/${ytId}/maxresdefault.jpg" alt="Trailer Thumbnail" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 opacity-85 group-hover:opacity-100" onerror="this.src='https://img.youtube.com/vi/${ytId}/hqdefault.jpg'">
+          <img src="https://img.youtube.com/vi/${ytId}/maxresdefault.jpg" alt="Trailer Thumbnail" class="w-full h-full object-cover opacity-85 group-hover:opacity-100 transition-opacity" onerror="this.src='https://img.youtube.com/vi/${ytId}/hqdefault.jpg'">
           <div class="absolute inset-0 flex items-center justify-center">
-            <div class="w-14 h-14 rounded-full bg-red-600 group-hover:bg-red-500 text-white flex items-center justify-center shadow-xl transition-all duration-300 group-hover:scale-110">
+            <div class="w-14 h-14 rounded-full bg-canvas/90 border border-border text-white flex items-center justify-center transition-colors">
               <svg class="w-6 h-6 fill-current translate-x-0.5" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
             </div>
           </div>
-          <div class="absolute bottom-2.5 right-2.5 px-2.5 py-1 rounded bg-black/80 text-[11px] font-medium text-white">
-            ▶ Guarda Video
-          </div>
+
         </div>
       `;
     }
@@ -3769,17 +3772,7 @@
         return;
       }
 
-      const badgeStyle = (type) => {
-        switch (type) {
-          case 'Trailer Ufficiale': return 'bg-red-500/15 border-red-500/40 text-red-300';
-          case 'Drip Marketing': return 'bg-gold/15 border-gold/40 text-gold';
-          case 'Extra Lore Story': return 'bg-purple-500/15 border-purple-500/40 text-purple-300';
-          case 'Annuncio Ufficiale': return 'bg-sky-500/15 border-sky-500/40 text-sky-300';
-          case 'Live Event Internazionale': return 'bg-emerald-500/15 border-emerald-500/40 text-emerald-300';
-          case 'Evento Festività': return 'bg-amber-500/15 border-amber-500/40 text-amber-300';
-          default: return 'bg-surface-raised border-border text-slate-300';
-        }
-      };
+      const badgeStyle = () => 'bg-white/[0.03] border-border/70 text-muted';
 
       let month = '';
       container.innerHTML = filtered.map(d => {
@@ -3788,7 +3781,7 @@
           ? new Date(d.date + 'T00:00:00').toLocaleDateString(currentLocale === 'it' ? 'it-IT' : 'en-GB', { month: 'long', year: 'numeric' })
           : (currentLocale === 'it' ? 'Data non registrata' : 'Date not recorded');
         const heading = monthKey !== month
-          ? `<div class="flex items-center gap-3 pt-2 first:pt-0"><span class="text-[11px] uppercase tracking-[0.2em] text-gold font-semibold whitespace-nowrap">${esc(monthLabel)}</span><span class="flex-1 h-px bg-border"></span></div>`
+          ? `<div class="flex items-center gap-3 pt-6 first:pt-0"><span class="text-xs font-medium text-gold whitespace-nowrap">${esc(monthLabel.charAt(0).toUpperCase() + monthLabel.slice(1))}</span><span class="flex-1 h-px bg-border"></span></div>`
           : '';
         month = monthKey;
 
@@ -3800,7 +3793,7 @@
           : `<span class="px-2.5 py-1 rounded-md border border-border/40 text-slate-500 font-medium">${currentLocale === 'it' ? 'Solo archivio' : 'Archive only'}</span>`;
 
         return `${heading}
-          <div class="p-5 sm:p-6 rounded-xl bg-surface border border-border hover:border-border-active transition-all space-y-3.5 shadow-sm">
+          <div class="p-5 sm:p-6 rounded-xl bg-surface border border-border hover:border-border-active transition-colors space-y-3.5 shadow-sm">
             <div class="flex items-center justify-between gap-3 text-xs">
               <div class="flex items-center gap-2 min-w-0 flex-wrap">
                 <span class="px-2.5 py-0.5 rounded-md border font-semibold ${badgeStyle(d.type)}">${esc(d.type)}</span>
@@ -3810,14 +3803,14 @@
             </div>
             ${cover ? `
               <div class="media-frame rounded-xl overflow-hidden border border-border aspect-[16/9] sm:aspect-[21/9] cursor-pointer group relative shadow-md" onclick="openLightbox('${esc(d.cover_img)}')">
-                <img src="${esc(cover)}" alt="${esc(d.title)}" loading="lazy" decoding="async" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                <img src="${esc(cover)}" alt="${esc(d.title)}" loading="lazy" decoding="async" class="w-full h-full object-cover transition-opacity">
                 <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-70 group-hover:opacity-40 transition-opacity"></div>
               </div>` : ''}
             <div class="space-y-1.5">
-              <h3 class="font-serif font-bold text-xl sm:text-2xl text-white tracking-tight">${esc(d.title)}</h3>
+              <h3 class="font-serif font-semibold text-xl sm:text-2xl text-white tracking-tight">${esc(d.title)}</h3>
               <p class="text-sm text-slate-300 leading-relaxed font-sans whitespace-pre-line">${esc(desc)}</p>
             </div>
-            ${d.tags && d.tags.length ? `<div class="flex flex-wrap gap-1.5 pt-1 text-[11px] text-slate-400">${d.tags.map(tag => `<span class="px-2 py-0.5 rounded bg-canvas border border-border-subtle">#${esc(tag)}</span>`).join('')}</div>` : ''}
+            ${d.tags && d.tags.length ? `<div class="flex flex-wrap gap-x-2.5 gap-y-1 pt-1 text-xs text-muted">${d.tags.map(tag => `<span>#${esc(tag)}</span>`).join('')}</div>` : ''}
           </div>`;
       }).join('');
     }
@@ -3831,42 +3824,26 @@
         }
       });
       container.innerHTML = factionCards.map(f => {
-        const initial = f.name.charAt(0);
         const hasBanner = !!f.banner;
         const members = cases.filter(c => c.faction && c.faction.toLowerCase().trim() === f.name.toLowerCase().trim());
 
         return `
-          <div class="p-6 rounded-xl bg-surface border border-border hover:border-border-active transition-all flex flex-col justify-between space-y-4 shadow-sm">
+          <div class="p-6 rounded-xl bg-surface border border-border hover:border-border-active transition-colors flex flex-col space-y-4">
             <div class="space-y-4">
               ${hasBanner ? `
                 <div class="rounded-lg overflow-hidden border border-border bg-canvas aspect-[21/9] cursor-pointer group relative shadow-inner" onclick="openLightbox('${esc(f.banner)}')">
-                  <img src="${esc(f.banner)}" alt="${esc(f.name)}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" loading="lazy">
+                  <img src="${esc(f.banner)}" alt="${esc(f.name)}" class="w-full h-full object-cover transition-opacity" loading="lazy">
                   <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-70 group-hover:opacity-40 transition-opacity"></div>
-                  <span class="absolute bottom-2 right-2 px-2 py-0.5 rounded bg-black/80 text-[10px] text-slate-300 border border-border flex items-center gap-1">
+                  <span class="absolute bottom-2 right-2 px-2 py-0.5 rounded bg-black/80 text-xs text-slate-300 border border-border flex items-center gap-1">
                     <svg class="w-3 h-3 text-gold" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v6m3-3H7"/></svg>
                     Ingrandisci Banner
                   </span>
                 </div>
-              ` : `
-                <div class="rounded-lg border border-border/80 bg-gradient-to-br from-surface-raised via-canvas to-surface-raised aspect-[21/9] p-5 flex flex-col items-center justify-center relative overflow-hidden shadow-inner group">
-                  <div class="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-gold/10 via-transparent to-transparent opacity-60"></div>
-                  <div class="absolute top-2.5 left-2.5 w-3 h-3 border-t border-l border-gold/40"></div>
-                  <div class="absolute top-2.5 right-2.5 w-3 h-3 border-t border-r border-gold/40"></div>
-                  <div class="absolute bottom-2.5 left-2.5 w-3 h-3 border-b border-l border-gold/40"></div>
-                  <div class="absolute bottom-2.5 right-2.5 w-3 h-3 border-b border-r border-gold/40"></div>
-                  <div class="w-12 h-12 rounded-xl bg-surface/90 border border-gold/40 flex items-center justify-center font-serif text-2xl font-bold text-gold flex-shrink-0 shadow-md relative z-10 group-hover:scale-105 transition-transform duration-300">
-                    ${initial}
-                  </div>
-                  <div class="text-center relative z-10 mt-2">
-                    <span class="text-[10px] font-semibold uppercase tracking-widest text-gold/90 block">Sigillo Ufficiale</span>
-                    <span class="text-[11px] text-slate-400 font-serif italic">Silver Palace Archive • Divisione Censita</span>
-                  </div>
-                </div>
-              `}
+              ` : ''}
 
               <div class="flex items-center justify-between pt-1">
                 <div>
-                  <h3 class="font-serif font-bold text-xl text-white">${esc(f.name)}</h3>
+                  <h3 class="font-serif font-semibold text-xl text-white">${esc(f.name)}</h3>
                   <p class="text-xs text-gold font-serif italic">${f.alias || ''}</p>
                 </div>
                 <button onclick="setFactionFilter('${esc(f.name)}'); setView('characters');" class="px-3 py-1.5 rounded-lg bg-surface-raised border border-border hover:border-gold hover:text-gold text-xs text-slate-300 transition-colors flex items-center gap-1 font-medium shadow-sm">
@@ -3884,7 +3861,7 @@
                   <span class="text-slate-400 font-medium">Operativi Noti:</span>
                   <div class="flex flex-wrap gap-1 justify-end max-w-[70%]">
                     ${members.map(m => `
-                      <span onclick="event.stopPropagation(); setFactionFilter('${esc(f.name)}'); setView('characters'); openCharacterDrawer('${esc(m.id)}');" class="px-2 py-0.5 rounded bg-surface-raised border border-border/80 hover:border-gold hover:text-gold text-[11px] text-slate-300 cursor-pointer transition-colors" title="Apri fascicolo di ${esc(m.name)}">
+                      <span onclick="event.stopPropagation(); setFactionFilter('${esc(f.name)}'); setView('characters'); openCharacterDrawer('${esc(m.id)}');" class="px-2 py-0.5 rounded bg-surface-raised border border-border/80 hover:border-gold hover:text-gold text-xs text-slate-300 cursor-pointer transition-colors" title="Apri fascicolo di ${esc(m.name)}">
                         ${esc(m.name)}
                       </span>
                     `).join('')}
@@ -3911,21 +3888,21 @@
         const def = currentLocale === 'it' ? (l.def_it || l.def) : (l.def_en || l.def_it || l.def);
 
         return `
-          <div class="p-5 rounded-xl bg-surface border border-border hover:border-border-active transition-all space-y-3 flex flex-col justify-between shadow-sm">
+          <div class="p-5 rounded-xl bg-surface border border-border hover:border-border-active transition-colors space-y-3 flex flex-col justify-between shadow-sm">
             <div class="space-y-2">
               ${l.image ? `
                 <div class="rounded-lg overflow-hidden border border-border bg-canvas aspect-[16/9] mb-3 cursor-pointer group relative shadow-inner" onclick="openLightbox('${esc(l.image)}')">
-                  <img src="${esc(l.image)}" alt="${esc(l.term)}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" loading="lazy">
+                  <img src="${esc(l.image)}" alt="${esc(l.term)}" class="w-full h-full object-cover transition-opacity" loading="lazy">
                   <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent opacity-60 group-hover:opacity-30 transition-opacity"></div>
-                  <span class="absolute bottom-2 right-2 px-2 py-0.5 rounded bg-black/80 text-[10px] text-slate-300 border border-border flex items-center gap-1">
+                  <span class="absolute bottom-2 right-2 px-2 py-0.5 rounded bg-black/80 text-xs text-slate-300 border border-border flex items-center gap-1">
                     <svg class="w-3 h-3 text-gold" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v6m3-3H7"/></svg>
                     Art
                   </span>
                 </div>
               ` : ''}
-              <span class="text-[11px] text-gold font-semibold uppercase tracking-wider px-2 py-0.5 rounded bg-gold/10 border border-gold/25 inline-block">${esc(l.category)}</span>
-              <h4 class="font-serif font-bold text-lg text-white pt-0.5">${esc(l.term)}</h4>
-              <p class="text-xs text-slate-300 leading-relaxed whitespace-pre-line font-sans">${def}</p>
+              <span class="text-xs font-medium text-muted inline-block">${esc(l.category)}</span>
+              <h4 class="font-serif font-semibold text-lg text-white pt-0.5">${esc(l.term)}</h4>
+              <p class="text-sm text-slate-300 leading-relaxed whitespace-pre-line font-sans">${def}</p>
             </div>
           </div>
         `;
@@ -3978,10 +3955,10 @@
         return `
           <button 
             onclick="setMultimediaCategory('${esc(cat.id)}')" 
-            class="px-3.5 py-1.5 rounded-lg border text-xs whitespace-nowrap flex-shrink-0 sm:flex-shrink transition-all ${isActive ? activeClass : inactiveClass}"
+            class="px-3.5 py-1.5 rounded-lg border text-xs whitespace-nowrap flex-shrink-0 sm:flex-shrink transition-colors ${isActive ? activeClass : inactiveClass}"
           >
             <span>${label}</span>
-            <span class="ml-1 opacity-70 text-[10px]">(${count})</span>
+            <span class="ml-1 opacity-70 text-xs">(${count})</span>
           </button>
         `;
       }).join('');
@@ -4076,21 +4053,18 @@
         const isVideo = it.type === 'video';
 
         return `
-          <div onclick="openMultimediaItem('${esc(it.id)}')" class="group cursor-pointer rounded-xl bg-surface border border-border hover:border-gold/60 card-hover-glow hover:-translate-y-1 transition-all duration-300 p-2.5 flex flex-col space-y-2.5 shadow-sm">
+          <div onclick="openMultimediaItem('${esc(it.id)}')" class="group cursor-pointer rounded-xl bg-surface border border-border hover:border-gold/60 card-hover-glow hover:-translate-y-1 transition-[transform,box-shadow,border-color] duration-200 p-2.5 flex flex-col space-y-2.5">
             
             <!-- Media Frame -->
             <div class="${aspectClass} w-full rounded-lg overflow-hidden bg-canvas relative shadow-inner">
-              <img src="${esc(it.thumb || it.src)}" alt="${esc(it.title)}" loading="lazy" decoding="async" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" loading="lazy">
+              <img src="${esc(it.thumb || it.src)}" alt="${esc(it.title)}" loading="lazy" decoding="async" class="w-full h-full object-cover transition-opacity" loading="lazy">
               
-              <!-- Top Right Badge -->
-              <div class="absolute top-2 right-2 px-1.5 py-0.5 rounded bg-canvas/85 backdrop-blur-md border border-border/70 text-[10px] font-medium ${isVideo ? 'text-red-400 border-red-500/40' : 'text-slate-300'} shadow-sm">
-                ${isVideo ? 'VIDEO' : it.format}
-              </div>
+              
 
               <!-- Video Play Overlay / Image Zoom Overlay -->
               ${isVideo ? `
                 <div class="absolute inset-0 bg-black/30 flex items-center justify-center group-hover:bg-black/10 transition-colors">
-                  <div class="w-10 h-10 rounded-full bg-red-600/90 text-white flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform">
+                  <div class="w-10 h-10 rounded-full bg-canvas/90 border border-border text-white flex items-center justify-center">
                     <svg class="w-4 h-4 ml-0.5" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
                   </div>
                 </div>
@@ -4105,12 +4079,12 @@
             <!-- Identity Info -->
             <div class="space-y-1 px-1 pb-0.5">
               <div class="flex items-center justify-between gap-1">
-                <span class="text-[10px] font-semibold uppercase tracking-wider text-gold truncate">
+                <span class="text-xs font-medium text-muted truncate">
                   ${catLabel}
                 </span>
-                <span class="text-[10px] text-muted">${esc(it.format)}</span>
+                <span class="text-xs text-muted">${esc(it.format)}</span>
               </div>
-              <h3 class="font-serif font-bold text-xs sm:text-sm text-white group-hover:text-gold transition-colors truncate" title="${esc(it.title)}">
+              <h3 class="font-serif font-semibold text-xs sm:text-sm text-white group-hover:text-gold transition-colors truncate" title="${esc(it.title)}">
                 ${esc(it.title)}
               </h3>
             </div>
