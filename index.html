@@ -79,6 +79,13 @@
       box-shadow: 0 10px 24px -14px rgba(0, 0, 0, .85);
     }
 
+    /* Direttori a colonne: una card corta non lascia più un buco sotto di sé */
+    .directory-2, .directory-3 { columns: 1; column-gap: 16px; }
+    .directory-2 > *, .directory-3 > * { break-inside: avoid; margin-bottom: 16px; }
+    @media (min-width: 768px) { .directory-2 { columns: 2; } }
+    @media (min-width: 640px) { .directory-3 { columns: 2; } }
+    @media (min-width: 1024px) { .directory-3 { columns: 3; } }
+
     /* Studio-grade drawer slide-over animation */
     #character-drawer {
       transition: opacity 220ms cubic-bezier(.22, 1, .36, 1);
@@ -289,7 +296,7 @@
         </div>
       </div>
 
-      <div id="factions-grid" class="grid grid-cols-1 md:grid-cols-2 gap-4 items-start">
+      <div id="factions-grid" class="directory-2">
         <!-- Rendered by JS -->
       </div>
     </section>
@@ -303,7 +310,7 @@
         </div>
       </div>
 
-      <div id="lexicon-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 items-start">
+      <div id="lexicon-grid" class="directory-3">
         <!-- Rendered by JS -->
       </div>
     </section>
@@ -3841,7 +3848,7 @@
                 </div>
               ` : ''}
 
-              <div class="flex items-center justify-between pt-1">
+              <div class="flex flex-wrap items-center justify-between gap-2 pt-1">
                 <div>
                   <h3 class="font-serif font-semibold text-xl text-white">${esc(f.name)}</h3>
                   <p class="text-xs text-gold font-serif italic">${f.alias || ''}</p>
