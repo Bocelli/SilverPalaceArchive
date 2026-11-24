@@ -197,7 +197,7 @@
             <input 
               type="text" 
               id="char-search" 
-              oninput="filterRoster()" 
+              oninput="filterRosterInput()" 
               aria-label="Cerca personaggi" data-i18n-ph="view.characters.search" placeholder="Cerca nome, fazione o titolo..." 
               class="w-full pl-9 pr-8 py-2 bg-surface border border-border rounded-lg text-xs text-white placeholder-slate-400 focus:outline-none focus:border-gold transition-colors font-sans"
             >
@@ -209,6 +209,9 @@
         </div>
 
       </div>
+
+      <!-- Conteggio risultati: visibile solo con ricerca o fazione attive -->
+      <p id="roster-result-count" class="hidden text-xs text-slate-400 font-sans px-1" aria-live="polite"></p>
 
       <!-- Character Cards Grid (Authentic Gacha Aesthetic) -->
       <div id="roster-grid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
@@ -2999,7 +3002,7 @@
         'nav.status': 'Stato',
         'header.eyebrow': 'Archivio Ufficiale',
         'header.tagline': 'Dossier Investigativi, Cronache & Multiverse Lore',
-        'view.characters.search': 'Cerca nome, fazione o titolo...',
+        'view.characters.search': 'Cerca nome, fazione, bio o lore...',
         'view.multimedia.search': 'Cerca per titolo, evento, tag...',
         'view.timeline.title': 'Timeline Ufficiale & Notizie',
         'view.timeline.subtitle': 'Tutti gli annunci, trailer promozionali e traguardi di Silver Palace in ordine cronologico.',
@@ -3027,6 +3030,9 @@
         'empty.roster.reset': 'Reimposta Tutti i Filtri',
         'empty.timeline': 'Nessun contenuto per questo filtro.',
         'filter.all': 'Tutti i Personaggi',
+        'roster.result': 'risultato',
+        'roster.results': 'risultati',
+        'empty.roster.term': 'Nessun risultato per',
         'timeline.all': 'Tutti i Contenuti'
       },
       en: {
@@ -3039,7 +3045,7 @@
         'nav.status': 'Status',
         'header.eyebrow': 'Official Archive',
         'header.tagline': 'Investigative Dossiers, Chronicles & Multiverse Lore',
-        'view.characters.search': 'Search name, faction or title...',
+        'view.characters.search': 'Search name, faction, bio or lore...',
         'view.multimedia.search': 'Search by title, event, tag...',
         'view.timeline.title': 'Official Timeline & News',
         'view.timeline.subtitle': 'Every announcement, promo trailer and milestone of Silver Palace in chronological order.',
@@ -3067,6 +3073,9 @@
         'empty.roster.reset': 'Reset All Filters',
         'empty.timeline': 'Nothing matches this filter yet.',
         'filter.all': 'All Characters',
+        'roster.result': 'result',
+        'roster.results': 'results',
+        'empty.roster.term': 'No results for',
         'timeline.all': 'All Content'
       }
     };
@@ -3243,16 +3252,22 @@
     function renderRoster() {
       const grid = document.getElementById('roster-grid');
       if (!grid) return;
-      const search = (document.getElementById('char-search')?.value || '').toLowerCase().trim();
+      const searchInput = document.getElementById('char-search');
+      const term = ((searchInput && searchInput.value) || '').trim();
+      const search = normalizeSearch(term);
 
       const filtered = cases.filter(c => {
         if (currentFaction !== 'ALL' && c.faction !== currentFaction) return false;
         if (!search) return true;
-        return [c.name, c.faction, c.title_it, c.title_en, c.role, (c.tags || []).join(' ')]
-          .join(' ').toLowerCase().includes(search);
+        return searchableText(c).includes(search);
       });
 
+      updateRosterCount(filtered.length, term);
+
       if (filtered.length === 0) {
+        const termLine = term
+          ? '<p class="text-xs text-slate-400 mt-1">' + esc(t('empty.roster.term')) + ' «' + esc(term) + '»</p>'
+          : '';
         grid.innerHTML = `
           <div class="col-span-full py-16 text-center space-y-3">
             <div class="w-12 h-12 rounded-full bg-surface-raised border border-border flex items-center justify-center mx-auto text-slate-400">
@@ -3260,6 +3275,7 @@
             </div>
             <p class="font-serif text-lg text-white">${esc(t('empty.roster.title'))}</p>
             <p class="text-xs text-slate-400">${esc(t('empty.roster.text'))}</p>
+            ${termLine}
             <button onclick="clearSearch(); setFactionFilter('ALL');" class="mt-2 px-4 py-2 rounded-lg bg-surface-raised border border-border text-xs text-gold hover:border-gold transition-colors font-medium">
               ${esc(t('empty.roster.reset'))}
             </button>
@@ -3319,7 +3335,47 @@
       renderRoster();
     }
 
+    // --- RICERCA ROSTER: indice di testo normalizzato ---
+    // La lore bilingue vive in più campi del vault: la ricerca deve attraversarli tutti.
+    const SEARCH_FIELDS = ['name', 'faction', 'title_it', 'title_en', 'role',
+      'bio_it', 'bio_en', 'hidden_title_it', 'hidden_title_en',
+      'hidden_story_it', 'hidden_story_en', 'hidden_bio_it', 'hidden_bio_en', 'creator_notes'];
+
+    // Senza accenti né maiuscole: "perche" trova "perché".
+    const normalizeSearch = (s) => String(s || '')
+      .normalize('NFD').replace(/[\u0300-\u036f]/g, '')
+      .toLowerCase().trim();
+
+    // Indice costruito una volta per fascicolo: a ogni tasto si confronta una sola stringa.
+    const searchIndex = new Map();
+    function searchableText(c) {
+      if (!searchIndex.has(c.id)) {
+        const fields = SEARCH_FIELDS.map(f => c[f]).filter(Boolean).join(' ');
+        searchIndex.set(c.id, normalizeSearch(fields + ' ' + (c.tags || []).join(' ')));
+      }
+      return searchIndex.get(c.id);
+    }
+
+    function updateRosterCount(shown, term) {
+      const el = document.getElementById('roster-result-count');
+      if (!el) return;
+      if (shown === cases.length && currentFaction === 'ALL' && !term) {
+        el.classList.add('hidden');
+        el.textContent = '';
+        return;
+      }
+      el.classList.remove('hidden');
+      el.textContent = shown + ' ' + t(shown === 1 ? 'roster.result' : 'roster.results') + ' / ' + cases.length + (term ? ' · «' + term + '»' : '');
+    }
+
+    let rosterSearchTimer = null;
+    function filterRosterInput() {
+      clearTimeout(rosterSearchTimer);
+      rosterSearchTimer = setTimeout(filterRoster, 180);
+    }
+
     function filterRoster() {
+      clearTimeout(rosterSearchTimer);
       const search = (document.getElementById('char-search')?.value || '').trim();
       const clearBtn = document.getElementById('clear-search-btn');
       if (clearBtn) {
@@ -3330,6 +3386,7 @@
     }
 
     function clearSearch() {
+      clearTimeout(rosterSearchTimer);
       const input = document.getElementById('char-search');
       if (input) {
         input.value = '';
