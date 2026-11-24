@@ -157,6 +157,22 @@
       #roster-grid.cards-3d article .media-frame::after { display: none; }
     }
 
+    /* --- TAB DEL DRAWER (generate dai dati) --- */
+    #drawer-section-nav [data-tab] {
+      padding: 12px 14px;
+      border-bottom: 2px solid transparent;
+      color: #8592A6;
+      white-space: nowrap;
+      font-weight: 500;
+      transition: color .2s, border-color .2s;
+    }
+    #drawer-section-nav [data-tab]:hover { color: #fff; }
+    #drawer-section-nav [data-tab].is-active {
+      color: #fff;
+      font-weight: 600;
+      border-bottom-color: #D4AF37;
+    }
+
   </style>
 </head>
 <body class="min-h-screen flex flex-col antialiased selection:bg-gold/20 selection:text-gold">
@@ -421,30 +437,14 @@
         </div>
       </div>
 
-            <!-- Tab Navigation (Horizontally scrollable on mobile) -->
-      <div id="drawer-tab-nav" class="flex-shrink-0 flex items-center border-b border-border bg-canvas px-4 sm:px-6 text-xs font-medium overflow-x-auto no-scrollbar scroll-smooth space-x-1 min-h-[46px] w-full sticky top-[49px] z-10 shadow-sm" style="-webkit-overflow-scrolling: touch;">
-        <button onclick="setDrawerTab('bio')" id="d-tab-bio" data-i18n="drawer.tab.bio" class="px-3.5 py-3 border-b-2 border-gold text-white font-semibold transition-colors whitespace-nowrap flex-shrink-0">
-          Panoramica & Lore
-        </button>
-        <button onclick="setDrawerTab('hidden')" id="d-tab-hidden" data-i18n="drawer.tab.hidden" class="px-3.5 py-3 border-b-2 border-transparent text-muted hover:text-white transition-colors whitespace-nowrap flex-shrink-0">
-          Pagine Segrete (Hidden Lore)
-        </button>
-        <button onclick="setDrawerTab('gallery')" id="d-tab-gallery" data-i18n="drawer.tab.gallery" class="px-3.5 py-3 border-b-2 border-transparent text-muted hover:text-white transition-colors whitespace-nowrap flex-shrink-0">
-          Galleria Art
-        </button>
-        <button onclick="setDrawerTab('media')" id="d-tab-media" data-i18n="drawer.tab.media" class="px-3.5 py-3 border-b-2 border-transparent text-muted hover:text-white transition-colors whitespace-nowrap flex-shrink-0">
-          Trailer Ufficiale
-        </button>
-        <button onclick="setDrawerTab('notes')" id="d-tab-notes" data-i18n="drawer.tab.notes" class="px-3.5 py-3 border-b-2 border-transparent text-gold hover:text-white transition-colors whitespace-nowrap flex-shrink-0">
-          Note CatalystOnline
-        </button>
-      </div>
+      <!-- Chip di ancoraggio: JS li genera solo per le sezioni che hanno contenuto -->
+      <nav id="drawer-section-nav" role="tablist" aria-label="Sezioni del dossier" class="flex-shrink-0 flex items-center border-b border-border bg-canvas px-4 sm:px-6 text-xs font-medium overflow-x-auto no-scrollbar min-h-[46px] w-full sticky top-[49px] z-10 shadow-sm" style="-webkit-overflow-scrolling: touch;"></nav>
 
       <!-- Tab Content Area -->
-      <div class="p-4 sm:p-6 space-y-6 flex-1">
+      <div id="drawer-content" class="p-4 sm:p-6 space-y-8 flex-1">
         
         <!-- TAB 1: BIO & BILINGUAL LORE -->
-        <div id="drawer-tab-content-bio" class="space-y-4">
+        <div id="d-sec-bio" data-drawer-section="bio" role="tabpanel" class="space-y-4">
           <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
             <!-- Italian Translation -->
             <div id="drawer-bio-it-wrap" class="p-5 rounded-xl bg-surface-raised border border-border/80 space-y-2.5">
@@ -472,7 +472,7 @@
         </div>
 
         <!-- TAB 2: HIDDEN PAGES LORE -->
-        <div id="drawer-tab-content-hidden" class="hidden space-y-4">
+        <div id="d-sec-hidden" data-drawer-section="hidden" role="tabpanel" class="hidden space-y-4">
           <div class="p-4 rounded-xl bg-surface-raised border border-gold/40 space-y-3">
             <div class="flex items-center justify-between border-b border-border pb-2">
               <span id="drawer-hidden-title" class="font-serif font-bold text-gold text-base sm:text-lg">Dossier Segreto</span>
@@ -497,18 +497,17 @@
               </div>
             </div>
 
-            <div id="drawer-hidden-extra-link" class="pt-2 text-xs flex items-center justify-between border-t border-border/60"></div>
           </div>
         </div>
 
         <!-- TAB 3: GALLERY -->
-        <div id="drawer-tab-content-gallery" class="hidden space-y-4">
+        <div id="d-sec-gallery" data-drawer-section="gallery" role="tabpanel" class="hidden space-y-4">
           <p class="text-xs text-muted" data-i18n="drawer.gallery.hint">Clicca su un'immagine per aprirla a schermo intero ad alta risoluzione.</p>
           <div class="grid grid-cols-1 sm:grid-cols-3 gap-4" id="drawer-gallery-grid"></div>
         </div>
 
         <!-- TAB 3: MEDIA (SMART YOUTUBE PLAYER) -->
-        <div id="drawer-tab-content-media" class="hidden space-y-4">
+        <div id="d-sec-media" data-drawer-section="media" role="tabpanel" class="hidden space-y-4">
           <div class="p-4 rounded-lg bg-canvas border border-border space-y-3">
             <div class="flex items-center justify-between text-xs pb-2 border-b border-border">
               <span class="font-semibold text-white">Filmato Ufficiale del Personaggio</span>
@@ -528,7 +527,7 @@
         </div>
 
         <!-- TAB 4: CREATOR NOTES -->
-        <div id="drawer-tab-content-notes" class="hidden space-y-4">
+        <div id="d-sec-notes" data-drawer-section="notes" role="tabpanel" class="hidden space-y-4">
           <div class="p-5 rounded-lg border border-gold/40 bg-surface-raised space-y-3">
             <div class="flex items-center gap-3">
               <div class="w-9 h-9 rounded-full bg-gold/10 border border-gold/40 flex items-center justify-center font-serif font-bold text-gold">
@@ -3062,11 +3061,11 @@
         'drawer.breadcrumb': 'Archivio',
         'drawer.role': 'Ruolo / Vocazione:',
         'drawer.faction': 'Fazione Vault:',
-        'drawer.tab.bio': 'Panoramica & Lore',
-        'drawer.tab.hidden': 'Pagine Segrete (Hidden Lore)',
-        'drawer.tab.gallery': 'Galleria Art',
-        'drawer.tab.media': 'Trailer Ufficiale',
-        'drawer.tab.notes': 'Note CatalystOnline',
+        'drawer.tab.short.bio': 'Panoramica',
+        'drawer.tab.short.hidden': 'Segrete',
+        'drawer.tab.short.gallery': 'Galleria',
+        'drawer.tab.short.media': 'Trailer',
+        'drawer.tab.short.notes': 'Note',
         'drawer.bio.it': '\u{1F1EE}\u{1F1F9} Traduzione Italiana',
         'drawer.bio.en': '\u{1F1EC}\u{1F1E7} Testo Ufficiale Inglese',
         'drawer.tags': 'Tag Lore:',
@@ -3105,11 +3104,11 @@
         'drawer.breadcrumb': 'Archive',
         'drawer.role': 'Role / Vocation:',
         'drawer.faction': 'Vault Faction:',
-        'drawer.tab.bio': 'Overview & Lore',
-        'drawer.tab.hidden': 'Hidden Pages',
-        'drawer.tab.gallery': 'Art Gallery',
-        'drawer.tab.media': 'Official Trailer',
-        'drawer.tab.notes': 'CatalystOnline Notes',
+        'drawer.tab.short.bio': 'Overview',
+        'drawer.tab.short.hidden': 'Hidden',
+        'drawer.tab.short.gallery': 'Gallery',
+        'drawer.tab.short.media': 'Trailer',
+        'drawer.tab.short.notes': 'Notes',
         'drawer.bio.it': '\u{1F1EE}\u{1F1F9} Italian Translation',
         'drawer.bio.en': '\u{1F1EC}\u{1F1E7} Official English Text',
         'drawer.tags': 'Lore Tags:',
@@ -3520,14 +3519,6 @@
       if (c.profile_img && c.profile_img !== c.drip_img) {
         galleryItems.push({ label: 'Profile Art', src: c.profile_img });
       }
-      if (hImgs.length > 0) {
-        hImgs.forEach((img, idx) => {
-          galleryItems.push({
-            label: hImgs.length > 1 ? `Hidden Pages Art (${idx + 1})` : 'Hidden Pages Art',
-            src: img
-          });
-        });
-      }
       if (c.official_art) {
         galleryItems.push({ label: 'Official Art', src: c.official_art });
       }
@@ -3584,11 +3575,12 @@
         extraLinkEl.innerHTML = `<span class="text-slate-400 text-xs">Archivio Ufficiale Silver Palace — Elementa Games</span>`;
       }
 
-      setDrawerTab('bio'); const tabNav = document.getElementById('drawer-tab-nav'); if (tabNav) tabNav.scrollLeft = 0;
+      renderDrawerTabs(c);
 
       const drawer = document.getElementById('character-drawer');
       const panel = document.getElementById('character-drawer-panel');
       if (drawer && panel) {
+        panel.scrollTop = 0;
         drawer.classList.remove('opacity-0', 'pointer-events-none');
         drawer.classList.add('opacity-100', 'pointer-events-auto');
         requestAnimationFrame(() => {
@@ -3629,29 +3621,93 @@
       }
     }
 
-    function setDrawerTab(tab) {
-      if (tab !== 'media') {
-        const vContainer = document.getElementById('drawer-video-container');
-        if (vContainer && activeChar) {
-          const ytId = extractYouTubeId(activeChar.trailer_url || "ZcDBkBs7J6g");
-          resetDrawerVideo(ytId);
-        }
+    // --- TAB DEL DRAWER: compaiono solo se hanno contenuto ---
+    // Una tab vuota è una promessa che il vault non mantiene: meglio non averla.
+    const DRAWER_TABS = ['bio', 'hidden', 'gallery', 'media', 'notes'];
+
+    function drawerHasText(v) {
+      return Array.isArray(v) ? v.length > 0 : Boolean(v && String(v).trim());
+    }
+
+    // Stessa regola del data contract: il flag has_hidden non decide, decide il contenuto.
+    function drawerSectionHasContent(c, id) {
+      if (!c) return false;
+      if (id === 'bio') return drawerHasText(c.bio_it) || drawerHasText(c.bio_en) || (c.tags || []).length > 0;
+      if (id === 'hidden') {
+        return drawerHasText(c.hidden_title_it) || drawerHasText(c.hidden_title_en) ||
+          drawerHasText(c.hidden_story_it) || drawerHasText(c.hidden_story_en) ||
+          drawerHasText(c.hidden_bio_it) || drawerHasText(c.hidden_bio_en) ||
+          drawerHasText(c.hidden_img) || (c.hidden_imgs || []).length > 0;
       }
-      ['bio', 'hidden', 'gallery', 'media', 'notes'].forEach(t => {
-        const btn = document.getElementById(`d-tab-${t}`);
-        const content = document.getElementById(`drawer-tab-content-${t}`);
-        if (t === tab) {
-          btn.className = "px-3.5 py-3 border-b-2 border-gold text-white font-semibold transition-colors whitespace-nowrap flex-shrink-0";
-          content.classList.remove('hidden');
-          try {
-            btn.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
-          } catch(e) {}
-        } else {
-          btn.className = "px-3.5 py-3 border-b-2 border-transparent text-muted hover:text-white transition-colors whitespace-nowrap flex-shrink-0";
-          content.classList.add('hidden');
-        }
+      if (id === 'gallery') return Boolean(c.drip_img || c.profile_img || c.official_art);
+      if (id === 'media') return drawerHasText(c.trailer_url);
+      if (id === 'notes') return drawerHasText(c.creator_notes);
+      return false;
+    }
+
+    function setActiveDrawerTab(id) {
+      const nav = document.getElementById('drawer-section-nav');
+      if (!nav) return;
+      nav.querySelectorAll('[data-tab]').forEach(btn => {
+        const on = btn.dataset.tab === id;
+        btn.classList.toggle('is-active', on);
+        btn.setAttribute('aria-selected', String(on));
       });
     }
+
+    // Una tab visibile per volta: si riparte dall'alto e il video si ferma
+    // quando si lascia il trailer, come faceva il vecchio setDrawerTab.
+    function setDrawerPanel(id) {
+      DRAWER_TABS.forEach(t => {
+        const sec = document.getElementById('d-sec-' + t);
+        if (sec) sec.classList.toggle('hidden', t !== id);
+      });
+      if (id !== 'media' && activeChar) {
+        const vContainer = document.getElementById('drawer-video-container');
+        if (vContainer) resetDrawerVideo(extractYouTubeId(activeChar.trailer_url || 'ZcDBkBs7J6g'));
+      }
+      const panel = document.getElementById('character-drawer-panel');
+      if (panel) panel.scrollTop = 0;
+      setActiveDrawerTab(id);
+    }
+
+    function renderDrawerTabs(c) {
+      const available = DRAWER_TABS.filter(id => drawerSectionHasContent(c, id));
+
+      const nav = document.getElementById('drawer-section-nav');
+      if (nav) {
+        nav.innerHTML = available.map(id => `
+          <button type="button" role="tab" id="d-tab-${id}" data-tab="${id}" aria-selected="false" aria-controls="d-sec-${id}"
+            onclick="setDrawerPanel('${id}')" data-i18n="drawer.tab.short.${id}">${esc(t('drawer.tab.short.' + id))}</button>
+        `).join('');
+        nav.scrollLeft = 0;
+      }
+
+      DRAWER_TABS.forEach(id => {
+        const sec = document.getElementById('d-sec-' + id);
+        if (!sec) return;
+        const on = id === available[0];
+        sec.classList.toggle('hidden', !on);
+        if (on) sec.setAttribute('aria-labelledby', 'd-tab-' + id);
+      });
+
+      if (available.length) setActiveDrawerTab(available[0]);
+      return available;
+    }
+
+    // Le fonti ufficiali sono una riga di servizio in coda al dossier, non una sezione:
+    // vanno tolte dal blocco "Pagine Segrete" che oggi le contiene.
+    (function placeDrawerSources() {
+      const content = document.getElementById('drawer-content');
+      if (!content) return;
+      let extra = document.getElementById('drawer-hidden-extra-link');
+      if (!extra) {
+        extra = document.createElement('div');
+        extra.id = 'drawer-hidden-extra-link';
+        content.appendChild(extra);
+      }
+      extra.className = 'pt-4 border-t border-border flex flex-wrap items-center justify-between gap-2 text-xs';
+    })();
 
     function resetDrawerVideo(ytId) {
       const container = document.getElementById('drawer-video-container');
