@@ -1,0 +1,80 @@
+name: Sync vault
+
+# Il db si aggiorna nel cloud: non serve il PC acceso.
+on:
+  schedule:
+    - cron: "20 6,18 * * *"
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pages: write
+
+concurrency:
+  group: sync-vault
+  cancel-in-progress: false
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+
+      # storia completa: le date dei contenuti vengono dai commit del vault
+      - name: Checkout vault
+        uses: actions/checkout@v4
+        with:
+          repository: Bocelli/SPVault
+          path: vault
+          fetch-depth: 0
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Pillow per le miniature
+        run: pip install pillow
+
+      - name: Sync
+        env:
+          SPVLT_VAULT: ${{ github.workspace }}/vault
+        run: node sync_spvault.js --no-pull --no-commit
+
+      - name: Commit e push su main e gh-pages
+        id: push
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          if [ -z "$(git status --porcelain)" ]; then
+            echo "nessuna modifica dal vault: niente commit"
+            echo "pushed=false" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+          git add -A
+          VERSION="$(node -p "require('./data/archive.json').version")"
+          git commit -m "chore(sync): vault ${VERSION}"
+          git push origin HEAD:main
+          git push origin HEAD:gh-pages
+          echo "pushed=true" >> "$GITHUB_OUTPUT"
+
+      # un push fatto con GITHUB_TOKEN non fa partire altri workflow:
+      # la build delle Pages va richiesta esplicitamente
+      - name: Richiedi la build delle Pages
+        if: steps.push.outputs.pushed == 'true'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          curl -sS -o /dev/null -w "pages build: %{http_code}\n" -X POST \
+            -H "Authorization: Bearer ${GH_TOKEN}" \
+            -H "Accept: application/vnd.github+json" \
+            "https://api.github.com/repos/${GITHUB_REPOSITORY}/pages/builds" || true

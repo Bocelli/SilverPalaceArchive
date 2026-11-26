@@ -11,6 +11,7 @@
  */
 const fs = require('fs');
 const path = require('path');
+const crypto = require('crypto');
 const { execSync, spawnSync } = require('child_process');
 
 const SITE_DIR = __dirname;
@@ -792,8 +793,16 @@ validate();
 
 // 9. scritture
 if (!fs.existsSync(DATA_DIR)) fs.mkdirSync(DATA_DIR, { recursive: true });
-const version = 'spvault_sync_' + Date.now();
-const archive = { version, generated_at: new Date().toISOString(), counts: { cases: cases.length, dispatches: dispatches.length, factions: allFactions.length, lexicon: lexicon.length, multimedia: multimedia.length }, cases, dispatches, factions: allFactions, lexicon, multimedia };
+// la versione è l'impronta del contenuto: se il vault non è cambiato resta uguale,
+// così un sync pianificato non produce commit vuoti né redeploy inutili
+const fingerprint = JSON.stringify({ cases, dispatches, factions: allFactions, lexicon, multimedia });
+const version = 'spvault_sync_' + crypto.createHash('sha1').update(fingerprint).digest('hex').slice(0, 12);
+let generatedAt = new Date().toISOString();
+try {
+  const prev = JSON.parse(fs.readFileSync(path.join(DATA_DIR, 'archive.json'), 'utf8'));
+  if (prev.version === version && prev.generated_at) generatedAt = prev.generated_at;
+} catch (_) {}
+const archive = { version, generated_at: generatedAt, counts: { cases: cases.length, dispatches: dispatches.length, factions: allFactions.length, lexicon: lexicon.length, multimedia: multimedia.length }, cases, dispatches, factions: allFactions, lexicon, multimedia };
 fs.writeFileSync(path.join(DATA_DIR, 'archive.json'), JSON.stringify(archive, null, 2), 'utf8');
 fs.writeFileSync(path.join(DATA_DIR, 'drift.json'), JSON.stringify({ version, generated_at: archive.generated_at, count: DRIFT.length, items: DRIFT }, null, 2), 'utf8');
 log(`data/archive.json + data/drift.json scritti (${DRIFT.length} voci di drift).`);
