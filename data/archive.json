@@ -1,6 +1,6 @@
 {
-  "version": "spvault_sync_b9c62ee3114c",
-  "generated_at": "2026-11-26T23:11:29.645Z",
+  "version": "spvault_sync_2ac9c8cbbe83",
+  "generated_at": "2026-11-26T23:12:02.687Z",
   "counts": {
     "cases": 20,
     "dispatches": 21,
@@ -300,12 +300,12 @@
       "drip_img": "_multimedia/Personaggi/Drip Marketing/Detective F Drip Marketing.jpg",
       "profile_img": "_multimedia/Personaggi/Profile Art/Detective F Profile Art.jpg",
       "thumb": "_thumbs/Personaggi/Profile Art/Detective F Profile Art.jpg",
-      "thumb_hidden": "_thumbs/Personaggi/Hidden Pages/Detective Hidden page 2.jpg",
+      "thumb_hidden": "_thumbs/Personaggi/Hidden Pages/Detective Hidden Pages.jpg",
       "thumb_official": "",
-      "hidden_img": "_multimedia/Personaggi/Hidden Pages/Detective Hidden page 2.jpg",
+      "hidden_img": "_multimedia/Personaggi/Hidden Pages/Detective Hidden Pages.jpg",
       "hidden_imgs": [
-        "_multimedia/Personaggi/Hidden Pages/Detective Hidden page 2.jpg",
-        "_multimedia/Personaggi/Hidden Pages/Detective Hidden Pages.jpg"
+        "_multimedia/Personaggi/Hidden Pages/Detective Hidden Pages.jpg",
+        "_multimedia/Personaggi/Hidden Pages/Detective Hidden page 2.jpg"
       ],
       "intel_img": "",
       "intel_imgs": [],
@@ -895,18 +895,6 @@
     },
     {
       "id": "disp_17",
-      "title": "gamescom 2026 Special Trailer - The Price of Truth",
-      "type": "Trailer Ufficiale",
-      "date": "2026-11-17",
-      "desc_en": "Emotion is but greed given a name, an obsession we cannot escape. Wealth, fame, or perhaps a relentless pursuit of truth and the regrets that haunt us... Are you ready to place your soul upon the scales, and pay the price for the answer buried within?",
-      "desc_it": "L'emozione non è altro che avidità a cui è stato dato un nome, un'ossessione da cui non possiamo sfuggire. Ricchezza, fama, o magari l'incessante ricerca della verità, insieme ai rimpianti che ci perseguitano... Sei pronto a porre la tua anima sulla bilancia e a pagare il prezzo per la risposta che vi giace sepolta?",
-      "cover_img": "",
-      "thumb": "",
-      "link": "https://www.youtube.com/watch?v=hDHFxsh02aE",
-      "tags": []
-    },
-    {
-      "id": "disp_18",
       "title": "Monotype Beta Test Trailer",
       "type": "Trailer Ufficiale",
       "date": "2026-11-17",
@@ -918,7 +906,7 @@
       "tags": []
     },
     {
-      "id": "disp_19",
+      "id": "disp_18",
       "title": "The Golden Age of Detectives",
       "type": "Trailer Ufficiale",
       "date": "2026-11-17",
@@ -935,6 +923,18 @@
         "fate",
         "author"
       ]
+    },
+    {
+      "id": "disp_19",
+      "title": "gamescom 2026 Special Trailer - The Price of Truth",
+      "type": "Trailer Ufficiale",
+      "date": "2026-11-17",
+      "desc_en": "Emotion is but greed given a name, an obsession we cannot escape. Wealth, fame, or perhaps a relentless pursuit of truth and the regrets that haunt us... Are you ready to place your soul upon the scales, and pay the price for the answer buried within?",
+      "desc_it": "L'emozione non è altro che avidità a cui è stato dato un nome, un'ossessione da cui non possiamo sfuggire. Ricchezza, fama, o magari l'incessante ricerca della verità, insieme ai rimpianti che ci perseguitano... Sei pronto a porre la tua anima sulla bilancia e a pagare il prezzo per la risposta che vi giace sepolta?",
+      "cover_img": "",
+      "thumb": "",
+      "link": "https://www.youtube.com/watch?v=hDHFxsh02aE",
+      "tags": []
     },
     {
       "id": "disp_2",
@@ -2425,23 +2425,6 @@
     },
     {
       "id": "mm_67",
-      "title": "Detective Hidden page 2",
-      "category": "personaggi_hidden",
-      "category_label_it": "Pagine Segrete",
-      "category_label_en": "Hidden Pages Art",
-      "type": "image",
-      "src": "_multimedia/Personaggi/Hidden Pages/Detective Hidden page 2.jpg",
-      "thumb": "_thumbs/Personaggi/Hidden Pages/Detective Hidden page 2.jpg",
-      "format": "JPG",
-      "tags": [
-        "personaggi_hidden",
-        "detective",
-        "hidden",
-        "page"
-      ]
-    },
-    {
-      "id": "mm_68",
       "title": "Detective Hidden Pages",
       "category": "personaggi_hidden",
       "category_label_it": "Pagine Segrete",
@@ -2455,6 +2438,23 @@
         "detective",
         "hidden",
         "pages"
+      ]
+    },
+    {
+      "id": "mm_68",
+      "title": "Detective Hidden page 2",
+      "category": "personaggi_hidden",
+      "category_label_it": "Pagine Segrete",
+      "category_label_en": "Hidden Pages Art",
+      "type": "image",
+      "src": "_multimedia/Personaggi/Hidden Pages/Detective Hidden page 2.jpg",
+      "thumb": "_thumbs/Personaggi/Hidden Pages/Detective Hidden page 2.jpg",
+      "format": "JPG",
+      "tags": [
+        "personaggi_hidden",
+        "detective",
+        "hidden",
+        "page"
       ]
     },
     {
@@ -2683,24 +2683,6 @@
     },
     {
       "id": "mm_83",
-      "title": "gamescom 2026 Special Trailer - The Price of Truth",
-      "category": "trailers",
-      "category_label_it": "Trailer & Video",
-      "category_label_en": "Official Trailers",
-      "type": "video",
-      "youtube_id": "hDHFxsh02aE",
-      "video_url": "https://www.youtube.com/watch?v=hDHFxsh02aE",
-      "src": "https://img.youtube.com/vi/hDHFxsh02aE/maxresdefault.jpg",
-      "thumb": "https://img.youtube.com/vi/hDHFxsh02aE/hqdefault.jpg",
-      "format": "YouTube HD",
-      "tags": [
-        "trailer",
-        "video",
-        "ufficiale"
-      ]
-    },
-    {
-      "id": "mm_84",
       "title": "Monotype Beta Test Trailer",
       "category": "trailers",
       "category_label_it": "Trailer & Video",
@@ -2718,7 +2700,7 @@
       ]
     },
     {
-      "id": "mm_85",
+      "id": "mm_84",
       "title": "The Golden Age of Detectives",
       "category": "trailers",
       "category_label_it": "Trailer & Video",
@@ -2728,6 +2710,24 @@
       "video_url": "https://www.youtube.com/watch?v=ELC4r7fbKEQ",
       "src": "https://img.youtube.com/vi/ELC4r7fbKEQ/maxresdefault.jpg",
       "thumb": "https://img.youtube.com/vi/ELC4r7fbKEQ/hqdefault.jpg",
+      "format": "YouTube HD",
+      "tags": [
+        "trailer",
+        "video",
+        "ufficiale"
+      ]
+    },
+    {
+      "id": "mm_85",
+      "title": "gamescom 2026 Special Trailer - The Price of Truth",
+      "category": "trailers",
+      "category_label_it": "Trailer & Video",
+      "category_label_en": "Official Trailers",
+      "type": "video",
+      "youtube_id": "hDHFxsh02aE",
+      "video_url": "https://www.youtube.com/watch?v=hDHFxsh02aE",
+      "src": "https://img.youtube.com/vi/hDHFxsh02aE/maxresdefault.jpg",
+      "thumb": "https://img.youtube.com/vi/hDHFxsh02aE/hqdefault.jpg",
       "format": "YouTube HD",
       "tags": [
         "trailer",
