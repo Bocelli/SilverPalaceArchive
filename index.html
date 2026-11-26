@@ -4132,7 +4132,7 @@
               <div class="flex flex-wrap items-center justify-between gap-2 pt-1">
                 <div>
                   <h3 class="font-serif font-semibold text-xl text-white">${esc(f.name)}</h3>
-                  <p class="text-xs text-gold font-serif italic">${f.alias || ''}</p>
+                  ${f.alias && f.alias.trim().toLowerCase() !== f.name.trim().toLowerCase() ? `<p class="text-xs text-gold font-serif italic">${esc(f.alias)}</p>` : ''}
                 </div>
                 <button onclick="setFactionFilter('${esc(f.name)}'); setView('characters');" class="px-3 py-1.5 rounded-lg bg-surface-raised border border-border hover:border-gold hover:text-gold text-xs text-slate-300 transition-colors flex items-center gap-1 font-medium shadow-sm">
                   <span>Vedi Membri</span>
