@@ -453,11 +453,13 @@ factionFolders.forEach(fDirName => {
   const cleanDir = fDirName.toLowerCase().replace(/[^a-z0-9]/g, '');
   const folderTag = FACTION_TAGS.find(([t]) => t === cleanDir || cleanDir.startsWith(t) || t.startsWith(cleanDir));
   const display = folderTag ? folderTag[1] : fDirName;
+  // l'alias è solo il nome esteso della fazione: quello della cartella del vault,
+  // spesso TUTTO MAIUSCOLO, non aggiunge nulla e sporcava la card
   const labels = FOLDER_LABELS[fDirName];
 
   factions.push({
     name: display,
-    alias: labels ? labels[0] : fDirName,
+    alias: labels ? labels[0] : '',
     desc_it: prose(it),
     desc_en: prose(en),
     banner,

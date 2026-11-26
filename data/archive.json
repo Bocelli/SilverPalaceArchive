@@ -1,6 +1,6 @@
 {
-  "version": "spvault_sync_1795733350209",
-  "generated_at": "2026-11-26T22:49:10.209Z",
+  "version": "spvault_sync_1795734340221",
+  "generated_at": "2026-11-26T23:05:40.221Z",
   "counts": {
     "cases": 20,
     "dispatches": 21,
@@ -1072,7 +1072,7 @@
   "factions": [
     {
       "name": "Crag Edgers",
-      "alias": "CRAG EDGERS",
+      "alias": "",
       "desc_it": "",
       "desc_en": "",
       "banner": "",
@@ -1083,7 +1083,7 @@
     },
     {
       "name": "Fableborn",
-      "alias": "FABLEBORNE",
+      "alias": "",
       "desc_it": "",
       "desc_en": "",
       "banner": "",
@@ -1094,7 +1094,7 @@
     },
     {
       "name": "Hunter's Guild",
-      "alias": "HUNTER'S GUILD",
+      "alias": "",
       "desc_it": "",
       "desc_en": "",
       "banner": "",
@@ -1116,7 +1116,7 @@
     },
     {
       "name": "Oz School of Metallurgy",
-      "alias": "OZ SCHOOL OF METALLURGY",
+      "alias": "",
       "desc_it": "",
       "desc_en": "",
       "banner": "",
@@ -1138,7 +1138,7 @@
     },
     {
       "name": "Casa Reale & Nobiltà",
-      "alias": "ROYALTY AND ARISTOCRACY",
+      "alias": "",
       "desc_it": "",
       "desc_en": "",
       "banner": "",
