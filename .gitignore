@@ -3,3 +3,4 @@ sync.log
 *.tmp
 .tmp-app.js
 sync-auto.log
+/vault/

@@ -45,6 +45,16 @@ function drift(type, title, location, why, preview, extra) {
   DRIFT.push({ type, title, location: location || '', why: why || '', preview: (preview || '').slice(0, 240), ...(extra || {}) });
 }
 
+/** readdir con ordine stabile: NTFS ed ext4 non concordano, e l'ordine finiva nei
+ *  dati (hash diversi tra PC e cloud, e art "principale" che cambiava macchina). */
+function ls(dir, options) {
+  return fs.readdirSync(dir, options).sort((a, b) => {
+    const na = typeof a === 'string' ? a : a.name;
+    const nb = typeof b === 'string' ? b : b.name;
+    return na < nb ? -1 : na > nb ? 1 : 0;
+  });
+}
+
 // ---------------------------------------------------------------- utils
 
 /** JSON sicuro dentro <script>: niente </script> o commenti HTML che rompano il documento. */
@@ -248,7 +258,7 @@ let copied = 0;
 function copyRecursive(src, dest) {
   if (!fs.existsSync(src)) return;
   if (!fs.existsSync(dest)) fs.mkdirSync(dest, { recursive: true });
-  fs.readdirSync(src).forEach(item => {
+  ls(src).forEach(item => {
     const s = path.join(src, item);
     const d = path.join(dest, item);
     if (fs.statSync(s).isDirectory()) return copyRecursive(s, d);
@@ -266,14 +276,14 @@ const charBase = path.join(repoContent, 'Personaggi');
 
 // 2. personaggi
 const charFolders = fs.existsSync(charBase)
-  ? fs.readdirSync(charBase).filter(f => fs.statSync(path.join(charBase, f)).isDirectory())
+  ? ls(charBase).filter(f => fs.statSync(path.join(charBase, f)).isDirectory())
   : [];
 if (charFolders.length === 0) fail('nessuna cartella in content/Personaggi');
 
 const cases = [];
 charFolders.forEach(name => {
   const cDir = path.join(charBase, name);
-  const files = fs.readdirSync(cDir);
+  const files = ls(cDir);
   const dripFile = files.find(f => f.toLowerCase().includes('drip') && f.endsWith('.md'));
   const hiddenFile = files.find(f => f.toLowerCase().includes('hidden') && f.endsWith('.md'));
 
@@ -340,7 +350,7 @@ charFolders.forEach(name => {
   const hiddenImgs = [];
   const hiddenDir = path.join(SITE_DIR, '_multimedia', 'Personaggi', 'Hidden Pages');
   if (fs.existsSync(hiddenDir)) {
-    fs.readdirSync(hiddenDir).forEach(f => {
+    ls(hiddenDir).forEach(f => {
       const cf = f.toLowerCase().replace(/[^a-z0-9]/g, '');
       if (cf.includes(cleanCharName) || (baseCharName && cf.includes(baseCharName))) hiddenImgs.push(`_multimedia/Personaggi/Hidden Pages/${f}`);
     });
@@ -349,7 +359,7 @@ charFolders.forEach(name => {
   const intelImgs = [];
   const intelDir = path.join(SITE_DIR, '_multimedia', 'Personaggi', 'Acquaintance Intel');
   if (fs.existsSync(intelDir)) {
-    fs.readdirSync(intelDir).forEach(f => {
+    ls(intelDir).forEach(f => {
       const cf = f.toLowerCase().replace(/[^a-z0-9]/g, '');
       if (cf.includes(cleanCharName) || (baseCharName && cf.includes(baseCharName))) intelImgs.push(`_multimedia/Personaggi/Acquaintance Intel/${f}`);
     });
@@ -357,7 +367,7 @@ charFolders.forEach(name => {
   let officialArt = '';
   const officialDir = path.join(SITE_DIR, '_multimedia', 'Personaggi', 'Official Art');
   if (fs.existsSync(officialDir)) {
-    const match = fs.readdirSync(officialDir).find(f => {
+    const match = ls(officialDir).find(f => {
       const cf = f.toLowerCase().replace(/[^a-z0-9]/g, '');
       return cf.includes(cleanCharName) || (baseCharName && cf.includes(baseCharName));
     });
@@ -422,13 +432,13 @@ charFolders.forEach(name => {
 // 3. fazioni
 const factionsBase = path.join(repoContent, 'Fazioni');
 const factionFolders = fs.existsSync(factionsBase)
-  ? fs.readdirSync(factionsBase).filter(f => fs.statSync(path.join(factionsBase, f)).isDirectory())
+  ? ls(factionsBase).filter(f => fs.statSync(path.join(factionsBase, f)).isDirectory())
   : [];
 const factions = [];
 
 factionFolders.forEach(fDirName => {
   const fPath = path.join(factionsBase, fDirName);
-  const files = fs.readdirSync(fPath).filter(f => f.endsWith('.md'));
+  const files = ls(fPath).filter(f => f.endsWith('.md'));
   if (files.length === 0) {
     drift('file-non-mappato', `Fazione vuota: ${fDirName}`, `content/Fazioni/${fDirName}`, 'Nessun .md nella cartella: la fazione non ha descrizione.', '');
     return;
@@ -446,7 +456,7 @@ factionFolders.forEach(fDirName => {
   const artDir = path.join(SITE_DIR, '_multimedia', 'Art Per Fazioni');
   if (fs.existsSync(artDir)) {
     const cleanFName = fDirName.replace(/[^a-zA-Z0-9]/g, '').toLowerCase();
-    const match = fs.readdirSync(artDir).find(file => file.toLowerCase().replace(/[^a-zA-Z0-9]/g, '').includes(cleanFName));
+    const match = ls(artDir).find(file => file.toLowerCase().replace(/[^a-zA-Z0-9]/g, '').includes(cleanFName));
     if (match) banner = `_multimedia/Art Per Fazioni/${match}`;
   }
 
@@ -505,7 +515,7 @@ Object.entries(tagUsage).forEach(([tag, count]) => {
 const lexicon = [];
 const dizDir = path.join(repoContent, 'Dizionario');
 if (fs.existsSync(dizDir)) {
-  fs.readdirSync(dizDir).filter(f => f.endsWith('.md')).forEach(f => {
+  ls(dizDir).filter(f => f.endsWith('.md')).forEach(f => {
     const raw = fs.readFileSync(path.join(dizDir, f), 'utf8');
     const p = splitBilingual(raw);
     lexicon.push({
@@ -521,7 +531,7 @@ if (fs.existsSync(dizDir)) {
 
 const mapsFootnotes = path.join(repoContent, 'Mappe/Footnotes');
 if (fs.existsSync(mapsFootnotes)) {
-  fs.readdirSync(mapsFootnotes).filter(f => f.endsWith('.md')).forEach(f => {
+  ls(mapsFootnotes).filter(f => f.endsWith('.md')).forEach(f => {
     const raw = fs.readFileSync(path.join(mapsFootnotes, f), 'utf8');
     const imgMatch = raw.match(/!\[\[(.*?)\]\]/);
     const img = imgMatch ? '_multimedia/Art Per Mappe/' + imgMatch[1] : '';
@@ -544,7 +554,7 @@ if (fs.existsSync(mapsFootnotes)) {
 const distrettiDir = path.join(repoContent, 'Mappe/Distretti ed Aree Menzionate');
 function districtFiles(dir) {
   const out = [];
-  fs.readdirSync(dir, { withFileTypes: true }).forEach(e => {
+  ls(dir, { withFileTypes: true }).forEach(e => {
     const full = path.join(dir, e.name);
     if (e.isDirectory()) out.push(...districtFiles(full));
     else if (e.name.endsWith('.md')) out.push(full);
@@ -631,7 +641,7 @@ function parsePost(fullPath, folder) {
 
 function scanPosts(dir, folder) {
   if (!fs.existsSync(dir)) return;
-  fs.readdirSync(dir).forEach(item => {
+  ls(dir).forEach(item => {
     const full = path.join(dir, item);
     if (fs.statSync(full).isDirectory()) return scanPosts(full, item);
     if (item.endsWith('.md')) parsePost(full, folder);
@@ -642,10 +652,10 @@ scanPosts(path.join(repoContent, 'Post Ufficiali'), '');
 // trailer nelle cartelle personaggio
 charFolders.forEach(cName => {
   const cDir = path.join(charBase, cName);
-  fs.readdirSync(cDir).forEach(sub => {
+  ls(cDir).forEach(sub => {
     const subPath = path.join(cDir, sub);
     if (fs.statSync(subPath).isDirectory() && sub.toLowerCase().includes('trailer')) {
-      fs.readdirSync(subPath).filter(f => f.endsWith('.md')).forEach(f => parsePost(path.join(subPath, f), 'Character Trailer'));
+      ls(subPath).filter(f => f.endsWith('.md')).forEach(f => parsePost(path.join(subPath, f), 'Character Trailer'));
     }
   });
 });
@@ -665,7 +675,7 @@ const KNOWN_MM_DIRS = new Set([
 
 function scanMediaDir(dir, category, labelIt, labelEn) {
   if (!fs.existsSync(dir)) return;
-  fs.readdirSync(dir, { withFileTypes: true }).forEach(f => {
+  ls(dir, { withFileTypes: true }).forEach(f => {
     if (f.isDirectory()) return;
     if (f.name === 'index.md' || f.name.startsWith('.')) return;
     const ext = path.extname(f.name).toUpperCase().replace('.', '');
@@ -702,7 +712,7 @@ scanMediaDir(path.join(SITE_DIR, '_multimedia/Web Event/Mystery Unveiled'), 'web
 // trailer come asset video
 const trailersDir = path.join(repoContent, 'Post Ufficiali/Trailers/Presentazione Gioco');
 if (fs.existsSync(trailersDir)) {
-  fs.readdirSync(trailersDir).filter(f => f.endsWith('.md')).forEach(tf => {
+  ls(trailersDir).filter(f => f.endsWith('.md')).forEach(tf => {
     const raw = fs.readFileSync(path.join(trailersDir, tf), 'utf8');
     const m = raw.match(/https?:\/\/(?:www\.)?(?:youtube\.com\/watch\?v=|youtu\.be\/)([a-zA-Z0-9_-]+)/);
     const ytId = m ? m[1] : '';
@@ -727,7 +737,7 @@ if (fs.existsSync(trailersDir)) {
 // 7. drift strutturale
 // 'Note Recenti' e 'Tag' sono indici generati dagli script del vault, non contenuto
 const knownRoots = new Set(['Personaggi', 'Fazioni', 'Dizionario', 'Mappe', 'Post Ufficiali', '_Multimedia', '!Indici', 'Template', 'Note Recenti', 'Tag']);
-fs.readdirSync(repoContent).filter(f => fs.statSync(path.join(repoContent, f)).isDirectory()).forEach(r => {
+ls(repoContent).filter(f => fs.statSync(path.join(repoContent, f)).isDirectory()).forEach(r => {
   if (!knownRoots.has(r)) drift('cartella-vault', `Nuova cartella nel vault: ${r}`, `content/${r}`, 'Non è mappata in sync_spvault.js: il contenuto non arriverà nel sito.', '');
 });
 
@@ -753,15 +763,15 @@ function scanHeadings(file) {
 }
 charFolders.forEach(name => {
   const cDir = path.join(charBase, name);
-  fs.readdirSync(cDir).filter(f => f.endsWith('.md')).forEach(f => scanHeadings(path.join(cDir, f)));
+  ls(cDir).filter(f => f.endsWith('.md')).forEach(f => scanHeadings(path.join(cDir, f)));
 });
 
-fs.readdirSync(mmDest, { withFileTypes: true }).forEach(d => {
+ls(mmDest, { withFileTypes: true }).forEach(d => {
   if (d.isDirectory() && !KNOWN_MM_DIRS.has(d.name)) drift('categoria-asset-nuova', `Nuova categoria di asset: ${d.name}`, `_multimedia/${d.name}`, 'La cartella non è indicizzata in extractMultimedia: le immagini non compaiono in archivio.', '');
 });
 const personaggiMm = path.join(mmDest, 'Personaggi');
 if (fs.existsSync(personaggiMm)) {
-  fs.readdirSync(personaggiMm, { withFileTypes: true }).forEach(d => {
+  ls(personaggiMm, { withFileTypes: true }).forEach(d => {
     if (d.isDirectory() && !KNOWN_MM_DIRS.has('Personaggi/' + d.name)) drift('categoria-asset-nuova', `Nuova categoria di asset: Personaggi/${d.name}`, `_multimedia/Personaggi/${d.name}`, 'Sottocartella non indicizzata: le immagini non compaiono in archivio.', '');
   });
 }
