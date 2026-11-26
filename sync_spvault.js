@@ -99,6 +99,8 @@ const TRAILING_SECTION = /(?:^|\n)(?:#{1,6}\s*)?(?:Post|Video|Immagin[ie].*|Medi
 function cleanObsidianProse(text) {
   if (!text) return '';
   let t = text;
+  // frontmatter YAML: non è prosa e finiva dentro le descrizioni delle fazioni
+  t = t.replace(/^\s*---\r?\n[\s\S]*?\r?\n---[ \t]*\r?\n?/, '');
   t = t.replace(/!\[.*?\]\(.*?\)/g, '');
   t = t.replace(/!\[\[.*?\]\]/g, '');
   t = t.replace(/\[\[(?:[^|\]]*\|)?([^\]]+)\]\]/g, '$1');
@@ -435,6 +437,9 @@ factionFolders.forEach(fDirName => {
   const p = splitBilingual(raw);
   const en = p.en;
   const it = p.it || p.en;
+  // le cartelle senza contenuto hanno un index.md segnaposto: meglio vuoto che quella frase
+  const PLACEHOLDER = /nessuna nota presente in questa sezione|no notes? (?:present )?in this section/i;
+  const prose = s => PLACEHOLDER.test(s) ? '' : s;
 
   let banner = '';
   const artDir = path.join(SITE_DIR, '_multimedia', 'Art Per Fazioni');
@@ -453,8 +458,8 @@ factionFolders.forEach(fDirName => {
   factions.push({
     name: display,
     alias: labels ? labels[0] : fDirName,
-    desc_it: it,
-    desc_en: en,
+    desc_it: prose(it),
+    desc_en: prose(en),
     banner,
     thumb: banner ? thumbPath(banner) : '',
     tags: [fDirName.toLowerCase().replace(/[^a-z0-9]/g, '')]
@@ -547,12 +552,15 @@ if (fs.existsSync(distrettiDir)) {
   // il vault nuovo raccoglie i distretti in sottocartelle (Middensea, Silvernia)
   districtFiles(distrettiDir).forEach(full => {
     const raw = fs.readFileSync(full, 'utf8');
-    const clean = cleanObsidianProse(raw);
+    // come per ogni altra nota: due lingue separate e sezioni di servizio (Tags, data) fuori
+    const p = splitBilingual(raw);
+    const it = p.it || p.en;
+    const en = p.en || p.it;
     lexicon.push({
       term: path.basename(full, '.md'),
       category: 'Distretti & Aree Notabili',
-      def_it: clean || 'Distretto censito negli atti ufficiali del database.',
-      def_en: clean || 'District registered in official database records.',
+      def_it: it || 'Distretto censito negli atti ufficiali del database.',
+      def_en: en || 'District registered in official database records.',
       source_file: path.relative(repoContent, full).replace(/\\/g, '/')
     });
   });
