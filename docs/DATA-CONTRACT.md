@@ -57,7 +57,7 @@ il drift detector lo accetta come equivalente di `###### Immagini`.
 | `bio_it` / `bio_en` | string | sì | senza titolo/citazione |
 | `has_hidden` | bool | sì | |
 | `hidden_title_*`, `hidden_bio_*` | string | se `has_hidden` | |
-| `profile_img`, `drip_img`, `hidden_imgs[]`, `official_art` | path | no | relativi alla root del sito |
+| `profile_img`, `drip_img`, `hidden_imgs[]`, `intel_imgs[]`, `official_art` | path | no | relativi alla root del sito; `intel_imgs[]` = art delle pagine Acquaintance Intel |
 | `thumb`, `thumb_hidden`, `thumb_official` | path | no | generati in `_thumbs/` |
 | `trailer_url`, `x_url` | url | no | |
 | `date` | `YYYY-MM-DD` | no | dal commit del file |

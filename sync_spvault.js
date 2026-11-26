@@ -187,6 +187,7 @@ const FACTION_TAGS = [
   ['royaltyandaristocracy', 'Casa Reale & Nobiltà'],
   ['cragedgers', 'Crag Edgers'],
   ['middensea', 'Crag Edgers'],
+  ['huntersguild', "Hunter's Guild"],
   ['ozschoolofmetallurgy', 'Oz School of Metallurgy'],
   ['fableborn', 'Fableborn'],
   ['ivorytower', 'Ivory Tower']
@@ -210,6 +211,7 @@ const POST_CATEGORY = {
   'Festività': 'Evento Festività',
   'Festivita': 'Evento Festività',
   'Post Social': 'Post Social / X',
+  'Stickers': 'Extra Multimediali',
   'Drip Marketing': 'Drip Marketing',
   'Extra Multimediali': 'Extra Multimediali',
   'Character Trailer': 'Character Trailer'
@@ -340,6 +342,15 @@ charFolders.forEach(name => {
       if (cf.includes(cleanCharName) || (baseCharName && cf.includes(baseCharName))) hiddenImgs.push(`_multimedia/Personaggi/Hidden Pages/${f}`);
     });
   }
+  // le pagine "Acquaintance Intel" hanno una loro art, distinta dalle Pagine Nascoste
+  const intelImgs = [];
+  const intelDir = path.join(SITE_DIR, '_multimedia', 'Personaggi', 'Acquaintance Intel');
+  if (fs.existsSync(intelDir)) {
+    fs.readdirSync(intelDir).forEach(f => {
+      const cf = f.toLowerCase().replace(/[^a-z0-9]/g, '');
+      if (cf.includes(cleanCharName) || (baseCharName && cf.includes(baseCharName))) intelImgs.push(`_multimedia/Personaggi/Acquaintance Intel/${f}`);
+    });
+  }
   let officialArt = '';
   const officialDir = path.join(SITE_DIR, '_multimedia', 'Personaggi', 'Official Art');
   if (fs.existsSync(officialDir)) {
@@ -395,6 +406,8 @@ charFolders.forEach(name => {
     thumb_official: officialArt ? thumbPath(officialArt) : '',
     hidden_img: hiddenImgs[0] || '',
     hidden_imgs: hiddenImgs,
+    intel_img: intelImgs[0] || '',
+    intel_imgs: intelImgs,
     official_art: officialArt,
     trailer_url: ytLink,
     x_url: xLink,
@@ -431,7 +444,10 @@ factionFolders.forEach(fDirName => {
     if (match) banner = `_multimedia/Art Per Fazioni/${match}`;
   }
 
-  const display = fDirName === 'RIVER CONSTABULARY' ? 'River Constabulary' : (fDirName === 'STATS' ? 'S.T.A.T.S.' : fDirName);
+  // il vault nuovo nomina le cartelle in maiuscolo: qui si riportano ai nomi canonici dei tag
+  const cleanDir = fDirName.toLowerCase().replace(/[^a-z0-9]/g, '');
+  const folderTag = FACTION_TAGS.find(([t]) => t === cleanDir || cleanDir.startsWith(t) || t.startsWith(cleanDir));
+  const display = folderTag ? folderTag[1] : fDirName;
   const labels = FOLDER_LABELS[fDirName];
 
   factions.push({
@@ -518,16 +534,26 @@ if (fs.existsSync(mapsFootnotes)) {
 }
 
 const distrettiDir = path.join(repoContent, 'Mappe/Distretti ed Aree Menzionate');
+function districtFiles(dir) {
+  const out = [];
+  fs.readdirSync(dir, { withFileTypes: true }).forEach(e => {
+    const full = path.join(dir, e.name);
+    if (e.isDirectory()) out.push(...districtFiles(full));
+    else if (e.name.endsWith('.md')) out.push(full);
+  });
+  return out;
+}
 if (fs.existsSync(distrettiDir)) {
-  fs.readdirSync(distrettiDir).filter(f => f.endsWith('.md')).forEach(f => {
-    const raw = fs.readFileSync(path.join(distrettiDir, f), 'utf8');
+  // il vault nuovo raccoglie i distretti in sottocartelle (Middensea, Silvernia)
+  districtFiles(distrettiDir).forEach(full => {
+    const raw = fs.readFileSync(full, 'utf8');
     const clean = cleanObsidianProse(raw);
     lexicon.push({
-      term: f.replace('.md', ''),
+      term: path.basename(full, '.md'),
       category: 'Distretti & Aree Notabili',
       def_it: clean || 'Distretto censito negli atti ufficiali del database.',
       def_en: clean || 'District registered in official database records.',
-      source_file: 'Mappe/Distretti ed Aree Menzionate/' + f
+      source_file: path.relative(repoContent, full).replace(/\\/g, '/')
     });
   });
 }
@@ -622,8 +648,8 @@ let mmId = 1;
 const KNOWN_MM_DIRS = new Set([
   'Art Per Eventi', 'Art Per Festività', 'Art Per Fazioni', 'Art Per Mappe',
   'Personaggi/Drip Marketing', 'Personaggi/Profile Art', 'Personaggi/Hidden Pages',
-  'Personaggi/Official Art', 'Web Event/Mystery Unveiled',
-  'Personaggi', 'Web Event'
+  'Personaggi/Official Art', 'Personaggi/Acquaintance Intel', 'Personaggi/Transparent Art',
+  'Web Event/Mystery Unveiled', 'Personaggi', 'Web Event'
 ]);
 
 function scanMediaDir(dir, category, labelIt, labelEn) {
@@ -659,6 +685,7 @@ scanMediaDir(path.join(SITE_DIR, '_multimedia/Personaggi/Drip Marketing'), 'pers
 scanMediaDir(path.join(SITE_DIR, '_multimedia/Personaggi/Profile Art'), 'personaggi_profile', 'Profile Art (Tarocchi)', 'Profile Art (Tarot)');
 scanMediaDir(path.join(SITE_DIR, '_multimedia/Personaggi/Hidden Pages'), 'personaggi_hidden', 'Pagine Segrete', 'Hidden Pages Art');
 scanMediaDir(path.join(SITE_DIR, '_multimedia/Personaggi/Official Art'), 'personaggi_official', 'Official Art Personaggi', 'Official Character Art');
+scanMediaDir(path.join(SITE_DIR, '_multimedia/Personaggi/Acquaintance Intel'), 'personaggi_intel', 'Acquaintance Intel', 'Acquaintance Intel');
 scanMediaDir(path.join(SITE_DIR, '_multimedia/Web Event/Mystery Unveiled'), 'webevent', 'Web Event (Mystery Unveiled)', 'Web Event (Mystery Unveiled)');
 
 // trailer come asset video
@@ -687,7 +714,8 @@ if (fs.existsSync(trailersDir)) {
 }
 
 // 7. drift strutturale
-const knownRoots = new Set(['Personaggi', 'Fazioni', 'Dizionario', 'Mappe', 'Post Ufficiali', '_Multimedia', '!Indici', 'Template']);
+// 'Note Recenti' e 'Tag' sono indici generati dagli script del vault, non contenuto
+const knownRoots = new Set(['Personaggi', 'Fazioni', 'Dizionario', 'Mappe', 'Post Ufficiali', '_Multimedia', '!Indici', 'Template', 'Note Recenti', 'Tag']);
 fs.readdirSync(repoContent).filter(f => fs.statSync(path.join(repoContent, f)).isDirectory()).forEach(r => {
   if (!knownRoots.has(r)) drift('cartella-vault', `Nuova cartella nel vault: ${r}`, `content/${r}`, 'Non è mappata in sync_spvault.js: il contenuto non arriverà nel sito.', '');
 });
