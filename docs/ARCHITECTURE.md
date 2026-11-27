@@ -32,18 +32,19 @@ File unico, nessun bundler. Tre `<script>`: config Tailwind, CDN Tailwind, app.
 |---|---|
 | `<head>` | font Playfair/Inter, meta, OG/Twitter, JSON-LD |
 | header | brand centrato, utility (lingua + link `status.html`), nav |
-| `main` | 5 viste: `characters`, `timeline`, `factions`, `lexicon`, `multimedia` |
+| `main` | 5 viste: `characters` (tab roster + NPC), `timeline`, `factions`, `lexicon`, `multimedia` |
 | drawer | scheda personaggio, 5 tab: bio, hidden, gallery, media, notes |
 | lightbox | immagini e video YouTube |
 | script | dati `DEFAULT_*` iniettati + rendering + router hash |
 
-Routing: `#/personaggi`, `#/personaggi/<id>`, `#/timeline`, `#/fazioni`, `#/lessico`, `#/multimedia`.
+Routing: `#/personaggi`, `#/personaggi/npc`, `#/personaggi/<id>`, `#/timeline`, `#/fazioni`, `#/lessico`, `#/multimedia`.
 Il back del browser funziona perché ogni vista e ogni scheda scrivono nell'hash.
 
 ## Funzioni del front-end
 
 - `setView(v)` — cambia vista, aggiorna nav e hash.
 - `renderRoster` / `filterRoster` / `setFactionFilter` — griglia, ricerca, pillole.
+- `setRosterTab` / `renderNpcs` — tab Personaggi / NPC & Menzionati, card compatte senza drawer.
 - `openCharacterDrawer(id)` / `closeCharacterDrawer()` — scheda, popola i 5 tab.
 - `renderTimeline` / `renderFactions` / `renderLexicon` / `renderMultimedia` — viste dati.
 - `setLanguage(l)` — IT/EN, persistito in `localStorage.sdb_lang`, aggiorna `<html lang>` e la chrome.

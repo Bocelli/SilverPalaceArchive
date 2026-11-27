@@ -4,6 +4,15 @@ Formato: [Keep a Changelog](https://keepachangelog.com/it/1.1.0/).
 
 ## [Non rilasciato]
 
+### NPC & Menzionati + Concetti Chiave (2026-11-27)
+**Aggiunto**
+- `npcs[]` in `data/archive.json`: note di `content/NPC & Menzionati/` con bio bilingue e legami
+  ricavati dai tag (personaggio o fazione). Nuova tab "NPC & Menzionati" nella vista Personaggi,
+  con ricerca, filtro fazione sulle sole fazioni citate, conteggio risultati e contatore in header.
+- Categoria `Concetti Chiave` nel Glossario (`content/Concetti Chiave/*.md`); una nota senza prosa
+  resta `drift` `nota-vuota` invece di generare una card vuota.
+- Le due cartelle non sono più drift "Nuova cartella": sono mappate in `knownRoots`.
+
 ### Audit iniziale (2026-11-21)
 Revisione completa del prototipo: 19 personaggi, 21 dispatch, 7 fazioni, 7 termini, 75 asset.
 

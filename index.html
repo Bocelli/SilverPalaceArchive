@@ -62,6 +62,17 @@
     .no-scrollbar::-webkit-scrollbar { display: none; }
     .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
 
+    /* La X del campo di ricerca la disegniamo noi (#clear-search-btn):
+       quella nativa del browser comparirebbe doppia (e bluastra). */
+    input[type="search"]::-webkit-search-cancel-button,
+    input[type="search"]::-webkit-search-decoration,
+    input[type="search"]::-webkit-search-results-button,
+    input[type="search"]::-webkit-search-results-decoration {
+      -webkit-appearance: none;
+      appearance: none;
+      display: none;
+    }
+
     /* Ultra-clean scrollbar */
     ::-webkit-scrollbar { width: 6px; height: 6px; }
     ::-webkit-scrollbar-track { background: #090B10; }
@@ -233,15 +244,22 @@
 
     <!-- ================= VIEW 1: CHARACTERS (PROFESSIONAL GACHA ROSTER) ================= -->
     <section id="view-characters" class="space-y-6">
+
       
       <!-- Toolbar: filtro fazione e ricerca, una riga sola -->
       <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 pb-3 border-b border-border">
 
-        <!-- Filtro fazione: una tendina regge anche trenta fazioni senza allargarsi -->
-        <div class="flex items-center gap-2 sm:flex-shrink-0">
-          <label for="faction-filter" class="hidden sm:block text-xs text-muted whitespace-nowrap" data-i18n="roster.faction">Fazione</label>
-          <select id="faction-filter" onchange="setFactionFilter(this.value)" aria-label="Filtra per fazione"
-                  class="w-full sm:w-60 px-3 py-2 bg-surface border border-border rounded-lg text-xs text-white focus:outline-none focus:border-gold transition-colors"></select>
+        <!-- Tab roster/NPC + filtro fazione: una riga sola, niente colonna vuota -->
+        <div class="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-3 min-w-0 w-full sm:w-auto">
+          <div id="roster-tabs" class="inline-flex max-w-full items-center gap-1 p-1 rounded-lg bg-surface border border-border overflow-x-auto" role="tablist" aria-label="Personaggi e NPC">
+            <button id="roster-tab-characters" type="button" role="tab" aria-selected="true" aria-controls="roster-grid" onclick="setRosterTab('characters')" class="px-3.5 py-1.5 rounded-md text-xs whitespace-nowrap transition-colors bg-gold text-canvas font-semibold border border-gold shadow-sm"><span data-i18n="roster.tab.characters">Personaggi</span> (<span id="tab-count-characters">0</span>)</button>
+            <button id="roster-tab-npcs" type="button" role="tab" aria-selected="false" aria-controls="npcs-grid" onclick="setRosterTab('npcs')" class="hidden px-3.5 py-1.5 rounded-md text-xs whitespace-nowrap transition-colors text-muted hover:text-white border border-transparent"><span data-i18n="roster.tab.npcs">NPC &amp; Menzionati</span> (<span id="tab-count-npcs">0</span>)</button>
+          </div>
+          <div class="flex items-center gap-2 min-w-0 sm:flex-shrink-0">
+            <label for="faction-filter" class="hidden sm:block text-xs text-muted whitespace-nowrap" data-i18n="roster.faction">Fazione</label>
+            <select id="faction-filter" onchange="setFactionFilter(this.value)" aria-label="Filtra per fazione"
+                    class="w-full sm:w-52 px-3 py-2 bg-surface border border-border rounded-lg text-xs text-white focus:outline-none focus:border-gold transition-colors"></select>
+          </div>
         </div>
 
         <!-- Ricerca: prende lo spazio che resta, non si incastra più con i filtri -->
@@ -266,7 +284,11 @@
       <p id="roster-result-count" class="hidden text-xs text-slate-400 font-sans px-1" aria-live="polite"></p>
 
       <!-- Character Cards Grid (Authentic Gacha Aesthetic) -->
-      <div id="roster-grid" class="cards-3d grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
+      <div id="roster-grid" role="tabpanel" aria-labelledby="roster-tab-characters" class="cards-3d grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
+        <!-- Rendered by JS -->
+      </div>
+
+      <div id="npcs-grid" role="tabpanel" aria-labelledby="roster-tab-npcs" class="hidden space-y-3">
         <!-- Rendered by JS -->
       </div>
 
@@ -538,8 +560,25 @@
     </div>
   </div>
 
+  <!-- ================= TAG SUMMARY OVERLAY ================= -->
+  <div id="tag-drawer" role="dialog" aria-modal="true" aria-labelledby="tag-drawer-title" class="fixed inset-0 z-[60] flex justify-end bg-black/75 backdrop-blur-sm opacity-0 pointer-events-none transition-opacity" onclick="if (event.target === this) closeTagDrawer()">
+    <div class="w-full max-w-xl h-full bg-surface border-l border-border shadow-2xl flex flex-col">
+      <div class="flex-shrink-0 flex items-center justify-between gap-3 px-4 sm:px-6 py-3 border-b border-border bg-canvas/90 backdrop-blur-md">
+        <div class="min-w-0">
+          <p class="text-[10px] uppercase tracking-wider text-muted" data-i18n="tag.eyebrow">Sommario tag</p>
+          <h2 id="tag-drawer-title" class="font-serif text-xl font-semibold text-white truncate">#tag</h2>
+        </div>
+        <button onclick="closeTagDrawer()" class="flex items-center gap-2 px-3 py-1.5 rounded-lg text-xs font-medium text-slate-300 hover:text-gold hover:bg-surface-raised border border-border/70 hover:border-gold/50 transition-colors flex-shrink-0">
+          <svg class="w-4 h-4 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"/></svg>
+          <span data-i18n="ui.back">Indietro</span>
+        </button>
+      </div>
+      <div id="tag-drawer-body" class="flex-1 overflow-y-auto p-4 sm:p-6 space-y-6"></div>
+    </div>
+  </div>
+
   <!-- ================= LIGHTBOX MODAL ================= -->
-  <div id="lightbox" role="dialog" aria-modal="true" aria-label="Anteprima media" class="fixed inset-0 z-50 hidden bg-black/95 flex flex-col items-center justify-center p-4 sm:p-6" onclick="handleLightboxBackdrop(event)">
+  <div id="lightbox" role="dialog" aria-modal="true" aria-label="Anteprima media" class="fixed inset-0 z-[70] hidden bg-black/95 flex flex-col items-center justify-center p-4 sm:p-6" onclick="handleLightboxBackdrop(event)">
     <!-- Top Bar with Back Button & Title -->
     <div class="absolute top-4 inset-x-4 sm:top-6 sm:inset-x-6 flex items-center justify-between z-50 pointer-events-none">
       <div id="lightbox-meta" class="pointer-events-auto bg-surface/85 backdrop-blur-md border border-border rounded-lg px-3.5 py-1.5 max-w-[70%] shadow-lg">
@@ -1871,6 +1910,52 @@
     "def_it": "FIERA COMMERCIALE DEL TOROID SPINE\n\nCuriosi di scoprire le ultime novità nella tecnologia dei Reactor? Non perdetevi questa spettacolare vetrina dell'innovazione.",
     "def_en": "TOROID SPINE TRADE FAIR\n\nCurious about the latest in Reactor technology? Don't miss this spectacular showcase of innovation.",
     "source_file": "Mappe/Distretti ed Aree Menzionate/Silvernia/Toroid Spine Traid Fair.md"
+  }
+];
+
+    const DEFAULT_NPCS = [
+  {
+    "id": "npc_erwing",
+    "name": "Erwing",
+    "bio_it": "Studioso della Royal Academy, padre di Firtho.",
+    "bio_en": "Studioso della Royal Academy, padre di Firtho.",
+    "tags": [
+      "firtho",
+      "royalacademy"
+    ],
+    "links": [
+      {
+        "kind": "character",
+        "label": "Firtho",
+        "tags": [
+          "firtho"
+        ]
+      }
+    ],
+    "source_file": "NPC & Menzionati/Erwing.md"
+  },
+  {
+    "id": "npc_queen-feliana",
+    "name": "Queen Feliana",
+    "bio_it": "Regina di Silvernia, cugina di Cynthia",
+    "bio_en": "Regina di Silvernia, cugina di Cynthia",
+    "tags": [
+      "silvernia",
+      "queen",
+      "royaltyandaristocracy",
+      "queenassassination"
+    ],
+    "links": [
+      {
+        "kind": "faction",
+        "label": "Casa Reale & Nobiltà",
+        "tags": [
+          "queen",
+          "royaltyandaristocracy"
+        ]
+      }
+    ],
+    "source_file": "NPC & Menzionati/Queen Feliana.md"
   }
 ];
 
@@ -3311,13 +3396,15 @@
 ];
 
     // Auto-sync with SPVault DB Version
-    const SDB_VERSION = "spvault_sync_2ac9c8cbbe83";
+    const SDB_VERSION = "spvault_sync_8bb5d52e4ef9";
     const cases = DEFAULT_CASES;
     const dispatches = DEFAULT_DISPATCHES;
     const factions = DEFAULT_FACTIONS;
     const lexicon = DEFAULT_LEXICON;
+    const npcs = DEFAULT_NPCS;
 
     let currentLocale = 'it';
+    let rosterTab = 'characters';
     let currentFaction = 'ALL';
     let activeChar = cases[0];
     // Ogni stringa che arriva dal vault passa da qui prima di finire in HTML.
@@ -3336,11 +3423,31 @@
         'header.eyebrow': 'Archivio ufficiale',
         'header.tagline': 'Dossier investigativi, cronache e lore del multiverso',
         'register.cases': 'fascicoli',
+        'register.npcs': 'npc',
         'register.factions': 'fazioni',
         'register.dispatches': 'cronache',
         'register.assets': 'asset',
         'view.characters.search': 'Cerca',
         'roster.faction': 'Fazione',
+        'roster.faction.npcs': 'Fazione',
+        'roster.tab.characters': 'Personaggi',
+        'roster.tab.npcs': 'NPC & Menzionati',
+        'roster.legami': 'Legami',
+        'roster.tags': 'Tag',
+        'tag.eyebrow': 'Sommario tag',
+        'tag.items': 'elementi collegati',
+        'tag.section.cases': 'Personaggi',
+        'tag.section.npcs': 'NPC & Menzionati',
+        'tag.section.factions': 'Fazioni',
+        'tag.section.timeline': 'Timeline & Notizie',
+        'tag.section.multimedia': 'Multimedia',
+        'tag.related': 'Diramazioni del tag',
+        'tag.empty': 'Nessun contenuto porta questo tag.',
+        'link.character': 'Personaggio',
+        'link.faction': 'Fazione',
+        'view.npcs.search': 'Cerca nome, bio, tag e legami',
+        'empty.npcs.title': 'Nessun NPC trovato con i filtri attuali.',
+        'empty.npcs.text': 'Prova a cambiare il termine di ricerca o la fazione selezionata.',
         'view.multimedia.search': 'Cerca per titolo, evento, tag...',
         'view.timeline.title': 'Timeline Ufficiale & Notizie',
         'view.timeline.subtitle': 'Tutti gli annunci, trailer promozionali e traguardi di Silver Palace in ordine cronologico.',
@@ -3384,11 +3491,31 @@
         'header.eyebrow': 'Official archive',
         'header.tagline': 'Investigative dossiers, chronicles and multiverse lore',
         'register.cases': 'files',
+        'register.npcs': 'npc',
         'register.factions': 'factions',
         'register.dispatches': 'chronicles',
         'register.assets': 'assets',
         'view.characters.search': 'Search',
         'roster.faction': 'Faction',
+        'roster.faction.npcs': 'Faction',
+        'roster.tab.characters': 'Characters',
+        'roster.tab.npcs': 'NPCs & Mentioned',
+        'roster.legami': 'Links',
+        'roster.tags': 'Tags',
+        'tag.eyebrow': 'Tag summary',
+        'tag.items': 'linked items',
+        'tag.section.cases': 'Characters',
+        'tag.section.npcs': 'NPCs & Mentioned',
+        'tag.section.factions': 'Factions',
+        'tag.section.timeline': 'Timeline & News',
+        'tag.section.multimedia': 'Multimedia',
+        'tag.related': 'Tag branches',
+        'tag.empty': 'No content carries this tag.',
+        'link.character': 'Character',
+        'link.faction': 'Faction',
+        'view.npcs.search': 'Search name, bio, tags and links',
+        'empty.npcs.title': 'No NPC matches the current filters.',
+        'empty.npcs.text': 'Try changing the search term or the selected faction.',
         'view.multimedia.search': 'Search by title, event, tag...',
         'view.timeline.title': 'Official Timeline & News',
         'view.timeline.subtitle': 'Every announcement, promo trailer and milestone of Silver Palace in chronological order.',
@@ -3466,11 +3593,35 @@
     function route() {
       const raw = decodeURIComponent((location.hash || '').replace(/^#\/?/, ''));
       const parts = raw.split('/').filter(Boolean);
+      if (parts[0] === 'art' && parts[1]) {
+        routeSilent = true;
+        openLightbox(parts.slice(1).join('/'), { fromHistory: true });
+        routeSilent = false;
+        return;
+      }
+      closeLightbox({ silent: true });
+      if (parts[0] === 'tag' && parts[1]) {
+        routeSilent = true;
+        openTagDrawer(parts[1], { fromHistory: true });
+        routeSilent = false;
+        return;
+      }
+      if (tagDrawerOpen) closeTagDrawer({ silent: true });
       const view = SLUG_VIEW[parts[0]] || 'characters';
       routeSilent = true;
       setView(view);
-      if (view === 'characters' && parts[1]) openCharacterDrawer(parts[1]);
-      else closeCharacterDrawer(true);
+      if (view === 'characters') {
+        if (parts[1] === 'npc') {
+          setRosterTab('npcs');
+          closeCharacterDrawer(true);
+        } else {
+          if (rosterTab === 'npcs') setRosterTab('characters');
+          if (parts[1]) openCharacterDrawer(parts[1]);
+          else closeCharacterDrawer(true);
+        }
+      } else {
+        closeCharacterDrawer(true);
+      }
       routeSilent = false;
     }
 
@@ -3481,6 +3632,8 @@
       renderHeaderRegister();
       populateFactionFilter();
       renderRoster();
+      renderRosterTabs();
+      renderNpcs();
       renderTimeline();
       renderFactions();
       renderLexicon();
@@ -3503,6 +3656,8 @@
 
       populateFactionFilter();
       renderRoster();
+      renderRosterTabs();
+      renderNpcs();
       renderTimeline();
       renderFactions();
       renderLexicon();
@@ -3513,6 +3668,7 @@
 
       document.addEventListener('keydown', (e) => {
         if (e.key !== 'Escape') return;
+        closeTagDrawer();
         closeCharacterDrawer();
         closeLightbox();
       });
@@ -3572,6 +3728,7 @@
       const assets = (typeof DEFAULT_MULTIMEDIA !== 'undefined') ? DEFAULT_MULTIMEDIA.length : 0;
       const cells = [
         [cases.length, 'register.cases'],
+        [npcs.length, 'register.npcs'],
         [factions.length, 'register.factions'],
         [dispatches.length, 'register.dispatches'],
         [assets, 'register.assets']
@@ -3587,8 +3744,9 @@
     function setView(view) {
       const views = ['characters', 'timeline', 'factions', 'lexicon', 'multimedia'];
       if (!views.includes(view)) view = 'characters';
+      closeTagDrawer({ silent: true });
       closeCharacterDrawer(true);
-      closeLightbox();
+      closeLightbox({ silent: true });
       views.forEach(v => {
         const el = document.getElementById(`view-${v}`);
         const btn = document.getElementById(`nav-${v}`);
@@ -3626,7 +3784,7 @@
         return searchableText(c).includes(search);
       });
 
-      updateRosterCount(filtered.length, term);
+      updateRosterCount(filtered.length, cases.length, term);
 
       if (filtered.length === 0) {
         const termLine = term
@@ -3668,14 +3826,142 @@
           </article>`;
       }).join('');
     }
+    // --- TAB PERSONAGGI / NPC & MENZIONATI ---
+    // Gli NPC sono note brevi su personaggi secondari: card compatta, nessuna art né drawer.
+    function npcFaction(n) {
+      const f = (n.links || []).find(l => l.kind === 'faction');
+      return f ? f.label : '';
+    }
+
+    const npcSearchIndex = new Map();
+    function npcSearchableText(n) {
+      if (!npcSearchIndex.has(n.id)) {
+        const fields = [n.name, n.bio_it, n.bio_en, (n.tags || []).join(' '),
+          (n.links || []).map(l => l.label).join(' ')].filter(Boolean).join(' ');
+        npcSearchIndex.set(n.id, normalizeSearch(fields));
+      }
+      return npcSearchIndex.get(n.id);
+    }
+
+    function renderRosterTabs() {
+      const tabs = document.getElementById('roster-tabs');
+      const npcBtn = document.getElementById('roster-tab-npcs');
+      if (!tabs || !npcBtn) return;
+      const charCount = document.getElementById('tab-count-characters');
+      const npcCount = document.getElementById('tab-count-npcs');
+      if (charCount) charCount.textContent = cases.length;
+      if (npcCount) npcCount.textContent = npcs.length;
+      const hasNpcs = npcs.length > 0;
+      tabs.classList.toggle('hidden', !hasNpcs);
+      const on = 'px-3.5 py-1.5 rounded-md text-xs whitespace-nowrap transition-colors bg-gold text-canvas font-semibold border border-gold shadow-sm';
+      const off = 'px-3.5 py-1.5 rounded-md text-xs whitespace-nowrap transition-colors text-muted hover:text-white border border-transparent';
+      ['characters', 'npcs'].forEach(tab => {
+        const btn = document.getElementById('roster-tab-' + tab);
+        if (!btn) return;
+        const active = rosterTab === tab;
+        btn.className = (tab === 'npcs' && !hasNpcs) ? (off + ' hidden') : (active ? on : off);
+        btn.setAttribute('aria-selected', String(active));
+        btn.setAttribute('tabindex', active ? '0' : '-1');
+      });
+      const input = document.getElementById('char-search');
+      if (input) {
+        input.dataset.i18nPh = rosterTab === 'npcs' ? 'view.npcs.search' : 'view.characters.search';
+        input.placeholder = t(input.dataset.i18nPh);
+      }
+      const label = document.querySelector('label[for="faction-filter"]');
+      if (label) {
+        label.dataset.i18n = rosterTab === 'npcs' ? 'roster.faction.npcs' : 'roster.faction';
+        label.textContent = t(label.dataset.i18n);
+      }
+    }
+
+    function renderActiveTab() {
+      if (rosterTab === 'npcs') renderNpcs();
+      else renderRoster();
+    }
+
+    function setRosterTab(tab) {
+      rosterTab = (tab === 'npcs' && npcs.length > 0) ? 'npcs' : 'characters';
+      const chars = document.getElementById('roster-grid');
+      const npcGrid = document.getElementById('npcs-grid');
+      if (chars) chars.classList.toggle('hidden', rosterTab !== 'characters');
+      if (npcGrid) npcGrid.classList.toggle('hidden', rosterTab !== 'npcs');
+      renderRosterTabs();
+      populateFactionFilter();
+      renderActiveTab();
+      if (!routeSilent) setHash(rosterTab === 'npcs' ? '#/personaggi/npc' : '#/personaggi');
+    }
+
+    function renderNpcs() {
+      const grid = document.getElementById('npcs-grid');
+      if (!grid) return;
+      const searchInput = document.getElementById('char-search');
+      const term = ((searchInput && searchInput.value) || '').trim();
+      const search = normalizeSearch(term);
+      const filtered = npcs.filter(n => {
+        if (currentFaction !== 'ALL' && npcFaction(n) !== currentFaction) return false;
+        if (!search) return true;
+        return npcSearchableText(n).includes(search);
+      });
+      updateRosterCount(filtered.length, npcs.length, term);
+
+      if (filtered.length === 0) {
+        grid.innerHTML = '<div class="py-12 text-center space-y-3">'
+          + '<p class="font-serif text-lg text-white">' + esc(t('empty.npcs.title')) + '</p>'
+          + '<p class="text-xs text-slate-400">' + esc(t('empty.npcs.text')) + '</p>'
+          + '<button onclick="clearSearch(); setFactionFilter(\'ALL\');" class="mt-2 px-4 py-2 rounded-lg bg-surface-raised border border-border text-xs text-gold hover:border-gold transition-colors font-medium">'
+          + esc(t('empty.roster.reset')) + '</button>'
+          + '</div>';
+        return;
+      }
+
+      grid.innerHTML = filtered.map(n => {
+        const bio = currentLocale === 'it' ? (n.bio_it || n.bio_en) : (n.bio_en || n.bio_it);
+        const faction = npcFaction(n);
+        const chips = (n.links || []).map(l => {
+          const title = t(l.kind === 'character' ? 'link.character' : 'link.faction');
+          const target = l.kind === 'character'
+            ? "openLinkedCharacter('" + esc((cases.find(c => c.name === l.label) || {}).id || '') + "')"
+            : "openLinkedFaction('" + esc(slugifyClient(l.label)) + "')";
+          return '<button type="button" title="' + esc(title) + '" onclick="' + target + '" class="px-2 py-0.5 rounded-full border border-gold/30 bg-gold-dim text-gold text-[11px] whitespace-nowrap hover:border-gold hover:bg-gold/20 transition-colors">' + esc(l.label) + '</button>';
+        }).join('');
+        const consumed = new Set([].concat(...(n.links || []).map(l => l.tags || [])));
+        const loose = (n.tags || []).filter(tag => !consumed.has(String(tag).toLowerCase()));
+        const looseRow = loose.length
+          ? '<div class="flex flex-wrap items-center gap-2 pt-1"><span class="text-[10px] uppercase tracking-wide text-muted">' + esc(t('roster.tags')) + '</span>'
+            + loose.map(tag => '<button type="button" onclick="openTagDrawer(\'' + esc(tag) + '\')" class="px-2 py-0.5 rounded-full border border-border bg-surface-raised text-muted text-[11px] whitespace-nowrap hover:text-gold hover:border-gold/60 transition-colors">#' + esc(tag) + '</button>').join('')
+            + '</div>'
+          : '';
+        const chipsRow = chips
+          ? '<div class="flex flex-wrap items-center gap-2 pt-1"><span class="text-[10px] uppercase tracking-wide text-muted">' + esc(t('roster.legami')) + '</span>' + chips + '</div>'
+          : '';
+        return '<article class="p-5 rounded-xl bg-surface border border-border space-y-2">'
+          + '<div class="flex flex-wrap items-baseline justify-between gap-x-3 gap-y-1">'
+          + '<h3 class="font-serif font-semibold text-lg text-white">' + esc(n.name) + '</h3>'
+          + '<span class="text-[11px] text-muted">' + esc(faction ? 'NPC · ' + faction : 'NPC') + '</span>'
+          + '</div>'
+          + '<p class="text-sm text-slate-300 leading-relaxed whitespace-pre-line">' + esc(bio) + '</p>'
+          + chipsRow
+          + looseRow
+          + '</article>';
+      }).join('');
+    }
+
     function populateFactionFilter() {
       const sel = document.getElementById('faction-filter');
       if (!sel) return;
-      // Unione: fazioni censite + fazioni presenti solo nei tag dei personaggi.
-      const names = [...new Set([...factions.map(f => f.name), ...cases.map(c => c.faction).filter(Boolean)])];
-      const countOf = (name) => cases.filter(c => name === 'ALL' || c.faction === name).length;
+      const isNpc = rosterTab === 'npcs';
+      const pool = isNpc ? npcs : cases;
+      const facOf = (item) => isNpc ? npcFaction(item) : item.faction;
+      // Personaggi: fazioni censite + quelle presenti solo nei tag. NPC: solo le fazioni citate.
+      const names = isNpc
+        ? [...new Set(pool.map(facOf).filter(Boolean))]
+        : [...new Set([...factions.map(f => f.name), ...cases.map(c => c.faction).filter(Boolean)])];
+      const countOf = (name) => pool.filter(x => name === 'ALL' || facOf(x) === name).length;
 
-      const allLabel = currentLocale === 'it' ? 'Tutti i personaggi' : 'All characters';
+      const allLabel = isNpc
+        ? (currentLocale === 'it' ? 'Tutti gli NPC' : 'All NPCs')
+        : (currentLocale === 'it' ? 'Tutti i personaggi' : 'All characters');
       sel.innerHTML = `<option value="ALL">${esc(allLabel)} (${countOf('ALL')})</option>` +
         names.map(n => `<option value="${esc(n)}">${esc(n)} (${countOf(n)})</option>`).join('');
 
@@ -3690,7 +3976,7 @@
     function setFactionFilter(fac) {
       currentFaction = fac;
       populateFactionFilter();
-      renderRoster();
+      renderActiveTab();
     }
 
     // --- RICERCA ROSTER: indice di testo normalizzato ---
@@ -3714,16 +4000,16 @@
       return searchIndex.get(c.id);
     }
 
-    function updateRosterCount(shown, term) {
+    function updateRosterCount(shown, total, term) {
       const el = document.getElementById('roster-result-count');
       if (!el) return;
-      if (shown === cases.length && currentFaction === 'ALL' && !term) {
+      if (shown === total && currentFaction === 'ALL' && !term) {
         el.classList.add('hidden');
         el.textContent = '';
         return;
       }
       el.classList.remove('hidden');
-      el.textContent = shown + ' ' + t(shown === 1 ? 'roster.result' : 'roster.results') + ' / ' + cases.length + (term ? ' · «' + term + '»' : '');
+      el.textContent = shown + ' ' + t(shown === 1 ? 'roster.result' : 'roster.results') + ' / ' + total + (term ? ' · «' + term + '»' : '');
     }
 
     let rosterSearchTimer = null;
@@ -3740,7 +4026,7 @@
         if (search.length > 0) clearBtn.classList.remove('hidden');
         else clearBtn.classList.add('hidden');
       }
-      renderRoster();
+      renderActiveTab();
     }
 
     function clearSearch() {
@@ -3749,7 +4035,7 @@
       if (input) {
         input.value = '';
         document.getElementById('clear-search-btn')?.classList.add('hidden');
-        renderRoster();
+        renderActiveTab();
       }
     }
 
@@ -3787,9 +4073,13 @@
 
 
     // --- CHARACTER DETAIL DRAWER ---
+    // Il drawer chiude con un ritardo di 320ms per l'animazione: se nel frattempo
+    // se ne apre un altro, il timer va annullato o richiude quello appena aperto.
+    let drawerCloseTimer = null;
     function _openCharacterDrawer(id) {
       const c = cases.find(item => item.id === id);
       if (!c) return;
+      if (drawerCloseTimer) { clearTimeout(drawerCloseTimer); drawerCloseTimer = null; }
       activeChar = c;
 
       const breadcrumbEl = document.getElementById('drawer-breadcrumb-name');
@@ -3816,7 +4106,8 @@
       resetDrawerVideo(ytId);
 
       // Tags with clear styling
-      document.getElementById('drawer-tags').innerHTML = c.tags.map(t => `<span>#${esc(t)}</span>`).join('');
+      document.getElementById('drawer-tags').innerHTML = (c.tags || []).map(tag =>
+        `<button type="button" onclick="openTagDrawer('${esc(tag)}')" class="text-muted hover:text-gold underline-offset-4 hover:underline transition-colors">#${esc(tag)}</button>`).join('');
 
       // Gallery with zoom prompt (only authentic existing artworks)
       const hImgs = (c.hidden_imgs && c.hidden_imgs.length > 0) ? c.hidden_imgs : (c.hidden_img ? [c.hidden_img] : []);
@@ -3902,7 +4193,9 @@
       drawer.classList.remove('opacity-100', 'pointer-events-auto');
       drawer.classList.add('opacity-0');
 
-      setTimeout(() => {
+      if (drawerCloseTimer) clearTimeout(drawerCloseTimer);
+      drawerCloseTimer = setTimeout(() => {
+        drawerCloseTimer = null;
         drawer.classList.add('pointer-events-none');
         document.body.classList.remove('overflow-hidden');
       }, 320);
@@ -4116,7 +4409,7 @@
         const members = cases.filter(c => c.faction && c.faction.toLowerCase().trim() === f.name.toLowerCase().trim());
 
         return `
-          <div class="p-6 rounded-xl bg-surface border border-border hover:border-border-active transition-colors flex flex-col space-y-4">
+          <div id="faction-${esc(slugifyClient(f.name))}" class="p-6 rounded-xl bg-surface border border-border hover:border-border-active transition-colors flex flex-col space-y-4">
             <div class="space-y-4">
               ${hasBanner ? `
                 <div class="rounded-lg overflow-hidden border border-border bg-canvas aspect-[21/9] cursor-pointer group relative shadow-inner" onclick="openLightbox('${esc(f.banner)}')">
@@ -4169,10 +4462,184 @@
       }).join('');
     }
 
+    // --- SOMMARIO TAG: dove rientra un tag e le sue diramazioni ---
+    function slugifyClient(s) {
+      return String(s || '').normalize('NFD').replace(/[\u0300-\u036f]/g, '')
+        .toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '');
+    }
+
+    let tagDrawerOpen = false;
+    let tagIndexCache = null;
+    function tagIndex() {
+      if (tagIndexCache) return tagIndexCache;
+      const idx = new Map();
+      const add = (tag, kind, item) => {
+        const key = String(tag || '').toLowerCase().trim();
+        if (!key) return;
+        if (!idx.has(key)) idx.set(key, { cases: [], npcs: [], factions: [], dispatches: [], multimedia: [] });
+        idx.get(key)[kind].push(item);
+      };
+      cases.forEach(c => (c.tags || []).forEach(t => add(t, 'cases', c)));
+      npcs.forEach(n => (n.tags || []).forEach(t => add(t, 'npcs', n)));
+      factions.forEach(f => (f.tags || []).forEach(t => add(t, 'factions', f)));
+      dispatches.forEach(d => (d.tags || []).forEach(t => add(t, 'dispatches', d)));
+      (typeof DEFAULT_MULTIMEDIA !== 'undefined' ? DEFAULT_MULTIMEDIA : []).forEach(m => (m.tags || []).forEach(t => add(t, 'multimedia', m)));
+      tagIndexCache = idx;
+      return idx;
+    }
+
+    function mmCategoryLabel(id) {
+      const cats = (typeof MM_CATEGORIES !== 'undefined' ? MM_CATEGORIES : []);
+      const cat = cats.find(c => c.id === id || (c.matches || []).includes(id));
+      if (!cat) return id;
+      return currentLocale === 'it' ? cat.label_it : cat.label_en;
+    }
+
+    function tagRow(label, sub, onclick) {
+      return '<button type="button" onclick="' + onclick + '" class="w-full text-left px-3 py-2 rounded-lg bg-surface-raised border border-border hover:border-gold/60 transition-colors">'
+        + '<span class="block text-sm text-white font-medium truncate">' + esc(label) + '</span>'
+        + (sub ? '<span class="block text-[11px] text-muted mt-0.5 truncate">' + esc(sub) + '</span>' : '')
+        + '</button>';
+    }
+
+    function tagSection(title, rows) {
+      if (!rows.length) return '';
+      return '<section class="space-y-2"><h3 class="text-[11px] uppercase tracking-wider text-muted font-semibold">'
+        + esc(title) + ' (' + rows.length + ')</h3><div class="space-y-1.5">' + rows.join('') + '</div></section>';
+    }
+
+    function openTagDrawer(rawTag, opts) {
+      const key = String(rawTag || '').toLowerCase().trim();
+      const entry = tagIndex().get(key) || { cases: [], npcs: [], factions: [], dispatches: [], multimedia: [] };
+      const total = entry.cases.length + entry.npcs.length + entry.factions.length + entry.dispatches.length + entry.multimedia.length;
+      const parts = [];
+
+      parts.push('<p class="text-xs text-muted">' + total + ' ' + esc(t('tag.items')) + '</p>');
+      if (!total) parts.push('<p class="text-sm text-muted">' + esc(t('tag.empty')) + '</p>');
+
+      parts.push(tagSection(t('tag.section.cases'), entry.cases.map(c =>
+        tagRow(c.name, currentLocale === 'it' ? c.title_it : c.title_en, "openLinkedCharacter('" + esc(c.id) + "')"))));
+      parts.push(tagSection(t('tag.section.npcs'), entry.npcs.map(n =>
+        tagRow(n.name, (n.links || []).map(l => l.label).join(' · '), "openLinkedNpc('" + esc(n.id) + "')"))));
+      parts.push(tagSection(t('tag.section.factions'), entry.factions.map(f =>
+        tagRow(f.name, f.alias || '', "openLinkedFaction('" + esc(slugifyClient(f.name)) + "')"))));
+      parts.push(tagSection(t('tag.section.timeline'), entry.dispatches.map(d =>
+        tagRow(d.title, d.date || '', 'openTimelineFromTag()'))));
+      parts.push(tagSection(t('tag.section.multimedia'), entry.multimedia.slice(0, 8).map(m =>
+        tagRow(m.title || m.file || '', mmCategoryLabel(m.category),
+          'openMediaFromTag(' + (typeof DEFAULT_MULTIMEDIA !== 'undefined' ? DEFAULT_MULTIMEDIA.indexOf(m) : -1) + ')'))));
+
+      // diramazioni: gli altri tag che compaiono sulle stesse entità
+      const related = new Map();
+      [...entry.cases, ...entry.npcs, ...entry.factions, ...entry.dispatches, ...entry.multimedia].forEach(item => {
+        (item.tags || []).forEach(tag => {
+          const k = String(tag).toLowerCase().trim();
+          if (!k || k === key) return;
+          related.set(k, (related.get(k) || 0) + 1);
+        });
+      });
+      const rel = [...related.entries()].sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0])).slice(0, 14);
+      if (rel.length) {
+        parts.push('<section class="space-y-2"><h3 class="text-[11px] uppercase tracking-wider text-muted font-semibold">'
+          + esc(t('tag.related')) + '</h3><div class="flex flex-wrap gap-2">'
+          + rel.map(pair => '<button type="button" onclick="openTagDrawer(\'' + esc(pair[0]) + '\')" class="px-2.5 py-1 rounded-full border border-border bg-surface-raised text-xs text-slate-300 hover:text-gold hover:border-gold/60 transition-colors">#' + esc(pair[0]) + ' <span class="text-muted">' + pair[1] + '</span></button>').join('')
+          + '</div></section>');
+      }
+
+      document.getElementById('tag-drawer-title').textContent = '#' + key;
+      document.getElementById('tag-drawer-body').innerHTML = parts.join('');
+      document.getElementById('tag-drawer').classList.remove('opacity-0', 'pointer-events-none');
+      document.body.style.overflow = 'hidden';
+      tagDrawerOpen = true;
+      if (!opts || !opts.fromHistory) {
+        const target = '#/tag/' + encodeURIComponent(key);
+        if (location.hash !== target) history.pushState({ tag: key }, '', target);
+      }
+    }
+
+    function closeTagDrawer(opts) {
+      const drawer = document.getElementById('tag-drawer');
+      if (!drawer) return;
+      const wasOpen = tagDrawerOpen;
+      drawer.classList.add('opacity-0', 'pointer-events-none');
+      tagDrawerOpen = false;
+      if (!drawerOpen) document.body.style.overflow = '';
+      // Uscita esplicita (Indietro/Esc/fuori): si consuma la voce di storico del tag,
+      // così il back del browser non salta al fascicolo sottostante.
+      const silent = !!(opts && opts.silent);
+      if (!silent && wasOpen && location.hash.indexOf('#/tag/') === 0) {
+        if (history.length > 1) history.back();
+        else setHash('#/personaggi');
+      }
+    }
+
+    function openLinkedCharacter(id) {
+      if (!cases.some(c => c.id === id)) return;
+      closeTagDrawer({ silent: true });
+      openCharacterDrawer(id);
+    }
+
+    function openLinkedFaction(slug) {
+      closeTagDrawer({ silent: true });
+      setView('factions');
+      const el = document.getElementById('faction-' + slug);
+      if (el) el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+
+    function openLinkedNpc(id) {
+      closeTagDrawer({ silent: true });
+      const n = npcs.find(x => x.id === id);
+      routeSilent = true;
+      setView('characters');
+      setRosterTab('npcs');
+      routeSilent = false;
+      setHash('#/personaggi/npc');
+      const input = document.getElementById('char-search');
+      if (input && n) { input.value = n.name; filterRoster(); }
+    }
+
+    function openTimelineFromTag() {
+      closeTagDrawer({ silent: true });
+      setView('timeline');
+    }
+
+    function openMediaFromTag(index) {
+      const list = (typeof DEFAULT_MULTIMEDIA !== 'undefined' ? DEFAULT_MULTIMEDIA : []);
+      const item = list[index];
+      // l'immagine si apre sopra il sommario: lui resta aperto, così il back
+      // non lo ricrea da capo (niente dissolvenza) e torna esattamente dov'era
+      if (item && item.type === 'image' && item.src) { openLightbox(item.src); return; }
+      closeTagDrawer({ silent: true });
+      setView('multimedia');
+    }
+
+    function openMultimediaFromTag() {
+      closeTagDrawer({ silent: true });
+      setView('multimedia');
+    }
+
     // --- LEXICON RENDERING ---
+    // Le categorie arrivano dal vault in italiano: la UI le traduce, senza toccare i dati.
+    const LEXICON_CATEGORY = {
+      'Terminologia & Concetti': { it: 'Terminologia & Concetti', en: 'Terminology & Concepts' },
+      'Mappe & Ambientazione': { it: 'Mappe & Ambientazione', en: 'Maps & Setting' },
+      'Distretti & Aree Notabili': { it: 'Distretti & Aree Notabili', en: 'Districts & Notable Areas' },
+      'Concetti Chiave': { it: 'Concetti Chiave', en: 'Key Concepts' }
+    };
+    function categoryLabel(cat) {
+      const m = LEXICON_CATEGORY[cat];
+      if (!m) return cat;
+      return currentLocale === 'it' ? m.it : m.en;
+    }
+
     function renderLexicon() {
       const container = document.getElementById('lexicon-grid');
-      container.innerHTML = lexicon.map(l => {
+      // raggruppa per categoria mantenendo l'ordine di arrivo dei dati
+      const catOrder = [];
+      lexicon.forEach(l => { if (!catOrder.includes(l.category)) catOrder.push(l.category); });
+      const items = [...lexicon].sort((a, b) =>
+        catOrder.indexOf(a.category) - catOrder.indexOf(b.category) || String(a.term).localeCompare(String(b.term)));
+      container.innerHTML = items.map(l => {
         const def = currentLocale === 'it' ? (l.def_it || l.def) : (l.def_en || l.def_it || l.def);
 
         return `
@@ -4188,7 +4655,7 @@
                   </span>
                 </div>
               ` : ''}
-              <span class="text-xs font-medium text-muted inline-block">${esc(l.category)}</span>
+              <span class="text-xs font-medium text-muted inline-block">${esc(categoryLabel(l.category))}</span>
               <h4 class="font-serif font-semibold text-lg text-white pt-0.5">${esc(l.term)}</h4>
               <p class="text-sm text-slate-300 leading-relaxed whitespace-pre-line font-sans">${def}</p>
             </div>
@@ -4412,7 +4879,7 @@
       }
     }
 
-    function openImageLightbox(it) {
+    function openImageLightbox(it, opts) {
       const lb = document.getElementById('lightbox');
       const lbImg = document.getElementById('lightbox-img');
       const lbVid = document.getElementById('lightbox-video-container');
@@ -4442,6 +4909,10 @@
       }
 
       lb.classList.remove('hidden');
+      if (!opts || !opts.fromHistory) {
+        const target = '#/art/' + encodeURI(it.src || '');
+        if (it.src && location.hash !== target) history.pushState({ art: it.src }, '', target);
+      }
     }
 
     function openVideoLightbox(it) {
@@ -4476,11 +4947,19 @@
       lb.classList.remove('hidden');
     }
 
-    function closeLightbox() {
+    function closeLightbox(opts) {
       const lb = document.getElementById('lightbox');
       const lbVid = document.getElementById('lightbox-video-container');
+      const wasOpen = !!(lb && !lb.classList.contains('hidden'));
       if (lb) lb.classList.add('hidden');
       if (lbVid) lbVid.innerHTML = '';
+      const silent = !!(opts && opts.silent);
+      // Chiusura esplicita (X / fuori / Esc): si consuma la voce del lightbox,
+      // così il back del browser torna alla schermata da cui è stato aperto.
+      if (!silent && wasOpen && location.hash.indexOf('#/art/') === 0) {
+        if (history.length > 1) history.back();
+        else setHash('#/personaggi');
+      }
     }
 
     function handleLightboxBackdrop(e) {
@@ -4490,10 +4969,10 @@
     }
 
     // Classic openLightbox fallback
-    function openLightbox(src) {
+    function openLightbox(src, opts) {
       const it = (typeof DEFAULT_MULTIMEDIA !== 'undefined') ? DEFAULT_MULTIMEDIA.find(m => m.src === src) : null;
       if (it) {
-        openImageLightbox(it);
+        openImageLightbox(it, opts);
       } else {
         openImageLightbox({
           title: 'Illustrazione Ufficiale',
@@ -4501,7 +4980,7 @@
           category_label_en: 'Art Gallery',
           src: src,
           format: 'JPG'
-        });
+        }, opts);
       }
     }
 

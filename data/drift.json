@@ -1,21 +1,14 @@
 {
-  "version": "spvault_sync_2ac9c8cbbe83",
-  "generated_at": "2026-11-26T23:12:02.687Z",
-  "count": 2,
+  "version": "spvault_sync_8bb5d52e4ef9",
+  "generated_at": "2026-11-27T19:14:46.313Z",
+  "count": 1,
   "items": [
     {
-      "type": "cartella-vault",
-      "title": "Nuova cartella nel vault: Concetti Chiave",
-      "location": "content/Concetti Chiave",
-      "why": "Non è mappata in sync_spvault.js: il contenuto non arriverà nel sito.",
-      "preview": ""
-    },
-    {
-      "type": "cartella-vault",
-      "title": "Nuova cartella nel vault: NPC & Menzionati",
-      "location": "content/NPC & Menzionati",
-      "why": "Non è mappata in sync_spvault.js: il contenuto non arriverà nel sito.",
-      "preview": ""
+      "type": "nota-vuota",
+      "title": "Silverium: nota senza prosa",
+      "location": "content/Concetti Chiave/Silverium.md",
+      "why": "La nota contiene solo tag/metadati: la card del Glossario nasce quando c'è una descrizione.",
+      "preview": "#silverium #silveriumlifeforms #silvernia"
     }
   ]
 }

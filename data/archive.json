@@ -1,8 +1,9 @@
 {
-  "version": "spvault_sync_2ac9c8cbbe83",
-  "generated_at": "2026-11-26T23:12:02.687Z",
+  "version": "spvault_sync_8bb5d52e4ef9",
+  "generated_at": "2026-11-27T19:14:46.313Z",
   "counts": {
     "cases": 20,
+    "npcs": 2,
     "dispatches": 21,
     "factions": 11,
     "lexicon": 14,
@@ -774,6 +775,51 @@
         "tinsley",
         "starstudent"
       ]
+    }
+  ],
+  "npcs": [
+    {
+      "id": "npc_erwing",
+      "name": "Erwing",
+      "bio_it": "Studioso della Royal Academy, padre di Firtho.",
+      "bio_en": "Studioso della Royal Academy, padre di Firtho.",
+      "tags": [
+        "firtho",
+        "royalacademy"
+      ],
+      "links": [
+        {
+          "kind": "character",
+          "label": "Firtho",
+          "tags": [
+            "firtho"
+          ]
+        }
+      ],
+      "source_file": "NPC & Menzionati/Erwing.md"
+    },
+    {
+      "id": "npc_queen-feliana",
+      "name": "Queen Feliana",
+      "bio_it": "Regina di Silvernia, cugina di Cynthia",
+      "bio_en": "Regina di Silvernia, cugina di Cynthia",
+      "tags": [
+        "silvernia",
+        "queen",
+        "royaltyandaristocracy",
+        "queenassassination"
+      ],
+      "links": [
+        {
+          "kind": "faction",
+          "label": "Casa Reale & Nobiltà",
+          "tags": [
+            "queen",
+            "royaltyandaristocracy"
+          ]
+        }
+      ],
+      "source_file": "NPC & Menzionati/Queen Feliana.md"
     }
   ],
   "dispatches": [

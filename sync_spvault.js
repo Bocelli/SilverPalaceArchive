@@ -206,6 +206,60 @@ const FACTION_TAGS = [
   ['ivorytower', 'Ivory Tower']
 ];
 
+// ---------------------------------------------------------------- link dai tag
+
+/** "Queen Feliana" -> "queen-feliana": id stabili per gli NPC. */
+function slugify(s) {
+  return String(s || '')
+    .normalize('NFD').replace(/[\u0300-\u036f]/g, '')
+    .toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '');
+}
+
+/** Tag -> entità: prima i personaggi del roster, poi le fazioni censite. */
+function resolveLinks(tags) {
+  const out = [];
+  const seen = new Set();
+  const push = (kind, label, tag) => {
+    const key = kind + ':' + label;
+    if (!label) return;
+    if (!seen.has(key)) {
+      seen.add(key);
+      out.push({ kind: kind, label: label, tags: [] });
+    }
+    const link = out.find(l => l.kind === kind && l.label === label);
+    if (link && tag && !link.tags.includes(tag)) link.tags.push(tag);
+  };
+  (tags || []).forEach(tag => {
+    const t = String(tag || '').toLowerCase();
+    const char = cases.find(c => slugify(c.name) === slugify(t));
+    if (char) return push('character', char.name, t);
+    const fac = FACTION_TAGS.find(pair => pair[0] === t);
+    if (fac) push('faction', fac[1], t);
+  });
+  // personaggi prima, poi fazioni; ordine stabile dentro i due gruppi
+  return out.filter(l => l.kind === 'character').concat(out.filter(l => l.kind === 'faction'));
+}
+
+/** Tag della nota: solo la sezione "Tags", non gli hashtag dentro la prosa. */
+function noteTags(raw) {
+  const lines = String(raw || '').split(/\r?\n/);
+  const out = [];
+  let inTags = false;
+  for (const line of lines) {
+    const t = line.trim();
+    if (!inTags) {
+      if (/^#{0,6}\s*tags?\s*$/i.test(t)) inTags = true;
+      continue;
+    }
+    if (!t) { if (out.length) break; continue; }
+    if (/^#{1,6}\s/.test(t) || /^\*?data di creazione/i.test(t)) break;
+    const found = t.match(/#[A-Za-z0-9_-]+/g) || [];
+    if (!found.length) break;
+    found.forEach(tag => out.push(tag.slice(1).toLowerCase()));
+  }
+  return [...new Set(out)];
+}
+
 const ROLE_MAP = {
   'maid': 'Cameriera', 'bartender': 'Barista', 'secretary': 'Segretaria', 'technician': 'Tecnico',
   'host': 'Host / Albergatrice', 'doctor': 'Medico', 'knight': 'Cavaliere', 'journalist': 'Giornalista',
@@ -579,6 +633,60 @@ if (fs.existsSync(distrettiDir)) {
   });
 }
 
+// 4b. NPC & Menzionati: note brevi su personaggi secondari (card compatta, senza art)
+const npcs = [];
+const npcDir = path.join(repoContent, 'NPC & Menzionati');
+if (fs.existsSync(npcDir)) {
+  ls(npcDir).filter(f => f.endsWith('.md')).forEach(f => {
+    const full = path.join(npcDir, f);
+    const raw = fs.readFileSync(full, 'utf8');
+    const p = splitBilingual(raw);
+    const name = path.basename(f, '.md');
+    const bioIt = p.it || p.en;
+    const bioEn = p.en || '';
+    const tags = noteTags(raw);
+    if (!bioIt) {
+      drift('nota-vuota', `${name}: nota senza prosa`, `content/NPC & Menzionati/${f}`,
+        'La nota contiene solo tag/metadati: senza descrizione non entra nella tab NPC.', tags.map(t => '#' + t).join(' '));
+      return;
+    }
+    npcs.push({
+      id: 'npc_' + slugify(name),
+      name: name,
+      bio_it: bioIt,
+      bio_en: bioEn,
+      tags: tags,
+      links: resolveLinks(tags),
+      source_file: 'NPC & Menzionati/' + f
+    });
+  });
+}
+
+// 4c. Concetti Chiave: stessa card del Glossario, ma solo se la nota ha prosa
+const concettiDir = path.join(repoContent, 'Concetti Chiave');
+if (fs.existsSync(concettiDir)) {
+  ls(concettiDir).filter(f => f.endsWith('.md')).forEach(f => {
+    const full = path.join(concettiDir, f);
+    const raw = fs.readFileSync(full, 'utf8');
+    const p = splitBilingual(raw);
+    const term = path.basename(f, '.md');
+    const it = p.it || p.en;
+    if (!it) {
+      drift('nota-vuota', `${term}: nota senza prosa`, `content/Concetti Chiave/${f}`,
+        'La nota contiene solo tag/metadati: la card del Glossario nasce quando c\'è una descrizione.', noteTags(raw).map(t => '#' + t).join(' '));
+      return;
+    }
+    lexicon.push({
+      term: term,
+      category: 'Concetti Chiave',
+      def_it: it,
+      def_en: p.en || '',
+      date: gitIsoDate(full),
+      source_file: 'Concetti Chiave/' + f
+    });
+  });
+}
+
 // 5. dispatch
 const dispatches = [];
 let dispId = 1;
@@ -736,7 +844,7 @@ if (fs.existsSync(trailersDir)) {
 
 // 7. drift strutturale
 // 'Note Recenti' e 'Tag' sono indici generati dagli script del vault, non contenuto
-const knownRoots = new Set(['Personaggi', 'Fazioni', 'Dizionario', 'Mappe', 'Post Ufficiali', '_Multimedia', '!Indici', 'Template', 'Note Recenti', 'Tag']);
+const knownRoots = new Set(['Personaggi', 'Fazioni', 'Dizionario', 'Mappe', 'Post Ufficiali', '_Multimedia', '!Indici', 'Template', 'Note Recenti', 'Tag', 'NPC & Menzionati', 'Concetti Chiave']);
 ls(repoContent).filter(f => fs.statSync(path.join(repoContent, f)).isDirectory()).forEach(r => {
   if (!knownRoots.has(r)) drift('cartella-vault', `Nuova cartella nel vault: ${r}`, `content/${r}`, 'Non è mappata in sync_spvault.js: il contenuto non arriverà nel sito.', '');
 });
@@ -805,14 +913,14 @@ validate();
 if (!fs.existsSync(DATA_DIR)) fs.mkdirSync(DATA_DIR, { recursive: true });
 // la versione è l'impronta del contenuto: se il vault non è cambiato resta uguale,
 // così un sync pianificato non produce commit vuoti né redeploy inutili
-const fingerprint = JSON.stringify({ cases, dispatches, factions: allFactions, lexicon, multimedia });
+const fingerprint = JSON.stringify({ cases, dispatches, factions: allFactions, lexicon, multimedia, npcs });
 const version = 'spvault_sync_' + crypto.createHash('sha1').update(fingerprint).digest('hex').slice(0, 12);
 let generatedAt = new Date().toISOString();
 try {
   const prev = JSON.parse(fs.readFileSync(path.join(DATA_DIR, 'archive.json'), 'utf8'));
   if (prev.version === version && prev.generated_at) generatedAt = prev.generated_at;
 } catch (_) {}
-const archive = { version, generated_at: generatedAt, counts: { cases: cases.length, dispatches: dispatches.length, factions: allFactions.length, lexicon: lexicon.length, multimedia: multimedia.length }, cases, dispatches, factions: allFactions, lexicon, multimedia };
+const archive = { version, generated_at: generatedAt, counts: { cases: cases.length, npcs: npcs.length, dispatches: dispatches.length, factions: allFactions.length, lexicon: lexicon.length, multimedia: multimedia.length }, cases, npcs, dispatches, factions: allFactions, lexicon, multimedia };
 fs.writeFileSync(path.join(DATA_DIR, 'archive.json'), JSON.stringify(archive, null, 2), 'utf8');
 fs.writeFileSync(path.join(DATA_DIR, 'drift.json'), JSON.stringify({ version, generated_at: archive.generated_at, count: DRIFT.length, items: DRIFT }, null, 2), 'utf8');
 log(`data/archive.json + data/drift.json scritti (${DRIFT.length} voci di drift).`);
@@ -830,6 +938,8 @@ const block = [
   '    const DEFAULT_FACTIONS = ' + safeJson(allFactions) + ';',
   '',
   '    const DEFAULT_LEXICON = ' + safeJson(lexicon) + ';',
+  '',
+  '    const DEFAULT_NPCS = ' + safeJson(npcs) + ';',
   '',
   '    const DEFAULT_MULTIMEDIA = ' + safeJson(multimedia) + ';',
   '',
@@ -897,5 +1007,5 @@ if (DRIFT.length > 0 && fs.existsSync(path.join(SITE_DIR, 'notify.ps1'))) {
   }
 }
 
-log(`Riepilogo: ${cases.length} personaggi, ${allFactions.length} fazioni (${derived.length} derivate), ${lexicon.length} termini, ${dispatches.length} post, ${multimedia.length} asset, ${DRIFT.length} drift.`);
+log(`Riepilogo: ${cases.length} personaggi, ${npcs.length} NPC, ${allFactions.length} fazioni (${derived.length} derivate), ${lexicon.length} termini, ${dispatches.length} post, ${multimedia.length} asset, ${DRIFT.length} drift.`);
 log('=== COMPLETATO ===');

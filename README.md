@@ -17,7 +17,7 @@ password, nessun salvataggio dal browser. I dati vengono rigenerati dal vault.
 
 | File | Ruolo |
 |---|---|
-| `index.html` | applicazione completa: 5 viste, scheda personaggio, timeline, glossario, archivio media |
+| `index.html` | applicazione completa: 5 viste (Personaggi con tab roster/NPC), scheda personaggio, timeline, glossario, archivio media |
 | `status.html` | diagnostica: cosa c'è nel vault e non ha ancora una UI (**drift**) + prompt da copiare |
 | `sync_spvault.js` | estrae il vault, valida, genera dati e pagine |
 | `data/archive.json` `data/drift.json` | dati generati, leggibili e diffabili |

@@ -48,10 +48,14 @@
 
   <main class="max-w-5xl mx-auto px-4 sm:px-6 py-8 space-y-8">
 
-    <section id="summary" class="grid grid-cols-2 sm:grid-cols-5 gap-3">
+    <section id="summary" class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3">
       <div class="p-4 rounded-xl bg-surface border border-border">
         <span class="text-[10px] uppercase tracking-wider text-muted font-semibold">Personaggi</span>
         <p id="count-cases" class="font-serif text-2xl font-bold text-white">—</p>
+      </div>
+      <div class="p-4 rounded-xl bg-surface border border-border">
+        <span class="text-[10px] uppercase tracking-wider text-muted font-semibold">NPC</span>
+        <p id="count-npcs" class="font-serif text-2xl font-bold text-white">—</p>
       </div>
       <div class="p-4 rounded-xl bg-surface border border-border">
         <span class="text-[10px] uppercase tracking-wider text-muted font-semibold">Fazioni</span>
@@ -65,7 +69,7 @@
         <span class="text-[10px] uppercase tracking-wider text-muted font-semibold">Asset</span>
         <p id="count-multimedia" class="font-serif text-2xl font-bold text-white">—</p>
       </div>
-      <div class="p-4 rounded-xl bg-surface border border-border col-span-2 sm:col-span-1">
+      <div class="p-4 rounded-xl bg-surface border border-border">
         <span class="text-[10px] uppercase tracking-wider text-muted font-semibold">Da mappare</span>
         <p id="count-drift" class="font-serif text-2xl font-bold text-gold">—</p>
       </div>
@@ -108,21 +112,14 @@
   <script>
     window.VAULT_DRIFT = /*DRIFT_START*/[
   {
-    "type": "cartella-vault",
-    "title": "Nuova cartella nel vault: Concetti Chiave",
-    "location": "content/Concetti Chiave",
-    "why": "Non è mappata in sync_spvault.js: il contenuto non arriverà nel sito.",
-    "preview": ""
-  },
-  {
-    "type": "cartella-vault",
-    "title": "Nuova cartella nel vault: NPC & Menzionati",
-    "location": "content/NPC & Menzionati",
-    "why": "Non è mappata in sync_spvault.js: il contenuto non arriverà nel sito.",
-    "preview": ""
+    "type": "nota-vuota",
+    "title": "Silverium: nota senza prosa",
+    "location": "content/Concetti Chiave/Silverium.md",
+    "why": "La nota contiene solo tag/metadati: la card del Glossario nasce quando c'è una descrizione.",
+    "preview": "#silverium #silveriumlifeforms #silvernia"
   }
 ]/*DRIFT_END*/;
-    const SYNC_META = /*META_START*/{"version":"spvault_sync_2ac9c8cbbe83","generated_at":"2026-11-26T23:12:02.687Z","counts":{"cases":20,"dispatches":21,"factions":11,"lexicon":14,"multimedia":85}}/*META_END*/;
+    const SYNC_META = /*META_START*/{"version":"spvault_sync_8bb5d52e4ef9","generated_at":"2026-11-27T19:14:46.313Z","counts":{"cases":20,"npcs":2,"dispatches":21,"factions":11,"lexicon":14,"multimedia":85}}/*META_END*/;
 
     const TYPE_LABELS = {
       'file-non-mappato': 'File non mappato',
@@ -169,6 +166,7 @@
     function renderSummary() {
       const c = (SYNC_META && SYNC_META.counts) || {};
       document.getElementById('count-cases').textContent = c.cases ?? '—';
+      document.getElementById('count-npcs').textContent = c.npcs ?? '—';
       document.getElementById('count-factions').textContent = c.factions ?? '—';
       document.getElementById('count-dispatches').textContent = c.dispatches ?? '—';
       document.getElementById('count-multimedia').textContent = c.multimedia ?? '—';

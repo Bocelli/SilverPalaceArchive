@@ -11,6 +11,8 @@ finisce in `data/drift.json` e viene mostrato in `status.html`.
 | `content/Personaggi/<Nome>/<Nome> Hidden Page.md` | lore segreta | opzionale |
 | `content/Fazioni/<NOME>/*.md` | fazione | primo file o file che inizia con `ATOTS` |
 | `content/Dizionario/*.md` | termine | un termine per file, nome file = termine |
+| `content/Concetti Chiave/*.md` | concetto chiave | card del Glossario; senza prosa resta `drift` `nota-vuota` |
+| `content/NPC & Menzionati/*.md` | NPC | nota breve: bio + `###### Tags`; i tag diventano legami |
 | `content/Mappe/Footnotes/*.md` | luogo | embed `![[immagine]]` per la mappa |
 | `content/Mappe/Distretti ed Aree Menzionate/*.md` | distretto | testo semplice |
 | `content/Post Ufficiali/**/*.md` | dispatch | la cartella padre determina il tipo |
@@ -72,8 +74,15 @@ Le fazioni senza cartella nel vault ma presenti nei tag dei personaggi esistono 
 `id`, `title`, `type`, `date` (`YYYY-MM-DD`), `desc_it`, `desc_en`, `cover_img`, `link`, `tags[]`.
 `link` può essere vuoto: in quel caso la UI non mostra un bottone cliccabile.
 
+### npcs[]
+`id` (`npc_<slug>`), `name`, `bio_it`, `bio_en` (può essere vuota: la UI usa l'IT), `tags[]`,
+`links[]` = `{ kind: 'character'|'faction', label }` ricavati dai tag (`#firtho` → personaggio,
+`#queen`/`#royaltyandaristocracy` → Casa Reale & Nobiltà). Un tag non censito resta in `tags[]`
+ma non diventa un legame. Nota con soli tag/metadati → `drift` `nota-vuota`, nessuna voce.
+
 ### lexicon[] / multimedia[]
-Invariati rispetto al prototipo; `multimedia[].thumb` punta a `_thumbs/`.
+`lexicon[].category` include `Concetti Chiave` (nota senza prosa → `drift`, nessuna card);
+`multimedia[].thumb` punta a `_thumbs/`.
 
 ## Derivazione fazione dai tag
 
