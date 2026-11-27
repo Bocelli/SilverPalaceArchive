@@ -24,7 +24,7 @@ password, nessun salvataggio dal browser. I dati vengono rigenerati dal vault.
 | `_multimedia/` | asset originali (55 MB) |
 | `_thumbs/` | versioni leggere per le card (420 px, q74) |
 | `tools/thumbs.py` | rigenera le thumb con Pillow |
-| `docs/` | architettura e contratto dati |
+| `docs/` | architettura, contratto dati e `TRAIL.md` (mappa dei punti di contatto + registro) |
 
 ## Uso
 

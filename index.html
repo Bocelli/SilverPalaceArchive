@@ -3429,7 +3429,6 @@
         'register.assets': 'asset',
         'view.characters.search': 'Cerca',
         'roster.faction': 'Fazione',
-        'roster.faction.npcs': 'Fazione',
         'roster.tab.characters': 'Personaggi',
         'roster.tab.npcs': 'NPC & Menzionati',
         'roster.legami': 'Legami',
@@ -3446,6 +3445,8 @@
         'link.character': 'Personaggio',
         'link.faction': 'Fazione',
         'view.npcs.search': 'Cerca nome, bio, tag e legami',
+        'search.characters.aria': 'Cerca nome, fazione, titolo, lore e note',
+        'search.npcs.aria': 'Cerca nome, bio, tag e legami degli NPC',
         'empty.npcs.title': 'Nessun NPC trovato con i filtri attuali.',
         'empty.npcs.text': 'Prova a cambiare il termine di ricerca o la fazione selezionata.',
         'view.multimedia.search': 'Cerca per titolo, evento, tag...',
@@ -3497,7 +3498,6 @@
         'register.assets': 'assets',
         'view.characters.search': 'Search',
         'roster.faction': 'Faction',
-        'roster.faction.npcs': 'Faction',
         'roster.tab.characters': 'Characters',
         'roster.tab.npcs': 'NPCs & Mentioned',
         'roster.legami': 'Links',
@@ -3514,6 +3514,8 @@
         'link.character': 'Character',
         'link.faction': 'Faction',
         'view.npcs.search': 'Search name, bio, tags and links',
+        'search.characters.aria': 'Search name, faction, title, lore and notes',
+        'search.npcs.aria': 'Search NPC name, bio, tags and links',
         'empty.npcs.title': 'No NPC matches the current filters.',
         'empty.npcs.text': 'Try changing the search term or the selected faction.',
         'view.multimedia.search': 'Search by title, event, tag...',
@@ -3588,6 +3590,16 @@
     function setHash(hash) {
       if (location.hash === hash) return;
       history.pushState(null, '', hash);
+    }
+
+    // Chiude un livello consumando la voce di storico solo se l'abbiamo spinta noi.
+    // Se il tag/art arriva da un link incollato lo stato non è nostro: si sostituisce
+    // la voce con il roster, così Indietro non porta fuori dal sito.
+    function consumeHistoryEntry(kind, key) {
+      const state = history.state || {};
+      if (state[kind] === key) { history.back(); return; }
+      history.replaceState(null, '', '#/personaggi');
+      route();
     }
 
     function route() {
@@ -3666,11 +3678,14 @@
       renderHeaderRegister();
       route();
 
+      // Esc chiude un livello per volta: prima il lightbox, poi il sommario tag, poi la scheda.
+      // Chiudere tutti insieme faceva perdere la scheda sotto la foto e lasciava una voce di storico.
       document.addEventListener('keydown', (e) => {
         if (e.key !== 'Escape') return;
-        closeTagDrawer();
-        closeCharacterDrawer();
-        closeLightbox();
+        const lb = document.getElementById('lightbox');
+        if (lb && !lb.classList.contains('hidden')) { closeLightbox(); return; }
+        if (tagDrawerOpen) { closeTagDrawer(); return; }
+        if (drawerOpen) closeCharacterDrawer();
       });
     });
 
@@ -3867,10 +3882,11 @@
       if (input) {
         input.dataset.i18nPh = rosterTab === 'npcs' ? 'view.npcs.search' : 'view.characters.search';
         input.placeholder = t(input.dataset.i18nPh);
+        input.setAttribute('aria-label', t(rosterTab === 'npcs' ? 'search.npcs.aria' : 'search.characters.aria'));
       }
       const label = document.querySelector('label[for="faction-filter"]');
       if (label) {
-        label.dataset.i18n = rosterTab === 'npcs' ? 'roster.faction.npcs' : 'roster.faction';
+        label.dataset.i18n = 'roster.faction';
         label.textContent = t(label.dataset.i18n);
       }
     }
@@ -4524,7 +4540,7 @@
       parts.push(tagSection(t('tag.section.factions'), entry.factions.map(f =>
         tagRow(f.name, f.alias || '', "openLinkedFaction('" + esc(slugifyClient(f.name)) + "')"))));
       parts.push(tagSection(t('tag.section.timeline'), entry.dispatches.map(d =>
-        tagRow(d.title, d.date || '', 'openTimelineFromTag()'))));
+        tagRow(d.title, d.date || '', "setView('timeline')"))));
       parts.push(tagSection(t('tag.section.multimedia'), entry.multimedia.slice(0, 8).map(m =>
         tagRow(m.title || m.file || '', mmCategoryLabel(m.category),
           'openMediaFromTag(' + (typeof DEFAULT_MULTIMEDIA !== 'undefined' ? DEFAULT_MULTIMEDIA.indexOf(m) : -1) + ')'))));
@@ -4568,8 +4584,7 @@
       // così il back del browser non salta al fascicolo sottostante.
       const silent = !!(opts && opts.silent);
       if (!silent && wasOpen && location.hash.indexOf('#/tag/') === 0) {
-        if (history.length > 1) history.back();
-        else setHash('#/personaggi');
+        consumeHistoryEntry('tag', decodeURIComponent(location.hash.slice(6)));
       }
     }
 
@@ -4580,14 +4595,12 @@
     }
 
     function openLinkedFaction(slug) {
-      closeTagDrawer({ silent: true });
       setView('factions');
       const el = document.getElementById('faction-' + slug);
       if (el) el.scrollIntoView({ behavior: 'smooth', block: 'center' });
     }
 
     function openLinkedNpc(id) {
-      closeTagDrawer({ silent: true });
       const n = npcs.find(x => x.id === id);
       routeSilent = true;
       setView('characters');
@@ -4598,23 +4611,12 @@
       if (input && n) { input.value = n.name; filterRoster(); }
     }
 
-    function openTimelineFromTag() {
-      closeTagDrawer({ silent: true });
-      setView('timeline');
-    }
-
     function openMediaFromTag(index) {
       const list = (typeof DEFAULT_MULTIMEDIA !== 'undefined' ? DEFAULT_MULTIMEDIA : []);
       const item = list[index];
       // l'immagine si apre sopra il sommario: lui resta aperto, così il back
       // non lo ricrea da capo (niente dissolvenza) e torna esattamente dov'era
       if (item && item.type === 'image' && item.src) { openLightbox(item.src); return; }
-      closeTagDrawer({ silent: true });
-      setView('multimedia');
-    }
-
-    function openMultimediaFromTag() {
-      closeTagDrawer({ silent: true });
       setView('multimedia');
     }
 
@@ -4957,8 +4959,7 @@
       // Chiusura esplicita (X / fuori / Esc): si consuma la voce del lightbox,
       // così il back del browser torna alla schermata da cui è stato aperto.
       if (!silent && wasOpen && location.hash.indexOf('#/art/') === 0) {
-        if (history.length > 1) history.back();
-        else setHash('#/personaggi');
+        consumeHistoryEntry('art', decodeURIComponent(location.hash.slice(6)));
       }
     }
 
